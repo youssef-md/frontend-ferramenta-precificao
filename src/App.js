@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { ThemeProvider } from 'styled-components';
 
 import Button from './components/Button';
 import GlobalStyle from './styles/global';
 
+import defaultTheme from './styles/defaultTheme';
+import darkTheme from './styles/darkTheme';
+
 function App() {
-  function sayHello() {
-    console.log('oi');
+  const [theme, setTheme] = useState(defaultTheme);
+
+  function changeTheme() {
+    setTheme(theme === defaultTheme ? darkTheme : defaultTheme);
   }
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
+      <button onClick={changeTheme}>Switch Theme</button>
       <h1>Análise de Custos de Serviços</h1>
       <h2>Participar de Processo Seletivo para Curso de Graduação UnB</h2>
       <h3>Etapa 1: Custos de Pessoal</h3>
@@ -21,8 +28,10 @@ function App() {
         aliquid molestias quos?
       </p>
       <GlobalStyle />
-      <Button onClick={sayHello} color="#000" />
-    </>
+      <Button type="primary">
+        Entrar com <strong>gov.br</strong>
+      </Button>
+    </ThemeProvider>
   );
 }
 

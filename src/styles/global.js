@@ -15,16 +15,19 @@ export default createGlobalStyle`
 
   body, input, button {
     font-family: 'Raleway', sans-serif;
+    background-color: ${props => props.theme.secondary03};
+    transition: all .3s;
   }
 
   button {
     cursor: pointer;
+    font-size: 1.6rem;
   }
 
   h1, h2, h3, h4 {
     line-height: 1.5;
     font-weight: 600;
-    color: #071D41;
+    color: ${props => props.theme.primary04};
   }
 
   h2, h3, h4 {
@@ -51,5 +54,6 @@ export default createGlobalStyle`
   p {
     font-size: 1.6rem;
     line-height: 1.75;
+    color: ${props => props.theme.secondary08}
   }
 `;
