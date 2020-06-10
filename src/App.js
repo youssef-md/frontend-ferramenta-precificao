@@ -6,6 +6,7 @@ import GlobalStyle from './styles/global';
 
 import defaultTheme from './styles/defaultTheme';
 import darkTheme from './styles/darkTheme';
+import Input from './components/Input';
 
 function App() {
   const [theme, setTheme] = useState(defaultTheme);
@@ -28,7 +29,27 @@ function App() {
         aliquid molestias quos?
       </p>
       <GlobalStyle />
-      <div style={{ display: 'flex' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'space-evenly',
+        }}
+      >
+        <Input label="Custos de Infra" />
+
+        <Button type="primary">
+          Entrar com <strong>gov.br</strong>
+        </Button>
+        <Button type="secondary">
+          Entrar com <strong>gov.br</strong>
+        </Button>
+        <Button type="secondary" loading>
+          Entrar com <strong>gov.br</strong>
+        </Button>
+        <Button type="secondary" disabled>
+          Entrar com <strong>gov.br</strong>
+        </Button>
         <Button type="primary" loading>
           Entrar com <strong>gov.br</strong>
         </Button>
