@@ -1,17 +1,36 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+const variations = {
+  primary: css`
+    background-color: ${props => props.theme.primary05};
+
+    &:not(:disabled):hover {
+      background-color: ${props => props.theme.primary04};
+    }
+  `,
+
+  secondary: css`
+    background-color: none;
+    border: 1px solid ${props => props.theme.primary05};
+    color: ${props => props.theme.primary05};
+
+    &:not(:disabled):hover {
+      background-color: ${props => !props.loading && props.theme.primary04};
+      border: 1px solid ${props => props.theme.primary04};
+      color: ${props => props.theme.secondary01};
+    }
+  `,
+};
 
 export const ButtonStyle = styled.button`
   height: 44px;
   border: 0;
   color: white;
   padding: 0 40px;
-  background-color: ${props => props.theme.primary05};
+  /* background-color: ${props => props.theme.primary05}; */
+  ${props => variations[props.type]}
   border-radius: 50px;
   transition: all 0.4s;
-
-  &:not(:disabled):hover {
-    background-color: ${props => props.theme.primary04};
-  }
 
   &:active {
     background-color: ${props => props.theme.primary05};
