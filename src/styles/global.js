@@ -6,6 +6,7 @@ export default createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    outline: 0;
   }
 
   html {
@@ -16,7 +17,7 @@ export default createGlobalStyle`
   body, input, button {
     font-family: 'Raleway', sans-serif;
     background-color: ${props => props.theme.secondary03};
-    transition: all .3s;
+    transition: background-color .3s;
   }
 
   button {

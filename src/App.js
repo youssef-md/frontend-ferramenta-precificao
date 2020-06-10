@@ -28,9 +28,14 @@ function App() {
         aliquid molestias quos?
       </p>
       <GlobalStyle />
-      <Button type="primary">
-        Entrar com <strong>gov.br</strong>
-      </Button>
+      <div style={{ display: 'flex' }}>
+        <Button type="primary" loading>
+          Entrar com <strong>gov.br</strong>
+        </Button>
+        <Button type="primary" disabled>
+          Entrar com <strong>gov.br</strong>
+        </Button>
+      </div>
     </ThemeProvider>
   );
 }
