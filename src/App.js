@@ -34,12 +34,26 @@ function App() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          height: '500px',
+          height: '800px',
           maxWidth: '400px',
           margin: 'auto',
         }}
       >
         <Input label="Custos de Infra" />
+
+        <Input label="Tempo Médio" auxiliaryText="Unidade de tempo em horas" />
+
+        <Input
+          label="Tempo Médio"
+          auxiliaryText="Unidade de tempo em horas"
+          valid
+        />
+
+        <Input
+          label="Tempo Médio"
+          auxiliaryText="Unidade de tempo em horas"
+          invalid
+        />
 
         <Button type="primary">
           Entrar com <strong>gov.br</strong>

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -24,7 +24,51 @@ export const Container = styled.div`
     }
 
     &:focus {
-      border: 1px solid red;
+      border-color: ${props => props.theme.primary04};
+      box-shadow: 0 0 0 1px ${props => props.theme.primary04};
     }
+
+    ${props =>
+      props.valid &&
+      css`
+        border-color: ${props => props.theme.success};
+        box-shadow: 0 0 0 1px ${props => props.theme.success};
+      `}
+
+    ${props =>
+      props.invalid &&
+      css`
+        border-color: ${props => props.theme.danger};
+        box-shadow: 0 0 0 1px ${props => props.theme.danger};
+      `}
+  }
+
+  p {
+    font-size: 13px;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    margin-top: 4px;
+
+    p {
+      font-style: italic;
+      margin-left: 4px;
+    }
+  }
+`;
+
+export const Valid = styled.span`
+  color: ${props => props.theme.success};
+  p {
+    color: ${props => props.theme.success};
+  }
+`;
+
+export const Invalid = styled.span`
+  color: ${props => props.theme.danger};
+  p {
+    color: ${props => props.theme.danger};
   }
 `;

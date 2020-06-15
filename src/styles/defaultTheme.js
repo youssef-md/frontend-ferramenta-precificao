@@ -15,4 +15,9 @@ export default {
   secondary07: '#555555',
   secondary08: '#333333',
   secondary09: '#000000',
+  highlight: '#268744',
+  success: '#168821',
+  warning: '#ffcd07',
+  danger: '#e60000',
+  info: '#155bcb',
 };
