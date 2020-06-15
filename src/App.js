@@ -32,8 +32,11 @@ function App() {
       <div
         style={{
           display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'space-evenly',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          height: '500px',
+          maxWidth: '400px',
+          margin: 'auto',
         }}
       >
         <Input label="Custos de Infra" />
@@ -41,6 +44,13 @@ function App() {
         <Button type="primary">
           Entrar com <strong>gov.br</strong>
         </Button>
+        <Button type="primary" loading>
+          Entrar com <strong>gov.br</strong>
+        </Button>
+        <Button type="primary" disabled>
+          Entrar com <strong>gov.br</strong>
+        </Button>
+
         <Button type="secondary">
           Entrar com <strong>gov.br</strong>
         </Button>
@@ -48,12 +58,6 @@ function App() {
           Entrar com <strong>gov.br</strong>
         </Button>
         <Button type="secondary" disabled>
-          Entrar com <strong>gov.br</strong>
-        </Button>
-        <Button type="primary" loading>
-          Entrar com <strong>gov.br</strong>
-        </Button>
-        <Button type="primary" disabled>
           Entrar com <strong>gov.br</strong>
         </Button>
       </div>
