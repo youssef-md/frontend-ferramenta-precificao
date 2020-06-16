@@ -4,6 +4,7 @@ export const BreadcrumbsStyle = styled.div`
   display: flex;
   align-items: center;
   padding: 15px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
   a {
     color: ${props => props.theme.secondary07};

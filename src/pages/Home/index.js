@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Breadcrumbs from '../../components/Breadcrumbs';
@@ -28,7 +29,7 @@ function Home() {
         }}
       >
         <Breadcrumbs />
-
+        <Link to="servicos">Ir para listagem de serviços</Link>
         <Input label="Custos de Infra" />
 
         <Input label="Tempo Médio" auxiliaryText="Unidade de tempo em horas" />
