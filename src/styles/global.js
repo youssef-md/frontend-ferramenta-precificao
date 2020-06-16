@@ -16,7 +16,7 @@ export default createGlobalStyle`
 
   body, input, button {
     font-family: 'Raleway', sans-serif;
-    background-color: ${props => props.theme.secondary03};
+    background-color: ${props => props.theme.secondary01};
     transition: background-color .3s;
   }
 
