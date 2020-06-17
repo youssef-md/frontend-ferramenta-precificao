@@ -1,5 +1,11 @@
 import React from 'react';
-import Input from '../../components/Input';
+
+import {
+  Container,
+  FormSide,
+  CustomInput as Input,
+  InputsContainer,
+} from './styles';
 
 const formPages = [
   // {
@@ -37,6 +43,18 @@ const formPages = [
           type: 'string',
           auxText: 'Tempo em horas',
         },
+        {
+          title: 'Tempo Médio',
+          placeholder: '123',
+          type: 'string',
+          auxText: 'Tempo em horas',
+        },
+        {
+          title: 'Tempo Médio',
+          placeholder: '123',
+          type: 'string',
+          auxText: 'Tempo em horas',
+        },
       ],
     },
   },
@@ -55,25 +73,30 @@ function PreencherModelo() {
   }
 
   return (
-    <>
+    <Container>
+      <h2>{formPages[0].title}</h2>
+      <p>Bolinhas</p>
       {formPages.map(function createPage(page) {
         return (
           <>
-            <h2>{page.title}</h2>
             <h3>{page.subTitle}</h3>
             <h4>{page.description}</h4>
 
             <form>
               {page.form.pre && page.form.pos ? (
                 <>
-                  <div>
-                    <p>Pré Transformação</p>
-                    <div>{page.form.inputs.map(createForm)}</div>
-                  </div>
-                  <div>
-                    <p>Pós Transformação</p>
-                    <div>{page.form.inputs.map(createForm)}</div>
-                  </div>
+                  <FormSide>
+                    <h5>Pré Transformação</h5>
+                    <InputsContainer>
+                      {page.form.inputs.map(createForm)}
+                    </InputsContainer>
+                  </FormSide>
+                  <FormSide>
+                    <h5>Pós Transformação</h5>
+                    <InputsContainer>
+                      {page.form.inputs.map(createForm)}
+                    </InputsContainer>
+                  </FormSide>
                 </>
               ) : (
                 <div>{page.form.inputs.map(createForm)}</div>
@@ -82,7 +105,7 @@ function PreencherModelo() {
           </>
         );
       })}
-    </>
+    </Container>
   );
 }
 

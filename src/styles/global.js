@@ -9,6 +9,16 @@ export default createGlobalStyle`
     outline: 0;
   }
 
+
+    /* * { outline: 2px dotted red }
+  * * { outline: 2px dotted green }
+  * * * { outline: 2px dotted orange }
+  * * * * { outline: 2px dotted blue }
+  * * * * * { outline: 1px solid red }
+  * * * * * * { outline: 1px solid green }
+  * * * * * * * { outline: 1px solid orange }
+  * * * * * * * * { outline: 1px solid blue } */
+
   html {
     /* 1rem = 10px, 10px(target)/16px(browser-default) = 62.5% */
     font-size: 62.5%;
@@ -20,18 +30,22 @@ export default createGlobalStyle`
     transition: background-color .3s;
   }
 
+  body, #root {
+    height: 100vh;
+  }
+  
   button {
     cursor: pointer;
     font-size: 1.6rem;
   }
 
-  h1, h2, h3, h4 {
+  h1, h2, h3, h4, h5 {
     line-height: 1.5;
     font-weight: 600;
-    color: ${props => props.theme.primary04};
+    color: ${props => props.theme.primary07};
   }
 
-  h2, h3, h4 {
+  h2, h3, h4, h5 {
     margin: 28px 0 20px 0;
   }
 
@@ -50,6 +64,10 @@ export default createGlobalStyle`
 
   h4 {
     font-size: 2.419rem;
+  }
+
+  h5 {
+    font-size: 2.016rem;
   }
 
   p {
