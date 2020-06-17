@@ -30,6 +30,7 @@ function Home() {
       >
         <Breadcrumbs />
         <Link to="servicos">Ir para listagem de serviços</Link>
+        <Link to="preencher-modelo">Ir para preencher modelo</Link>
         <Input label="Custos de Infra" />
 
         <Input label="Tempo Médio" auxiliaryText="Unidade de tempo em horas" />
