@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import Home from '../pages/Home';
 import Servicos from '../pages/Servicos';
 import ServicoSelecionado from '../pages/ServicoSelecionado';
+import PreencherModelo from '../pages/PreencherModelo';
 
 function Routes() {
   return (
@@ -11,6 +12,7 @@ function Routes() {
       <Route path="/" exact component={Home} />
       <Route path="/servicos" component={Servicos} />
       <Route path="/servico-selecionado" component={ServicoSelecionado} />
+      <Route path="/preencher-modelo" component={PreencherModelo} />
     </Switch>
   );
 }
