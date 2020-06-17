@@ -14,3 +14,8 @@ export const PACOTE_CONSTANTES = {
   name: 'Pacote de constantes',
   route: 'pacote-constantes',
 };
+
+export const PREENCHER_MODELO = {
+  name: 'Preencher modelo',
+  route: 'preencher-modelo',
+};

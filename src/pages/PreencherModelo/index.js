@@ -6,6 +6,8 @@ import {
   CustomInput as Input,
   InputsContainer,
 } from './styles';
+import Breadcrumbs from '../../components/Breadcrumbs';
+import { PREENCHER_MODELO } from '../../routes/routeObjects';
 
 const formPages = [
   // {
@@ -74,6 +76,7 @@ function PreencherModelo() {
 
   return (
     <Container>
+      <Breadcrumbs currentRouting={[PREENCHER_MODELO]} />
       <h2>{formPages[0].title}</h2>
       <p>Bolinhas</p>
       {formPages.map(function createPage(page) {
