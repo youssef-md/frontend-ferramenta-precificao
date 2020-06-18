@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 
 import {
   Container,
@@ -9,105 +9,68 @@ import {
 import Breadcrumbs from '../../components/Breadcrumbs';
 import { PREENCHER_MODELO } from '../../routes/routeObjects';
 
-const formPages = [
-  // {
-  //   title: 'Etapas do Serviço - Jornada do Usuário',
-  //   subTitle: 'Etapa 1: Buscar Informações',
-  //   image: 'fake-image',
-  //   description:
-  //     'Nesta etapa você deverá que preencher não sei o que, bla bla bla buscar informações lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
-  //   valido: false,
-  // },
-  {
-    title: 'Etapas do Serviço - Jornada do Usuário',
-    subTitle: 'Etapa 1 - Atividade: Digital',
-    description: 'Buscar informações por canal digital',
-    valido: false,
-    form: {
-      pre: true,
-      pos: true,
-      inputs: [
-        {
-          title: 'Tempo Médio',
-          placeholder: '123',
-          type: 'string',
-          auxText: 'Tempo em horas',
-        },
-        {
-          title: 'Tempo Médio',
-          placeholder: '123',
-          type: 'string',
-          auxText: 'Tempo em horas',
-        },
-        {
-          title: 'Tempo Médio',
-          placeholder: '123',
-          type: 'string',
-          auxText: 'Tempo em horas',
-        },
-        {
-          title: 'Tempo Médio',
-          placeholder: '123',
-          type: 'string',
-          auxText: 'Tempo em horas',
-        },
-        {
-          title: 'Tempo Médio',
-          placeholder: '123',
-          type: 'string',
-          auxText: 'Tempo em horas',
-        },
-      ],
-    },
-  },
-];
+import { formPages } from './jornadaUsuarioForms';
 
 function PreencherModelo() {
-  function createForm(input) {
+  const [currentFormIndex, setCurrentFormIndex] = useState(0);
+
+  const goToNextForm = useCallback(() => {
+    setCurrentFormIndex(currentFormIndex + 1);
+  }, [currentFormIndex]);
+
+  const goToPreviousForm = useCallback(() => {
+    setCurrentFormIndex(currentFormIndex - 1);
+  }, [currentFormIndex]);
+
+  const createInputs = useCallback(({ title, placeholder, auxText, type }) => {
     return (
       <Input
-        label={input.title}
-        placeholder={input.placeholder}
-        auxiliaryText={input.auxText}
-        type={input.type}
+        label={title}
+        placeholder={placeholder}
+        auxiliaryText={auxText}
+        type={type}
       />
     );
-  }
+  }, []);
+
+  const createForm = useCallback(() => {
+    if (
+      formPages[currentFormIndex].form.pre &&
+      formPages[currentFormIndex].form.pos
+    ) {
+      return (
+        <>
+          <FormSide>
+            <h5>Pré Transformação</h5>
+            <InputsContainer>
+              {formPages[currentFormIndex].form.inputs.map(createInputs)}
+            </InputsContainer>
+          </FormSide>
+          <FormSide>
+            <h5>Pós Transformação</h5>
+            <InputsContainer>
+              {formPages[currentFormIndex].form.inputs.map(createInputs)}
+            </InputsContainer>
+          </FormSide>
+        </>
+      );
+    }
+    return (
+      <div>{formPages[currentFormIndex].form.inputs.map(createInputs)}</div>
+    );
+  }, [currentFormIndex, createInputs]);
 
   return (
     <Container>
+      <button onClick={goToNextForm}>&larr;</button>
+      <button onClick={goToPreviousForm}>&rarr;</button>
+
       <Breadcrumbs currentRouting={[PREENCHER_MODELO]} />
       <h2>{formPages[0].title}</h2>
       <p>Bolinhas</p>
-      {formPages.map(function createPage(page) {
-        return (
-          <>
-            <h3>{page.subTitle}</h3>
-            <h4>{page.description}</h4>
-
-            <form>
-              {page.form.pre && page.form.pos ? (
-                <>
-                  <FormSide>
-                    <h5>Pré Transformação</h5>
-                    <InputsContainer>
-                      {page.form.inputs.map(createForm)}
-                    </InputsContainer>
-                  </FormSide>
-                  <FormSide>
-                    <h5>Pós Transformação</h5>
-                    <InputsContainer>
-                      {page.form.inputs.map(createForm)}
-                    </InputsContainer>
-                  </FormSide>
-                </>
-              ) : (
-                <div>{page.form.inputs.map(createForm)}</div>
-              )}
-            </form>
-          </>
-        );
-      })}
+      <h3>{formPages[currentFormIndex].subTitle}</h3>
+      <h4>{formPages[currentFormIndex].description}</h4>
+      <form>{createForm()}</form>
     </Container>
   );
 }

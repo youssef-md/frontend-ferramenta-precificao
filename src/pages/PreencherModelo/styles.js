@@ -9,15 +9,20 @@ export const InputsContainer = styled.div`
 
 export const FormSide = styled.div`
   flex: 1;
-
-  h5 {
-    text-align: center;
-  }
 `;
 
 export const Container = styled.div`
   max-width: 1200px;
   margin: auto;
+
+  h4 {
+    margin-top: -15px;
+    color: ${props => props.theme.secondary07}
+  }
+
+  h2, h3, h4, h5 {
+    text-align: center;
+  }
 
   form {
     display: flex;

@@ -34,6 +34,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'react/prop-types': 'off',
     'no-shadow': 'off',
+    'no-use-before-define': 'off',
   },
   settings: {},
 };
