@@ -12,7 +12,7 @@ function Breadcrumbs({ currentRouting = [] }) {
       </Link>
 
       {currentRouting.map(page => (
-        <span>
+        <span key={page.route}>
           <FaChevronRight size={11} color="#9E9D9D" />
           <Link to={page.route}>{page.name}</Link>
         </span>

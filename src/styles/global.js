@@ -32,6 +32,8 @@ export default createGlobalStyle`
 
   body, #root {
     height: 100vh;
+    max-width: 1200px;
+    margin: auto;
   }
   
   button {

@@ -76,6 +76,18 @@ export const formPages = [
           type: 'string',
           auxText: 'Tempo em horas',
         },
+      ],
+    },
+  },
+  {
+    title: 'Etapas do Serviço - Jornada do Usuário',
+    subTitle: 'Etapa 1 - Atividade: Bla Blak',
+    description: 'Buscar informaçes por canal Bla bla',
+    valido: false,
+    form: {
+      pre: true,
+      pos: true,
+      inputs: [
         {
           title: 'Tempo Médio',
           placeholder: '123',

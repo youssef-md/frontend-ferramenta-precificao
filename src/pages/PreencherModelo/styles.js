@@ -1,5 +1,7 @@
 import styled from 'styled-components';
+
 import Input from '../../components/Input';
+import Button from '../../components/Button';
 
 export const InputsContainer = styled.div`
   display: flex;
@@ -9,38 +11,58 @@ export const InputsContainer = styled.div`
 
 export const FormSide = styled.div`
   flex: 1;
+  background: blue;
+
+  h5 {
+    margin-top: 0;
+  }
 `;
 
 export const Container = styled.div`
-  max-width: 1200px;
-  margin: auto;
+  height: 100%;
 
   h4 {
     margin-top: -15px;
-    color: ${props => props.theme.secondary07}
+    color: ${props => props.theme.secondary07};
   }
 
-  h2, h3, h4, h5 {
+  h2,
+  h3,
+  h4,
+  h5 {
     text-align: center;
   }
 
   form {
+    min-height: 450px;
+    margin-top: 60px;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
 
-    ${FormSide}:first-child ${InputsContainer} {
-      border-right: 1px solid rgba(0,0,0,.1);
-      padding-right: 32px;
-    }
-    
     ${FormSide}:nth-child(2) ${InputsContainer} {
-      padding-left: 32px;
+      border-right: 1px solid rgba(0,0,0,.15);
+      padding: 0 15px;
+    }
+
+    ${FormSide}:nth-child(3) ${InputsContainer} {
+      padding: 0 15px;
     }
   }
 `;
 
 export const CustomInput = styled(Input)`
-  margin: 15px 10px;
+  margin: 15px 5px;
   flex: 1;
+`;
+
+export const FormButton = styled(Button)`
+  padding: 0 10px;
+`;
+
+export const Divider = styled.div`
+  width: 1px;
+  min-height: 100px;
+  margin: 0 10px;
+  background: rgba(0, 0, 0, 0.1);
 `;
