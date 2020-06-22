@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import { uuid } from 'uuidv4';
 
@@ -23,18 +23,41 @@ function PreencherModelo() {
 
   const goToNextForm = useCallback(
     event => {
-      event.preventDefault();
-      setCurrentFormIndex(currentFormIndex + 1);
+      if (event) event.preventDefault();
+      if (currentFormIndex < formPages.length - 1)
+        setCurrentFormIndex(currentFormIndex + 1);
     },
-    [currentFormIndex]
+    [currentFormIndex, formPages]
   );
 
   const goToPreviousForm = useCallback(
     event => {
-      event.preventDefault();
-      setCurrentFormIndex(currentFormIndex - 1);
+      if (event) event.preventDefault();
+      if (currentFormIndex > 0) setCurrentFormIndex(currentFormIndex - 1);
     },
     [currentFormIndex]
+  );
+
+  const handleKeyDownToSwitchPage = useCallback(
+    event => {
+      const { key, target } = event;
+      if (target.nodeName === 'INPUT') return;
+
+      if (key === 'ArrowRight') goToNextForm();
+      else if (key === 'ArrowLeft') goToPreviousForm();
+    },
+    [goToNextForm, goToPreviousForm]
+  );
+
+  useEffect(
+    function registerKeydownEventListener() {
+      window.addEventListener('keydown', handleKeyDownToSwitchPage);
+
+      return function remoteKeydownListener() {
+        window.removeEventListener('keydown', handleKeyDownToSwitchPage);
+      };
+    },
+    [handleKeyDownToSwitchPage]
   );
 
   const createInputs = useCallback(({ title, placeholder, auxText, type }) => {
