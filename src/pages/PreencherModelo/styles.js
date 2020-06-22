@@ -11,7 +11,6 @@ export const InputsContainer = styled.div`
 
 export const FormSide = styled.div`
   flex: 1;
-  background: blue;
 
   h5 {
     margin-top: 0;
@@ -58,11 +57,4 @@ export const CustomInput = styled(Input)`
 
 export const FormButton = styled(Button)`
   padding: 0 10px;
-`;
-
-export const Divider = styled.div`
-  width: 1px;
-  min-height: 100px;
-  margin: 0 10px;
-  background: rgba(0, 0, 0, 0.1);
 `;

@@ -35,6 +35,7 @@ module.exports = {
     'react/prop-types': 'off',
     'no-shadow': 'off',
     'no-use-before-define': 'off',
+    'consistent-return': 'off',
   },
   settings: {},
 };

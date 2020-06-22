@@ -1,17 +1,20 @@
-export const formPages = [
-  // {
-  //   title: 'Etapas do Serviço - Jornada do Usuário',
-  //   subTitle: 'Etapa 1: Buscar Informações',
-  //   image: 'fake-image',
-  //   description:
-  //     'Nesta etapa você deverá que preencher não sei o que, bla bla bla buscar informações lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
-  //   valido: false,
-  // },
+export const jornadaUsuarioForms = [
   {
+    type: 'page-intro',
+    title: 'Etapas do Serviço - Jornada do Usuário',
+    subTitle: 'Etapa 1: Buscar Informações',
+    image: 'fake-image',
+    description:
+      'Nesta etapa você deverá que preencher não sei o que, bla bla bla buscar informações lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
+    step: 1,
+    valid: true,
+  },
+  {
+    type: 'page-form',
     title: 'Etapas do Serviço - Jornada do Usuário',
     subTitle: 'Etapa 1 - Atividade: Digital',
     description: 'Buscar informações por canal digital',
-    valido: false,
+    valid: true,
     form: {
       pre: true,
       pos: true,
@@ -50,10 +53,11 @@ export const formPages = [
     },
   },
   {
+    type: 'page-form',
     title: 'Etapas do Serviço - Jornada do Usuário',
     subTitle: 'Etapa 1 - Atividade: Presencial',
     description: 'Buscar informaçes por canal presencial',
-    valido: false,
+    valid: false,
     form: {
       pre: true,
       pos: true,
@@ -80,10 +84,11 @@ export const formPages = [
     },
   },
   {
+    type: 'page-form',
     title: 'Etapas do Serviço - Jornada do Usuário',
     subTitle: 'Etapa 1 - Atividade: Bla Blak',
     description: 'Buscar informaçes por canal Bla bla',
-    valido: false,
+    valid: false,
     form: {
       pre: true,
       pos: true,
@@ -102,5 +107,15 @@ export const formPages = [
         },
       ],
     },
+  },
+  {
+    type: 'page-intro',
+    title: 'Etapas do Serviço - Jornada do Usuário',
+    subTitle: 'Etapa 2: Buscar Informações',
+    image: 'fake-image',
+    description:
+      'Nesta etapa você deverá que preencher não sei o que, bla bla bla buscar informações lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
+    step: 2,
+    valid: true,
   },
 ];

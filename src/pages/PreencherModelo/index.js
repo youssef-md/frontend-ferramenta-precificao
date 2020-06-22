@@ -2,8 +2,10 @@ import React, { useState, useCallback } from 'react';
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import { uuid } from 'uuidv4';
 
+import FormProgressState from '../../components/FormProgressState';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import { PREENCHER_MODELO } from '../../routes/routeObjects';
+
 import {
   Container,
   FormSide,
@@ -12,9 +14,10 @@ import {
   FormButton,
 } from './styles';
 
-import { formPages } from './jornadaUsuarioForms';
+import { jornadaUsuarioForms } from './jornadaUsuarioForms';
 
 function PreencherModelo() {
+  const [formPages, setFormPages] = useState(jornadaUsuarioForms);
   const [currentFormIndex, setCurrentFormIndex] = useState(0);
 
   const goToNextForm = useCallback(
@@ -72,16 +75,21 @@ function PreencherModelo() {
         {formPages[currentFormIndex].form.inputs.map(createInputs)}
       </InputsContainer>
     );
-  }, [currentFormIndex, createInputs]);
+  }, [formPages, currentFormIndex, createInputs]);
 
+  const currentPage = formPages[currentFormIndex];
   return (
     <Container>
       <Breadcrumbs currentRouting={[PREENCHER_MODELO]} />
-
       <h2>{formPages[0].title}</h2>
-      <p>Bolinhas</p>
-      <h3>{formPages[currentFormIndex].subTitle}</h3>
-      <h4>{formPages[currentFormIndex].description}</h4>
+
+      <FormProgressState
+        formPages={formPages}
+        currentFormIndex={currentFormIndex}
+      />
+
+      <h3>{currentPage.subTitle}</h3>
+      <h4>{currentPage.description}</h4>
       <form>
         <FormButton
           onClick={goToPreviousForm}
@@ -91,7 +99,7 @@ function PreencherModelo() {
           <FaArrowLeft size={22} />
         </FormButton>
 
-        {createForm()}
+        {currentPage.form ? createForm() : 'Intro'}
 
         <FormButton
           onClick={goToNextForm}
