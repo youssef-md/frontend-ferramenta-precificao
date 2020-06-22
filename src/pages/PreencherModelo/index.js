@@ -12,6 +12,7 @@ import {
   CustomInput as Input,
   InputsContainer,
   FormButton,
+  ImageContainer,
 } from './styles';
 
 import { jornadaUsuarioForms } from './jornadaUsuarioForms';
@@ -89,7 +90,8 @@ function PreencherModelo() {
       />
 
       <h3>{currentPage.subTitle}</h3>
-      <h4>{currentPage.description}</h4>
+      {currentPage.type === 'page-form' && <h4>{currentPage.description}</h4>}
+
       <form>
         <FormButton
           onClick={goToPreviousForm}
@@ -99,7 +101,14 @@ function PreencherModelo() {
           <FaArrowLeft size={22} />
         </FormButton>
 
-        {currentPage.form ? createForm() : 'Intro'}
+        {currentPage.form ? (
+          createForm()
+        ) : (
+          <ImageContainer>
+            <img src="https://images.unsplash.com/photo-1494253109108-2e30c049369b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" />
+            <h4>{currentPage.description}</h4>
+          </ImageContainer>
+        )}
 
         <FormButton
           onClick={goToNextForm}

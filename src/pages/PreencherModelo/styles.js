@@ -58,3 +58,16 @@ export const CustomInput = styled(Input)`
 export const FormButton = styled(Button)`
   padding: 0 10px;
 `;
+
+export const ImageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  img {
+    width: 80%;
+    height: 450px;
+    margin-bottom: 50px;
+    background-size: cover;
+  }
+`;
