@@ -77,14 +77,17 @@ function PreencherModelo() {
       >
         <FaArrowLeft size={22} />
       </FormButton>
+
       <Transition
         items={[1, 2, 3, 4, 5]}
         keys={uuid()}
-        from={{ transform: 'translateX(200%)' }}
-        enter={{ transform: 'translateX(0)' }}
-        leave={{ transform: 'translateX(-200%)' }}
+        from={{ transform: 'translate3d(100%, 0, 0)', opacity: 0 }}
+        enter={{ transform: 'translate3d(0%, 0, 0)', opacity: 1 }}
+        leave={{ transform: 'translate3d(-50%, 0, 0)', opacity: 0 }}
       >
-        {item => props => <PageStep page={formPages[currentFormIndex]} />}
+        {item => props => (
+          <PageStep page={formPages[currentFormIndex]} style={props} />
+        )}
       </Transition>
     </Container>
   );

@@ -9,7 +9,7 @@ import {
   ImageContainer,
 } from './styles';
 
-function PageStep({ page }) {
+function PageStep({ page, style }) {
   const createInputs = useCallback(({ title, placeholder, auxText, type }) => {
     return (
       <Input
@@ -47,7 +47,7 @@ function PageStep({ page }) {
   }, [page, createInputs]);
 
   return (
-    <Container style={{ position: 'absolute' }}>
+    <Container style={style}>
       <h3>{page.subTitle}</h3>
       {page.type === 'page-form' && <h4>{page.description}</h4>}
 
