@@ -19,6 +19,8 @@ export const FormSide = styled.div`
 
 export const Container = styled.div`
   height: 100%;
+  position: relative;
+  overflow-x: hidden;
 
   h4 {
     margin-top: -15px;
@@ -38,6 +40,8 @@ export const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+  /* transform: translateX(-1000px); */
+
 
     ${FormSide}:nth-child(2) ${InputsContainer} {
       border-right: 1px solid rgba(0,0,0,.15);

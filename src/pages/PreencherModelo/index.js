@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import { uuid } from 'uuidv4';
+import { useSpring, animated } from 'react-spring';
+import { Transition } from 'react-spring/renderprops';
 
 import FormProgressState from '../../components/FormProgressState';
 import Breadcrumbs from '../../components/Breadcrumbs';
@@ -13,6 +15,7 @@ import {
   InputsContainer,
   FormButton,
   ImageContainer,
+  AnimatedTransition,
 } from './styles';
 
 import { jornadaUsuarioForms } from './jornadaUsuarioForms';
@@ -101,46 +104,58 @@ function PreencherModelo() {
     );
   }, [formPages, currentFormIndex, createInputs]);
 
-  const currentPage = formPages[currentFormIndex];
   return (
     <Container>
       <Breadcrumbs currentRouting={[PREENCHER_MODELO]} />
       <h2>{formPages[0].title}</h2>
-
       <FormProgressState
         formPages={formPages}
         currentFormIndex={currentFormIndex}
       />
 
-      <h3>{currentPage.subTitle}</h3>
-      {currentPage.type === 'page-form' && <h4>{currentPage.description}</h4>}
+      <Transition
+        items={[1, 2, 3, 4, 5]}
+        keys={uuid()}
+        from={{ transform: 'translateX(200%)' }}
+        enter={{ transform: 'translateX(0)' }}
+        leave={{ transform: 'translateX(-200%)' }}
+      >
+        {item => props => (
+          <div style={{ ...props, position: 'absolute' }}>
+            <h3>{formPages[currentFormIndex].subTitle}</h3>
+            {formPages[currentFormIndex].type === 'page-form' && (
+              <h4>{formPages[currentFormIndex].description}</h4>
+            )}
 
-      <form>
-        <FormButton
-          onClick={goToPreviousForm}
-          type="secondary"
-          disabled={currentFormIndex === 0}
-        >
-          <FaArrowLeft size={22} />
-        </FormButton>
+            <form>
+              <FormButton
+                onClick={goToPreviousForm}
+                type="secondary"
+                disabled={currentFormIndex === 0}
+              >
+                <FaArrowLeft size={22} />
+              </FormButton>
 
-        {currentPage.form ? (
-          createForm()
-        ) : (
-          <ImageContainer>
-            <img src="https://images.unsplash.com/photo-1494253109108-2e30c049369b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" />
-            <h4>{currentPage.description}</h4>
-          </ImageContainer>
+              {formPages[currentFormIndex].form ? (
+                createForm()
+              ) : (
+                <ImageContainer>
+                  <img src="https://images.unsplash.com/photo-1494253109108-2e30c049369b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" />
+                  <h4>{formPages[currentFormIndex].description}</h4>
+                </ImageContainer>
+              )}
+
+              <FormButton
+                onClick={goToNextForm}
+                type="secondary"
+                disabled={currentFormIndex === formPages.length - 1}
+              >
+                <FaArrowRight size={22} />
+              </FormButton>
+            </form>
+          </div>
         )}
-
-        <FormButton
-          onClick={goToNextForm}
-          type="secondary"
-          disabled={currentFormIndex === formPages.length - 1}
-        >
-          <FaArrowRight size={22} />
-        </FormButton>
-      </form>
+      </Transition>
     </Container>
   );
 }

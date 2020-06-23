@@ -25,6 +25,7 @@ export const Indicator = styled.div`
         ? props.theme.primary06
         : props.theme.secondary04};
   color: ${props => props.theme.secondary01};
+  transition: all 0.2s;
 
   img {
     color: blue;

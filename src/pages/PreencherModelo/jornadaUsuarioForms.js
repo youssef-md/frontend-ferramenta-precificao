@@ -14,7 +14,7 @@ export const jornadaUsuarioForms = [
     title: 'Etapas do Serviço - Jornada do Usuário',
     subTitle: 'Etapa 1 - Atividade: Digital',
     description: 'Buscar informações por canal digital',
-    valid: true,
+    valid: false,
     form: {
       pre: true,
       pos: true,
