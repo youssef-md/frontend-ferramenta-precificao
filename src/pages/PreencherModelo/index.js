@@ -5,10 +5,11 @@ import { Transition } from 'react-spring/renderprops';
 
 import FormProgressState from '../../components/FormProgressState';
 import Breadcrumbs from '../../components/Breadcrumbs';
-import { PREENCHER_MODELO } from '../../routes/routeObjects';
-import { Container, FormButton } from './styles';
-import { jornadaUsuarioForms } from './jornadaUsuarioForms';
 import PageStep from './PageStep';
+import { PREENCHER_MODELO } from '../../routes/routeObjects';
+
+import { jornadaUsuarioForms } from './jornadaUsuarioForms';
+import { Container, FormButton, FormButtonContainer } from './styles';
 
 function PreencherModelo() {
   const [formPages, setFormPages] = useState(jornadaUsuarioForms);
@@ -62,28 +63,29 @@ function PreencherModelo() {
         currentFormIndex={currentFormIndex}
       />
 
-      <FormButton
-        onClick={goToNextPage}
-        type="secondary"
-        disabled={currentFormIndex === formPages.length - 1}
-      >
-        <FaArrowRight size={22} />
-      </FormButton>
+      <FormButtonContainer>
+        <FormButton
+          onClick={goToPreviousPage}
+          type="secondary"
+          disabled={currentFormIndex === 0}
+        >
+          <FaArrowLeft size={22} />
+        </FormButton>
 
-      <FormButton
-        onClick={goToPreviousPage}
-        type="secondary"
-        disabled={currentFormIndex === 0}
-      >
-        <FaArrowLeft size={22} />
-      </FormButton>
+        <FormButton
+          onClick={goToNextPage}
+          type="secondary"
+          disabled={currentFormIndex === formPages.length - 1}
+        >
+          <FaArrowRight size={22} />
+        </FormButton>
+      </FormButtonContainer>
 
       <Transition
-        items={[1, 2, 3, 4, 5]}
-        keys={uuid()}
-        from={{ transform: 'translate3d(100%, 0, 0)', opacity: 0 }}
+        keys={Math.random()}
+        from={{ transform: 'translate3d(200%, 0, 0)', opacity: 0 }}
         enter={{ transform: 'translate3d(0%, 0, 0)', opacity: 1 }}
-        leave={{ transform: 'translate3d(-50%, 0, 0)', opacity: 0 }}
+        leave={{ transform: 'translate3d(-200%, 0, 0)', opacity: 0 }}
       >
         {item => props => (
           <PageStep page={formPages[currentFormIndex]} style={props} />
