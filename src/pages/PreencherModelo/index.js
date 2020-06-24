@@ -9,7 +9,7 @@ import PageStep from './PageStep';
 import { PREENCHER_MODELO } from '../../routes/routeObjects';
 
 import { jornadaUsuarioForms } from './jornadaUsuarioForms';
-import { Container, FormButton, FormButtonContainer } from './styles';
+import { Container, RightFormButton, LeftFormButton } from './styles';
 
 function PreencherModelo() {
   const [formPages, setFormPages] = useState(jornadaUsuarioForms);
@@ -63,23 +63,22 @@ function PreencherModelo() {
         currentFormIndex={currentFormIndex}
       />
 
-      <FormButtonContainer>
-        <FormButton
-          onClick={goToPreviousPage}
-          type="secondary"
-          disabled={currentFormIndex === 0}
-        >
-          <FaArrowLeft size={22} />
-        </FormButton>
+      <LeftFormButton
+        style={{ backgroundColor: 'red' }}
+        onClick={goToPreviousPage}
+        type="secondary"
+        disabled={currentFormIndex === 0}
+      >
+        <FaArrowLeft size={22} />
+      </LeftFormButton>
 
-        <FormButton
-          onClick={goToNextPage}
-          type="secondary"
-          disabled={currentFormIndex === formPages.length - 1}
-        >
-          <FaArrowRight size={22} />
-        </FormButton>
-      </FormButtonContainer>
+      <RightFormButton
+        onClick={goToNextPage}
+        type="secondary"
+        disabled={currentFormIndex === formPages.length - 1}
+      >
+        <FaArrowRight size={22} />
+      </RightFormButton>
 
       <Transition
         keys={Math.random()}
@@ -87,7 +86,7 @@ function PreencherModelo() {
         enter={{ transform: 'translate3d(0%, 0, 0)', opacity: 1 }}
         leave={{ transform: 'translate3d(-200%, 0, 0)', opacity: 0 }}
       >
-        {item => props => (
+        {_ => props => (
           <PageStep page={formPages[currentFormIndex]} style={props} />
         )}
       </Transition>

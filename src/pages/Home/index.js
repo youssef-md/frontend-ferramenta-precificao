@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Breadcrumbs from '../../components/Breadcrumbs';
+import Navbar from '../../components/Navbar';
 
 function Home() {
   return (
     <>
+      <Navbar />
       <h1>Análise de Custos de Serviços</h1>
       <h2>Participar de Processo Seletivo para Curso de Graduação UnB</h2>
       <h3>Etapa 1: Custos de Pessoal</h3>

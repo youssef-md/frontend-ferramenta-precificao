@@ -7,18 +7,23 @@ export const Container = styled.div`
   height: 100%;
   position: relative;
   overflow-x: hidden;
-  text-align: center;
-`;
 
-export const FormButtonContainer = styled.div`
-  width: 100%;
-  position: absolute;
-  top: 600px;
-  display: flex;
-  justify-content: space-between;
+  h2 {
+    text-align: center;
+  }
 `;
 
 export const FormButton = styled(Button)`
+  position: absolute;
+  top: 600px;
   padding: 0 10px;
-  /* position: absolute; */
+  z-index: 10;
+`;
+
+export const LeftFormButton = styled(FormButton)`
+  left: 0;
+`;
+
+export const RightFormButton = styled(FormButton)`
+  right: 0;
 `;

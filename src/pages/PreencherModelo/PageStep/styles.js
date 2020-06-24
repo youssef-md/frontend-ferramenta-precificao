@@ -11,7 +11,7 @@ export const InputsContainer = styled.div`
 
 export const FormSide = styled.div`
   flex: 1;
-
+  max-width: 500px;
   h5 {
     margin-top: 0;
   }
@@ -19,7 +19,6 @@ export const FormSide = styled.div`
 
 export const Container = styled(animated.div)`
   will-change: transform, opacity;
-  /* background: red; */
   position: absolute;
   width: 100%;
 
@@ -65,7 +64,7 @@ export const ImageContainer = styled.div`
 
   img {
     width: 80%;
-    height: 450px;
+    height: 40vh;
     margin-bottom: 50px;
     background-size: cover;
   }
