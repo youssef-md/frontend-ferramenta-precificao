@@ -19,8 +19,8 @@ function App() {
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <button onClick={changeTheme}>Switch Theme</button>
         <Routes />
+        <button onClick={changeTheme}>Switch Theme</button>
       </ThemeProvider>
     </BrowserRouter>
   );
