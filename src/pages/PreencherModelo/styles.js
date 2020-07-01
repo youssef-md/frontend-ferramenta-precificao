@@ -15,8 +15,8 @@ export const Container = styled.div`
 
 export const FormButton = styled(Button)`
   position: absolute;
-  top: 600px;
-  padding: 0 10px;
+  top: 60rem;
+  padding: 0 1rem;
   z-index: 10;
 `;
 

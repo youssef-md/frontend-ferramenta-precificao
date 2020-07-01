@@ -52,7 +52,7 @@ export default createGlobalStyle`
 
   h1 {
     font-size: 4.18rem;
-    margin-bottom: 32px;
+    margin-bottom: 3.2rem;
   }
 
   h2 {

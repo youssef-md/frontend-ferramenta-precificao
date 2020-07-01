@@ -8,7 +8,7 @@ export const BreadcrumbsStyle = styled.div`
 
   a {
     color: ${props => props.theme.secondary07};
-    font-size: 16px;
+    font-size: 1.6rem;
     text-decoration: none;
   }
 
@@ -35,7 +35,7 @@ export const BreadcrumbsStyle = styled.div`
     }
 
     svg {
-      margin: 0 16px;
+      margin: 0 1.6rem;
     }
   }
 `;

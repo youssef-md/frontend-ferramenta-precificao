@@ -10,7 +10,7 @@ const rotate = keyframes`
 `;
 
 export const Container = styled.svg`
-  width: 30px;
-  height: 30px;
+  width: 3rem;
+  height: 3rem;
   animation: ${rotate} 2s infinite;
 `;

@@ -6,12 +6,12 @@ import Input from '../../../components/Input';
 export const InputsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin-top: 35px;
+  margin-top: 3.5rem;
 `;
 
 export const FormSide = styled.div`
   flex: 1;
-  max-width: 500px;
+  max-width: 50rem;
   h5 {
     margin-top: 0;
   }
@@ -23,7 +23,7 @@ export const Container = styled(animated.div)`
   width: 100%;
 
   h4 {
-    margin-top: -15px;
+    margin-top: -1.5rem;
     color: ${props => props.theme.secondary07};
   }
 
@@ -36,18 +36,18 @@ export const Container = styled(animated.div)`
 
   form {
     min-height: 450px;
-    margin-top: 60px;
+    margin-top: 6rem;
     display: flex;
     justify-content: center;
     align-items: center;
 
     ${FormSide}:first-child ${InputsContainer} {
       border-right: 1px solid rgba(0,0,0,.15);
-      padding: 0 15px;
+      padding: 0 1.5rem;
     }
 
     ${FormSide}:nth-child(2) ${InputsContainer} {
-      padding: 0 15px;
+      padding: 0 1.5rem;
     }
   }
 `;

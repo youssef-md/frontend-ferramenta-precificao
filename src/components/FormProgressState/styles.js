@@ -7,14 +7,14 @@ export const Container = styled.div`
 `;
 
 export const Indicator = styled.div`
-  font-size: 26px;
+  font-size: 2.6rem;
   display: flex;
   justify-content: center;
   align-items: center;
   width: ${props => (props.size === 'big' ? '44px' : '28px')};
   height: ${props => (props.size === 'big' ? '44px' : '28px')};
   border-radius: 50%;
-  margin: 0 10px;
+  margin: 0 1rem;
   background: ${props =>
     props.isValid || props.isCurrent
       ? props.theme.primary05
@@ -29,7 +29,7 @@ export const Indicator = styled.div`
 
   img {
     color: blue;
-    width: 15px;
-    height: 15px;
+    width: 1.5rem;
+    height: 1.5rem;
   }
 `;
