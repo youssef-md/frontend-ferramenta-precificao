@@ -5,12 +5,12 @@ import { Backdrop, SideNav, NavHead, NavItem } from './styles';
 
 import govBrLogo from '../../../assets/govbr-logo.png';
 
-function Sidedrawer() {
+function Sidedrawer({ onCloseSidedrawer }) {
   return (
-    <Backdrop>
+    <>
       <SideNav>
         <NavHead>
-          <button type="button">
+          <button onClick={onCloseSidedrawer} type="button">
             <FaTimes size={22} />
           </button>
           <a href="https://www.gov.br/">
@@ -20,7 +20,8 @@ function Sidedrawer() {
         <NavItem to="/oi">Pacote de Constantes</NavItem>
         <NavItem to="/oi">Lista de Serviços</NavItem>
       </SideNav>
-    </Backdrop>
+      <Backdrop onClick={onCloseSidedrawer} />
+    </>
   );
 }
 

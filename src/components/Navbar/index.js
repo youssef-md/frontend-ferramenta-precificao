@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { FaBars, FaUser, FaAdjust } from 'react-icons/fa';
 
 import {
@@ -11,8 +11,15 @@ import govBrLogo from '../../assets/govbr-logo.png';
 import Sidedrawer from './Sidedrawer';
 
 function Navbar() {
+  const [isSidedrawerOpen, setIsSidedrawerOpen] = useState(false);
+
+  const openSidedrawer = useCallback(() => setIsSidedrawerOpen(true), []);
+  const closeSidedrawer = useCallback(() => setIsSidedrawerOpen(false), []);
+
   return (
     <>
+      {isSidedrawerOpen && <Sidedrawer onCloseSidedrawer={closeSidedrawer} />}
+
       <Container>
         <TopContainer>
           <a href="https://www.gov.br/pt-br">
@@ -56,7 +63,7 @@ function Navbar() {
               </a>
             </li>
             <li>
-              <button onClick={() => alert('oi')} type="button">
+              <button type="button">
                 <FaAdjust size={14} />
               </button>
             </li>
@@ -69,13 +76,12 @@ function Navbar() {
           </ul>
         </TopContainer>
         <BottomContainer>
-          <button onClick={() => alert('open')} type="button">
+          <button onClick={() => setIsSidedrawerOpen(true)} type="button">
             <FaBars size={22} />
           </button>
           <h4>Análise de Custos de Serviços</h4>
         </BottomContainer>
       </Container>
-      <Sidedrawer />
     </>
   );
 }
