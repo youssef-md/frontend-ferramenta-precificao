@@ -1,7 +1,12 @@
 import React from 'react';
-import { FaBars } from 'react-icons/fa';
+import { FaBars, FaUser, FaAdjust } from 'react-icons/fa';
 
-import { Container, TopContainer, BottomContainer } from './styles';
+import {
+  Container,
+  TopContainer,
+  BottomContainer,
+  LogInButton,
+} from './styles';
 import govBrLogo from '../../assets/govbr-logo.png';
 
 function Navbar() {
@@ -48,10 +53,23 @@ function Navbar() {
               Acessibilidade
             </a>
           </li>
+          <li>
+            <button onClick={() => alert('oi')} type="button">
+              <FaAdjust size={14} />
+            </button>
+          </li>
+          <li>
+            <LogInButton>
+              <FaUser size={14} />
+              Entrar
+            </LogInButton>
+          </li>
         </ul>
       </TopContainer>
       <BottomContainer>
-        <FaBars size={25} />
+        <button onClick={() => alert('open')} type="button">
+          <FaBars size={22} />
+        </button>
         <h4>Análise de Custos de Serviços</h4>
       </BottomContainer>
     </Container>
