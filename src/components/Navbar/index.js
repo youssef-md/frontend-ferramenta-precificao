@@ -1,6 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { FaBars, FaUser, FaAdjust } from 'react-icons/fa';
-import { useTransition, animated } from 'react-spring';
 
 import {
   Container,
@@ -11,7 +10,11 @@ import {
 import govBrLogo from '../../assets/govbr-logo.png';
 import Sidedrawer from './Sidedrawer';
 
+import { ThemeSwitcherContext } from '../../App';
+
 function Navbar() {
+  const { toggleTheme } = useContext(ThemeSwitcherContext);
+
   const [isSidedrawerOpen, setIsSidedrawerOpen] = useState(false);
 
   const openSidedrawer = useCallback(() => setIsSidedrawerOpen(true), []);
@@ -34,7 +37,7 @@ function Navbar() {
               <a
                 href="https://www.gov.br/pt-br/orgaos-do-governo"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 Órgãos do Governo
               </a>
@@ -43,7 +46,7 @@ function Navbar() {
               <a
                 href="https://www.gov.br/acessoainformacao/pt-br"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 Acesso à Informação
               </a>
@@ -52,7 +55,7 @@ function Navbar() {
               <a
                 href="http://www4.planalto.gov.br/legislacao"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 Legislação
               </a>
@@ -61,13 +64,13 @@ function Navbar() {
               <a
                 href="https://www.gov.br/governodigital/pt-br/acessibilidade-digital"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 Acessibilidade
               </a>
             </li>
             <li>
-              <button type="button">
+              <button onClick={toggleTheme} type="button">
                 <FaAdjust size={14} />
               </button>
             </li>
@@ -80,7 +83,7 @@ function Navbar() {
           </ul>
         </TopContainer>
         <BottomContainer>
-          <button onClick={() => setIsSidedrawerOpen(true)} type="button">
+          <button onClick={openSidedrawer} type="button">
             <FaBars size={22} />
           </button>
           <h4>Análise de Custos de Serviços</h4>

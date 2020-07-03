@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, createContext } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -8,19 +8,23 @@ import Routes from './routes';
 import defaultTheme from './styles/defaultTheme';
 import darkTheme from './styles/darkTheme';
 
+export const ThemeSwitcherContext = createContext();
+
 function App() {
   const [theme, setTheme] = useState(defaultTheme);
 
-  function changeTheme() {
-    setTheme(theme === defaultTheme ? darkTheme : defaultTheme);
-  }
+  const toggleTheme = useCallback(
+    () => setTheme(theme === defaultTheme ? darkTheme : defaultTheme),
+    [theme]
+  );
 
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <Routes />
-        <button onClick={changeTheme}>Switch Theme</button>
+        <ThemeSwitcherContext.Provider value={{ toggleTheme }}>
+          <Routes />
+          <GlobalStyle />
+        </ThemeSwitcherContext.Provider>
       </ThemeProvider>
     </BrowserRouter>
   );
