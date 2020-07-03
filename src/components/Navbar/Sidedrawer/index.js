@@ -1,14 +1,14 @@
 import React from 'react';
 import { FaTimes } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+
 import { Backdrop, SideNav, NavHead, NavItem } from './styles';
 
 import govBrLogo from '../../../assets/govbr-logo.png';
 
-function Sidedrawer({ onCloseSidedrawer }) {
+function Sidedrawer({ onCloseSidedrawer, isOpen }) {
   return (
     <>
-      <SideNav>
+      <SideNav isOpen={isOpen}>
         <NavHead>
           <button onClick={onCloseSidedrawer} type="button">
             <FaTimes size={22} />
@@ -20,7 +20,7 @@ function Sidedrawer({ onCloseSidedrawer }) {
         <NavItem to="/oi">Pacote de Constantes</NavItem>
         <NavItem to="/oi">Lista de Serviços</NavItem>
       </SideNav>
-      <Backdrop onClick={onCloseSidedrawer} />
+      {isOpen && <Backdrop onClick={onCloseSidedrawer} />}
     </>
   );
 }

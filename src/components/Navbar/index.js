@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { FaBars, FaUser, FaAdjust } from 'react-icons/fa';
+import { useTransition, animated } from 'react-spring';
 
 import {
   Container,
@@ -18,7 +19,10 @@ function Navbar() {
 
   return (
     <>
-      {isSidedrawerOpen && <Sidedrawer onCloseSidedrawer={closeSidedrawer} />}
+      <Sidedrawer
+        onCloseSidedrawer={closeSidedrawer}
+        isOpen={isSidedrawerOpen}
+      />
 
       <Container>
         <TopContainer>

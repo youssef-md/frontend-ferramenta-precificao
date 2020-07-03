@@ -7,6 +7,7 @@ export const Backdrop = styled.div`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.3);
+  transition: all 0.2s;
   z-index: 6;
 `;
 
@@ -19,6 +20,8 @@ export const SideNav = styled.nav`
   background: ${props => props.theme.secondary01};
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
   z-index: 8;
+  transition: all 0.2s;
+  transform: translateX(${props => (props.isOpen ? 0 : '-47.5rem')});
 
   li {
     list-style: none;
