@@ -5,7 +5,7 @@ import BasePage from '../BasePage';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import { LISTA_SERVICOS } from '../../routes/routeObjects';
 import { Container } from './styles';
-import ServiceCard from '../../components/ServiceCard';
+import Card from '../../components/Card';
 
 function Servicos() {
   const cards = [0, 1, 2, 3, 4, 5];
@@ -13,13 +13,14 @@ function Servicos() {
   return (
     <BasePage>
       <Breadcrumbs currentRouting={[LISTA_SERVICOS]} />
-      {/* <Link to="servico-selecionado">Ir para bolsa de pesquisa UnB</Link> */}
       <Container>
         <h4>Lista de Serviços cadastrados</h4>;
-        <FaSearch size={20} color="blue" />
+        <button type="button">
+          <FaSearch size={22} />
+        </button>
       </Container>
       {cards.map(card => (
-        <ServiceCard key={card} />
+        <Card key={card} />
       ))}
     </BasePage>
   );

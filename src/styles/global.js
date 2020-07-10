@@ -21,7 +21,7 @@ export default createGlobalStyle`
 
   html {
     /* 1rem = 10px, 10px(target)/16px(browser-default) = 62.5% */
-    font-size: 62.5%;
+    font-size: 62.5%; 
   }
 
   body, input, button {
@@ -38,6 +38,8 @@ export default createGlobalStyle`
   button {
     cursor: pointer;
     font-size: 1.6rem;
+    background: none;
+    border: 0;
   }
 
   h1, h2, h3, h4, h5 {

@@ -10,7 +10,6 @@ export const Container = styled.nav`
   background: ${props => props.theme.secondary01};
 
   button {
-    border: 0;
     color: ${props => props.theme.primary05};
     display: flex;
     justify-content: center;

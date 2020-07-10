@@ -34,10 +34,6 @@ export const NavHead = styled.header`
   padding: 1.5rem 2.3rem;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
 
-  button {
-    border: 0;
-  }
-
   img {
     width: 10rem;
   }
