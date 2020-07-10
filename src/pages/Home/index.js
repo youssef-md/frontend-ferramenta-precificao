@@ -40,7 +40,7 @@ function Home() {
         }}
       >
         <Breadcrumbs />
-        <Link to="servicos">Ir para listagem de serviços</Link>
+        <Link to="listar-servicos">Ir para listagem de serviços</Link>
         <Link to="preencher-modelo">Ir para preencher modelo</Link>
         <Input label="Custos de Infra" />
 

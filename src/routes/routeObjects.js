@@ -1,6 +1,6 @@
 export const LISTA_SERVICOS = {
   name: 'Listagem de Serviços',
-  route: 'servicos',
+  route: 'listar-servicos',
 };
 
 export function SERVICO_SELECIONADO(serviceName) {
