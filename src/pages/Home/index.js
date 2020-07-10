@@ -5,10 +5,19 @@ import BasePage from '../BasePage';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Breadcrumbs from '../../components/Breadcrumbs';
+import api from '../../service/api';
 
 function Home() {
+  async function makeReq() {
+    const servicos = await api.get('servicos');
+    console.log(servicos);
+  }
+
   return (
     <BasePage>
+      <Button type="primary" onClick={makeReq}>
+        Testar req
+      </Button>
       <h1>Análise de Custos de Serviços</h1>
       <h2>Participar de Processo Seletivo para Curso de Graduação UnB</h2>
       <h3>Etapa 1: Custos de Pessoal</h3>

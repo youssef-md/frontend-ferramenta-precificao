@@ -12,7 +12,13 @@ import { Container, RightFormButton, LeftFormButton } from './styles';
 import BasePage from '../BasePage';
 
 function PreencherModelo() {
-  const [formPages, setFormPages] = useState(jornadaUsuarioForms);
+  // receber o objeto com os campos via params ao cadastrar esse componente no react router
+  // passar o id do modelo para a rota? pra saber onde deve fazer o post com o json? (vai que ele só copia e cola a url)
+
+  // Na tela do serviço selecionado, checar se estou recebendo o obj do serviço, se ele acessar a rota diretamente tem que fazer uma req
+  // pegando o id que ta na url
+
+  const formPages = jornadaUsuarioForms;
   const [currentFormIndex, setCurrentFormIndex] = useState(0);
 
   const goToNextPage = useCallback(
