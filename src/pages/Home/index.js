@@ -36,6 +36,7 @@ function Home() {
           height: '1000px',
           maxWidth: '400px',
           margin: 'auto',
+          marginBottom: '200px',
         }}
       >
         <Breadcrumbs />
