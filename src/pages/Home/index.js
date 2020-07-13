@@ -6,28 +6,23 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import api from '../../service/api';
+import Login from '../Login';
+import { useGeneralAppContext } from '../../App';
 
 function Home() {
+  const { showLoginModal } = useGeneralAppContext();
+
   async function makeReq() {
-    const servicos = await api.get('servicos');
-    console.log(servicos);
+    const servicos = await api.get('servicos/?quantidade=10&pagina=1');
+    console.log(servicos.data);
   }
 
   return (
     <BasePage>
+      {showLoginModal && <Login />}
       <Button type="primary" onClick={makeReq}>
         Testar req
       </Button>
-      <h1>Análise de Custos de Serviços</h1>
-      <h2>Participar de Processo Seletivo para Curso de Graduação UnB</h2>
-      <h3>Etapa 1: Custos de Pessoal</h3>
-      <h4>Fundação Universidade de Brasília (UnB)</h4>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis corrupti,
-        deleniti eveniet quidem cum earum ullam aspernatur error delectus ad,
-        tempora beatae excepturi, mollitia asperiores voluptate provident
-        aliquid molestias quos?
-      </p>
       <div
         style={{
           display: 'flex',
