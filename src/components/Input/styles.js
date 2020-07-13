@@ -12,7 +12,7 @@ export const Container = styled.div`
   }
 
   input {
-    height: 48px;
+    height: 40px;
     font-size: 16px;
     border: 1px solid ${props => props.theme.secondary06};
     color: ${props => props.theme.secondary07};

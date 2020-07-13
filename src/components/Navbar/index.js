@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback } from 'react';
 import { FaBars, FaUser, FaAdjust } from 'react-icons/fa';
 
 import {
@@ -10,10 +10,10 @@ import {
 import govBrLogo from '../../assets/govbr-logo.png';
 import Sidedrawer from './Sidedrawer';
 
-import { ThemeSwitcherContext } from '../../App';
+import { useGeneralAppContext } from '../../App';
 
 function Navbar() {
-  const { toggleTheme } = useContext(ThemeSwitcherContext);
+  const { toggleTheme, openLoginModal } = useGeneralAppContext();
 
   const [isSidedrawerOpen, setIsSidedrawerOpen] = useState(false);
 
@@ -75,7 +75,7 @@ function Navbar() {
               </button>
             </li>
             <li>
-              <LogInButton>
+              <LogInButton onClick={openLoginModal}>
                 <FaUser size={14} />
                 Entrar
               </LogInButton>

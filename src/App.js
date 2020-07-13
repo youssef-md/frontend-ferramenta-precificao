@@ -1,4 +1,4 @@
-import React, { useState, useCallback, createContext } from 'react';
+import React, { useState, useCallback, createContext, useContext } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -8,10 +8,18 @@ import Routes from './routes';
 import defaultTheme from './styles/defaultTheme';
 import darkTheme from './styles/darkTheme';
 
-export const ThemeSwitcherContext = createContext();
+const GeneralAppContext = createContext();
+
+export function useGeneralAppContext() {
+  return useContext(GeneralAppContext);
+}
 
 function App() {
+  const [showLoginModal, setShowLoginModal] = useState(true);
   const [theme, setTheme] = useState(defaultTheme);
+
+  const openLoginModal = useCallback(() => setShowLoginModal(true), []);
+  const closeLoginModal = useCallback(() => setShowLoginModal(false), []);
 
   const toggleTheme = useCallback(
     () => setTheme(theme === defaultTheme ? darkTheme : defaultTheme),
@@ -21,10 +29,17 @@ function App() {
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
-        <ThemeSwitcherContext.Provider value={{ toggleTheme }}>
+        <GeneralAppContext.Provider
+          value={{
+            toggleTheme,
+            showLoginModal,
+            openLoginModal,
+            closeLoginModal,
+          }}
+        >
           <Routes />
           <GlobalStyle />
-        </ThemeSwitcherContext.Provider>
+        </GeneralAppContext.Provider>
       </ThemeProvider>
     </BrowserRouter>
   );
