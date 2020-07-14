@@ -7,6 +7,7 @@ import Routes from './routes';
 
 import defaultTheme from './styles/defaultTheme';
 import darkTheme from './styles/darkTheme';
+import api from './service/api';
 
 const GeneralAppContext = createContext();
 
@@ -17,6 +18,16 @@ export function useGeneralAppContext() {
 function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [theme, setTheme] = useState(defaultTheme);
+  const [userToken, setUserToken] = useState(
+    function retrieveFromStorageIfExists() {
+      const token = localStorage.getItem('@ferramenta-precificacao:token');
+      if (token) {
+        api.defaults.headers.common = { Authorization: `Bearer ${token}` };
+        return token;
+      }
+      return null;
+    }
+  );
 
   const openLoginModal = useCallback(() => setShowLoginModal(true), []);
   const closeLoginModal = useCallback(() => setShowLoginModal(false), []);
@@ -31,6 +42,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <GeneralAppContext.Provider
           value={{
+            userToken,
             toggleTheme,
             showLoginModal,
             openLoginModal,

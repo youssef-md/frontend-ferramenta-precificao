@@ -1,13 +1,16 @@
 import React, { useCallback, useState } from 'react';
 
+import { useHistory } from 'react-router-dom';
 import { Container, Content, Backdrop } from './styles';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import { useGeneralAppContext } from '../../App';
 
 import api from '../../service/api';
+import { LISTA_SERVICOS } from '../../routes/routeObjects';
 
 function Login() {
+  const history = useHistory();
   const { closeLoginModal } = useGeneralAppContext();
 
   const [cpf, setCpf] = useState('');
@@ -21,21 +24,24 @@ function Login() {
       event.preventDefault();
 
       try {
-        const res = await api.post('auth', {
+        const {
+          data: { token },
+        } = await api.post('auth', {
           email: cpf,
           password,
         });
 
-        api.defaults.headers.common = {
-          Authorization: `Bearer ${res.data.token}`,
-        };
+        api.defaults.headers.common = { Authorization: `Bearer ${token}` };
+        localStorage.setItem('@ferramenta-precificacao:token', token);
+
+        history.push(LISTA_SERVICOS.route);
       } catch (error) {
         alert('Erro ao logar na aplicação');
       } finally {
         setIsLoading(false);
       }
     },
-    [cpf, password]
+    [cpf, password, history]
   );
 
   const togglePassword = useCallback(event => {
