@@ -5,28 +5,15 @@ import BasePage from '../BasePage';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Breadcrumbs from '../../components/Breadcrumbs';
-import api from '../../service/api';
 import Login from '../Login';
 import { useGeneralAppContext } from '../../App';
 
 function Home() {
   const { showLoginModal } = useGeneralAppContext();
 
-  async function makeReq() {
-    await api.post('auth', {
-      email: '03717970127',
-      password: 'itracunb',
-    });
-    const servicos = await api.get('servicos/?quantidade=20&pagina=0');
-    console.log(servicos.data);
-  }
-
   return (
     <BasePage>
       {showLoginModal && <Login />}
-      <Button type="primary" onClick={makeReq}>
-        Testar req
-      </Button>
       <div
         style={{
           display: 'flex',

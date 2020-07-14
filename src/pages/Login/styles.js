@@ -18,7 +18,7 @@ export const Backdrop = styled.div`
   height: 100%;
 `;
 
-export const Content = styled.div`
+export const Content = styled.form`
   position: absolute;
   width: 50rem;
   border-radius: 1rem;
@@ -35,7 +35,7 @@ export const Content = styled.div`
     margin-bottom: 2rem;
   }
 
-  button {
+  > button {
     width: 100%;
     margin-top: 1.5rem;
   }

@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
 
   label {
     font-size: 1.4rem;
@@ -12,6 +13,7 @@ export const Container = styled.div`
   }
 
   input {
+    width: 100%;
     height: 40px;
     font-size: 16px;
     border: 1px solid ${props => props.theme.secondary06};
@@ -70,5 +72,21 @@ export const Invalid = styled.span`
   color: ${props => props.theme.danger};
   p {
     color: ${props => props.theme.danger};
+  }
+`;
+
+export const TogglePassword = styled.button`
+  position: absolute;
+  right: 1rem;
+  top: 100%;
+  transform: translateY(-100%);
+  padding: 0.5rem;
+
+  svg {
+    color: ${props => props.theme.primary05};
+    transition: all 0.2s;
+    &:hover {
+      color: ${props => props.theme.primary04};
+    }
   }
 `;

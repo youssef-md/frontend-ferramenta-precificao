@@ -1,6 +1,11 @@
 import React from 'react';
-import { FaTimesCircle, FaCheckCircle } from 'react-icons/fa';
-import { Container, Invalid, Valid } from './styles';
+import {
+  FaTimesCircle,
+  FaCheckCircle,
+  FaEye,
+  FaEyeSlash,
+} from 'react-icons/fa';
+import { Container, Invalid, Valid, TogglePassword } from './styles';
 
 function Input({
   type,
@@ -10,11 +15,26 @@ function Input({
   valid,
   invalid,
   className,
+  value,
+  onValueChange,
+  seePassword,
+  onSetSeePassword,
 }) {
   return (
     <Container className={className} valid={valid} invalid={invalid}>
       <label htmlFor={label}>{label}</label>
-      <input id={label} placeholder={placeholder} type={type} />
+      <input
+        id={label}
+        placeholder={placeholder}
+        type={seePassword ? 'text' : type}
+        value={value}
+        onChange={onValueChange}
+      />
+      {type === 'password' && (
+        <TogglePassword onClick={onSetSeePassword}>
+          {seePassword ? <FaEyeSlash size={22} /> : <FaEye size={22} />}
+        </TogglePassword>
+      )}
       <p>{!invalid && !valid && auxiliaryText}</p>
       {valid && (
         <Valid>
