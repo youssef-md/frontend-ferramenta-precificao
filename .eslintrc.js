@@ -27,6 +27,7 @@ module.exports = {
     'global-require': 'off',
     'react-native/no-raw-text': 'off',
     'no-param-reassign': 'off',
+    'react/jsx-props-no-spreading': 'off',
     'no-underscore-dangle': 'off',
     'import/no-cycle': 'off',
     'no-alert': 'off',

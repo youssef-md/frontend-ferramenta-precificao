@@ -1,18 +1,48 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Home from '../pages/Home';
 import ListarServicos from '../pages/ListarServicos';
 import ServicoSelecionado from '../pages/ServicoSelecionado';
 import PreencherModelo from '../pages/PreencherModelo';
+import { useGeneralAppContext } from '../App';
+
+function CustomRoute({ isPrivate, component: Component, ...rest }) {
+  const { userToken } = useGeneralAppContext();
+
+  return (
+    <Route
+      {...rest}
+      render={() => {
+        return isPrivate === !!userToken ? (
+          <Component />
+        ) : (
+          <Redirect to={userToken ? 'listar-servicos' : '/'} />
+        );
+      }}
+    />
+  );
+}
 
 function Routes() {
   return (
     <Switch>
-      <Route path="/" exact component={Home} />
-      <Route path="/listar-servicos" component={ListarServicos} />
-      <Route path="/servico-selecionado" component={ServicoSelecionado} />
-      <Route path="/preencher-modelo" component={PreencherModelo} />
+      <CustomRoute isPrivate={false} path="/" exact component={Home} />
+      <CustomRoute
+        isPrivate
+        path="/listar-servicos"
+        component={ListarServicos}
+      />
+      <CustomRoute
+        isPrivate
+        path="/servico-selecionado"
+        component={ServicoSelecionado}
+      />
+      <CustomRoute
+        isPrivate
+        path="/preencher-modelo"
+        component={PreencherModelo}
+      />
     </Switch>
   );
 }

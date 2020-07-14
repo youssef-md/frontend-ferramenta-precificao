@@ -11,7 +11,7 @@ import { LISTA_SERVICOS } from '../../routes/routeObjects';
 
 function Login() {
   const history = useHistory();
-  const { closeLoginModal } = useGeneralAppContext();
+  const { closeLoginModal, setUserToken } = useGeneralAppContext();
 
   const [cpf, setCpf] = useState('');
   const [password, setPassword] = useState('');
@@ -30,7 +30,7 @@ function Login() {
           email: cpf,
           password,
         });
-
+        setUserToken(token);
         api.defaults.headers.common = { Authorization: `Bearer ${token}` };
         localStorage.setItem('@ferramenta-precificacao:token', token);
 
@@ -41,7 +41,7 @@ function Login() {
         setIsLoading(false);
       }
     },
-    [cpf, password, history]
+    [cpf, password, history, setUserToken]
   );
 
   const togglePassword = useCallback(event => {

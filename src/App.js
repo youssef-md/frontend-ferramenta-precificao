@@ -43,6 +43,7 @@ function App() {
         <GeneralAppContext.Provider
           value={{
             userToken,
+            setUserToken,
             toggleTheme,
             showLoginModal,
             openLoginModal,
