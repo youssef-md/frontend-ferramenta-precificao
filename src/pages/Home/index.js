@@ -13,7 +13,11 @@ function Home() {
   const { showLoginModal } = useGeneralAppContext();
 
   async function makeReq() {
-    const servicos = await api.get('servicos/?quantidade=10&pagina=1');
+    await api.post('auth', {
+      email: '03717970127',
+      password: 'itracunb',
+    });
+    const servicos = await api.get('servicos/?quantidade=20&pagina=0');
     console.log(servicos.data);
   }
 

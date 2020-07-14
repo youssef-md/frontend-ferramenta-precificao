@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
 import BasePage from '../BasePage';
@@ -7,9 +7,16 @@ import { LISTA_SERVICOS } from '../../routes/routeObjects';
 import Card from '../../components/Card';
 import { TitleHeader } from './styles';
 import PaginationFooter from '../../components/PaginationFooter';
+import api from '../../service/api';
 
 function ListarServicos() {
-  const cards = [0, 1, 2, 3, 4, 5];
+  const [servicos, setServicos] = useState([]);
+
+  useEffect(() => {
+    api.get('servicos/?quantidade=20&pagina=0').then(response => {
+      setServicos(response.data.content);
+    });
+  }, []);
 
   return (
     <BasePage>
@@ -20,8 +27,8 @@ function ListarServicos() {
           <FaSearch size={22} />
         </button>
       </TitleHeader>
-      {cards.map(card => (
-        <Card key={card} />
+      {servicos.map(servico => (
+        <Card key={servico.idServico} info={servico} />
       ))}
       <PaginationFooter />
     </BasePage>
