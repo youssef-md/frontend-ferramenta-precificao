@@ -15,7 +15,7 @@ export function useGeneralAppContext() {
 }
 
 function App() {
-  const [showLoginModal, setShowLoginModal] = useState(true);
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const [theme, setTheme] = useState(defaultTheme);
 
   const openLoginModal = useCallback(() => setShowLoginModal(true), []);

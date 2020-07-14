@@ -13,17 +13,30 @@ function Login() {
   const [cpf, setCpf] = useState('');
   const [password, setPassword] = useState('');
   const [seePassword, setSeePassword] = useState(false);
+  const [loading, setIsLoading] = useState(false);
 
-  const submitLogin = useCallback(async event => {
-    event.preventDefault();
+  const submitLogin = useCallback(
+    async event => {
+      setIsLoading(true);
+      event.preventDefault();
 
-    const res = await api.post('auth', {
-      email: '03717970127',
-      password: 'itracunb',
-    });
+      try {
+        const res = await api.post('auth', {
+          email: cpf,
+          password,
+        });
 
-    console.log(res.data);
-  }, []);
+        api.defaults.headers.common = {
+          Authorization: `Bearer ${res.data.token}`,
+        };
+      } catch (error) {
+        alert('Erro ao logar na aplicação');
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [cpf, password]
+  );
 
   const togglePassword = useCallback(event => {
     event.preventDefault();
@@ -48,7 +61,7 @@ function Login() {
           value={password}
           onValueChange={e => setPassword(e.target.value)}
         />
-        <Button type="primary" onClick={submitLogin}>
+        <Button type="primary" onClick={submitLogin} loading={Number(loading)}>
           Entrar
         </Button>
       </Content>

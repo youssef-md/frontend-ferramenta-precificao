@@ -75,11 +75,11 @@ export const Invalid = styled.span`
   }
 `;
 
-export const TogglePassword = styled.button`
+export const TogglePassword = styled.div`
   position: absolute;
   right: 1rem;
-  top: 100%;
-  transform: translateY(-100%);
+  top: 98%;
+  transform: translateY(-98%);
   padding: 0.5rem;
 
   svg {
