@@ -3,7 +3,7 @@ import { FaSearch } from 'react-icons/fa';
 
 import BasePage from '../BasePage';
 import Breadcrumbs from '../../components/Breadcrumbs';
-import { LISTA_SERVICOS } from '../../routes/routeObjects';
+import { LISTAR_SERVICOS } from '../../routes/routeObjects';
 import Card from '../../components/Card';
 import { TitleHeader } from './styles';
 import PaginationFooter from '../../components/PaginationFooter';
@@ -20,7 +20,7 @@ function ListarServicos() {
 
   return (
     <BasePage>
-      <Breadcrumbs currentRouting={[LISTA_SERVICOS]} />
+      <Breadcrumbs currentRouting={[LISTAR_SERVICOS]} />
       <TitleHeader>
         <h4>Lista de Serviços cadastrados</h4>;
         <button type="button">

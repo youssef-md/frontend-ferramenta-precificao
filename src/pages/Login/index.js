@@ -7,7 +7,7 @@ import Button from '../../components/Button';
 import { useGeneralAppContext } from '../../App';
 
 import api from '../../service/api';
-import { LISTA_SERVICOS } from '../../routes/routeObjects';
+import { LISTAR_SERVICOS } from '../../routes/routeObjects';
 
 function Login() {
   const history = useHistory();
@@ -34,7 +34,7 @@ function Login() {
         api.defaults.headers.common = { Authorization: `Bearer ${token}` };
         localStorage.setItem('@ferramenta-precificacao:token', token);
 
-        history.push(LISTA_SERVICOS.route);
+        history.push(LISTAR_SERVICOS.route);
       } catch (error) {
         alert('Erro ao logar na aplicação');
       } finally {
@@ -44,10 +44,13 @@ function Login() {
     [cpf, password, history, setUserToken]
   );
 
-  const togglePassword = useCallback(event => {
-    event.preventDefault();
-    setSeePassword(!seePassword);
-  });
+  const togglePassword = useCallback(
+    event => {
+      event.preventDefault();
+      setSeePassword(!seePassword);
+    },
+    [seePassword]
+  );
 
   return (
     <Container>

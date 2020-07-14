@@ -4,6 +4,10 @@ import { FaTimes } from 'react-icons/fa';
 import { Backdrop, SideNav, NavHead, NavItem } from './styles';
 
 import govBrLogo from '../../../assets/govbr-logo.png';
+import {
+  PACOTE_CONSTANTES,
+  LISTAR_SERVICOS,
+} from '../../../routes/routeObjects';
 
 function Sidedrawer({ onCloseSidedrawer, isOpen }) {
   return (
@@ -17,8 +21,8 @@ function Sidedrawer({ onCloseSidedrawer, isOpen }) {
             <img src={govBrLogo} alt="gov.br" />
           </a>
         </NavHead>
-        <NavItem to="/oi">Pacote de Constantes</NavItem>
-        <NavItem to="/oi">Lista de Serviços</NavItem>
+        <NavItem to={PACOTE_CONSTANTES.route}>Pacote de Constantes</NavItem>
+        <NavItem to={LISTAR_SERVICOS.route}>Lista de Serviços</NavItem>
       </SideNav>
       {isOpen && <Backdrop onClick={onCloseSidedrawer} />}
     </>

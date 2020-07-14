@@ -1,4 +1,4 @@
-export const LISTA_SERVICOS = {
+export const LISTAR_SERVICOS = {
   name: 'Listagem de Serviços',
   route: 'listar-servicos',
 };

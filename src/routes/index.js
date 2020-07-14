@@ -6,6 +6,7 @@ import ListarServicos from '../pages/ListarServicos';
 import ServicoSelecionado from '../pages/ServicoSelecionado';
 import PreencherModelo from '../pages/PreencherModelo';
 import { useGeneralAppContext } from '../App';
+import { LISTAR_SERVICOS } from './routeObjects';
 
 function CustomRoute({ isPrivate, component: Component, ...rest }) {
   const { userToken } = useGeneralAppContext();
@@ -17,7 +18,7 @@ function CustomRoute({ isPrivate, component: Component, ...rest }) {
         return isPrivate === !!userToken ? (
           <Component />
         ) : (
-          <Redirect to={userToken ? 'listar-servicos' : '/'} />
+          <Redirect to={userToken ? LISTAR_SERVICOS.route : '/'} />
         );
       }}
     />
