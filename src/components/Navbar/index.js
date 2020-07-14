@@ -1,11 +1,11 @@
 import React, { useState, useCallback } from 'react';
-import { FaBars, FaUser, FaAdjust } from 'react-icons/fa';
+import { FaBars, FaUser, FaAdjust, FaPowerOff } from 'react-icons/fa';
 
 import {
   Container,
   TopContainer,
   BottomContainer,
-  LogInButton,
+  LogInLogoutButton,
 } from './styles';
 import govBrLogo from '../../assets/govbr-logo.png';
 import Sidedrawer from './Sidedrawer';
@@ -13,7 +13,12 @@ import Sidedrawer from './Sidedrawer';
 import { useGeneralAppContext } from '../../App';
 
 function Navbar() {
-  const { toggleTheme, openLoginModal } = useGeneralAppContext();
+  const {
+    userToken,
+    logUserOut,
+    openLoginModal,
+    toggleTheme,
+  } = useGeneralAppContext();
 
   const [isSidedrawerOpen, setIsSidedrawerOpen] = useState(false);
 
@@ -75,10 +80,12 @@ function Navbar() {
               </button>
             </li>
             <li>
-              <LogInButton onClick={openLoginModal}>
-                <FaUser size={14} />
-                Entrar
-              </LogInButton>
+              <LogInLogoutButton
+                onClick={userToken ? logUserOut : openLoginModal}
+              >
+                {userToken ? <FaPowerOff size={14} /> : <FaUser size={14} />}
+                {userToken ? 'Sair' : 'Entrar'}
+              </LogInLogoutButton>
             </li>
           </ul>
         </TopContainer>

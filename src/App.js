@@ -37,6 +37,11 @@ function App() {
     [theme]
   );
 
+  const logUserOut = useCallback(() => {
+    localStorage.removeItem('@ferramenta-precificacao:token');
+    setUserToken(null);
+  }, []);
+
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
@@ -44,6 +49,7 @@ function App() {
           value={{
             userToken,
             setUserToken,
+            logUserOut,
             toggleTheme,
             showLoginModal,
             openLoginModal,

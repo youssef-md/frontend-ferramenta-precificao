@@ -76,7 +76,7 @@ export const BottomContainer = styled.div`
   }
 `;
 
-export const LogInButton = styled.button`
+export const LogInLogoutButton = styled.button`
   font-size: 1.2rem;
   font-weight: 600;
   border: 0;
