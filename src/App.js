@@ -8,6 +8,7 @@ import Routes from './routes';
 import defaultTheme from './styles/defaultTheme';
 import darkTheme from './styles/darkTheme';
 import api from './service/api';
+import ScrollToTop from './components/ScrollToTop';
 
 const GeneralAppContext = createContext();
 
@@ -56,6 +57,7 @@ function App() {
             closeLoginModal,
           }}
         >
+          <ScrollToTop />
           <Routes />
           <GlobalStyle />
         </GeneralAppContext.Provider>
