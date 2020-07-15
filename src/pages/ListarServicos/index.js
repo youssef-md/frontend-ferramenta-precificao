@@ -16,12 +16,16 @@ import api from '../../service/api';
 function ListarServicos() {
   const history = useHistory();
   const [servicos, setServicos] = useState([]);
+  const [qtd, setQtd] = useState(5);
+  const [page, setPage] = useState(0);
+  const [isItemDropOpen, setIsItemDropOpen] = useState(true);
+  const [isPageDropOpen, setIsPageDropOpen] = useState(true);
 
   useEffect(() => {
-    api.get('servicos/?quantidade=20&pagina=0').then(response => {
+    api.get(`servicos/?quantidade=${qtd}&pagina=${page}`).then(response => {
       setServicos(response.data.content);
     });
-  }, []);
+  }, [qtd, page]);
 
   const selectService = useCallback(
     servico => {
@@ -47,7 +51,16 @@ function ListarServicos() {
           onServiceSelect={selectService}
         />
       ))}
-      <PaginationFooter />
+      <PaginationFooter
+        qtd={qtd}
+        totalQtd="x"
+        page={page}
+        pageTotal="y"
+        isItemDropOpen={isItemDropOpen}
+        setIsItemDropOpen={setIsItemDropOpen}
+        isPageDropOpen={isPageDropOpen}
+        setIsPageDropOpen={setIsPageDropOpen}
+      />
     </BasePage>
   );
 }

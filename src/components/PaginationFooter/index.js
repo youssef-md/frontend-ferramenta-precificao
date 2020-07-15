@@ -1,39 +1,86 @@
 import React from 'react';
-import { FaChevronDown, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import {
+  FaChevronDown,
+  FaChevronLeft,
+  FaChevronRight,
+  FaTimes,
+} from 'react-icons/fa';
 
 import {
   Footer,
   PrimaryColorDetail,
   PaginationControls,
   Divider,
+  LeftDropDown,
+  RightDropDown,
 } from './styles';
 
-function PaginationFooter() {
+function PaginationFooter({
+  qtd,
+  totalQtd,
+  page,
+  pageTotal,
+  isItemDropOpen,
+  setIsItemDropOpen,
+  isPageDropOpen,
+  setIsPageDropOpen,
+}) {
   return (
     <Footer>
       <div>
+        {isItemDropOpen && (
+          <LeftDropDown>
+            <li>5</li>
+            <li>10</li>
+            <li>15</li>
+            <li>20</li>
+          </LeftDropDown>
+        )}
         <p>
           Exibir:
           <PrimaryColorDetail>
-            10
-            <button type="button">
-              <FaChevronDown size={12} />
+            {qtd}
+            <button
+              type="button"
+              onClick={() => setIsItemDropOpen(!isItemDropOpen)}
+            >
+              {isItemDropOpen ? (
+                <FaTimes size={12} />
+              ) : (
+                <FaChevronDown size={12} />
+              )}
             </button>
           </PrimaryColorDetail>
         </p>
         <Divider />
-        <p>1 - 10 de 50 itens</p>
+        <p>
+          1 - {qtd} de {totalQtd} itens
+        </p>
       </div>
 
       <div>
+        {isPageDropOpen && (
+          <RightDropDown>
+            <li>1</li>
+            <li>2</li>
+          </RightDropDown>
+        )}
         <p>
           <PrimaryColorDetail>
-            12
-            <button type="button">
-              <FaChevronDown size={12} />
+            {page}
+
+            <button
+              type="button"
+              onClick={() => setIsPageDropOpen(!isPageDropOpen)}
+            >
+              {isPageDropOpen ? (
+                <FaTimes size={12} />
+              ) : (
+                <FaChevronDown size={12} />
+              )}
             </button>
           </PrimaryColorDetail>
-          de 48 páginas
+          de {pageTotal} páginas
         </p>
 
         <Divider />
