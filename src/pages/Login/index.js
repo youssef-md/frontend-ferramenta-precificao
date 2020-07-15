@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 
 import { useHistory } from 'react-router-dom';
-import { Container, Content, Backdrop } from './styles';
+import { Container, Form, Backdrop } from './styles';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import { useGeneralAppContext } from '../../App';
@@ -13,23 +13,18 @@ function Login() {
   const history = useHistory();
   const { closeLoginModal, setUserToken } = useGeneralAppContext();
 
-  const [cpf, setCpf] = useState('');
-  const [password, setPassword] = useState('');
   const [seePassword, setSeePassword] = useState(false);
   const [loading, setIsLoading] = useState(false);
 
   const submitLogin = useCallback(
-    async event => {
+    async ({ cpf, password }) => {
       setIsLoading(true);
-      event.preventDefault();
 
       try {
         const {
           data: { token },
-        } = await api.post('auth', {
-          email: cpf,
-          password,
-        });
+        } = await api.post('auth', { email: cpf, password });
+
         setUserToken(token);
         api.defaults.headers.common = { Authorization: `Bearer ${token}` };
         localStorage.setItem('@ferramenta-precificacao:token', token);
@@ -41,7 +36,7 @@ function Login() {
         setIsLoading(false);
       }
     },
-    [cpf, password, history, setUserToken]
+    [history, setUserToken]
   );
 
   const togglePassword = useCallback(
@@ -54,26 +49,20 @@ function Login() {
 
   return (
     <Container>
-      <Content>
+      <Form onSubmit={submitLogin}>
         <h4>Login Ferramenta Precificação</h4>
+        <Input name="cpf" type="number" label="CPF" />
         <Input
-          type="number"
-          label="CPF"
-          value={cpf}
-          onValueChange={e => setCpf(e.target.value)}
-        />
-        <Input
+          name="password"
           type="password"
           seePassword={seePassword}
           onSetSeePassword={togglePassword}
           label="Senha"
-          value={password}
-          onValueChange={e => setPassword(e.target.value)}
         />
-        <Button type="primary" onClick={submitLogin} loading={Number(loading)}>
+        <Button type="primary" loading={Number(loading)}>
           Entrar
         </Button>
-      </Content>
+      </Form>
       <Backdrop onClick={closeLoginModal} />
     </Container>
   );

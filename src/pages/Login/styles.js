@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Form as UnformForm } from '@unform/web';
 
 export const Container = styled.div`
   position: fixed;
@@ -18,7 +19,7 @@ export const Backdrop = styled.div`
   height: 100%;
 `;
 
-export const Content = styled.form`
+export const Form = styled(UnformForm)`
   position: absolute;
   width: 50rem;
   border-radius: 1rem;
