@@ -3,10 +3,10 @@ export const LISTAR_SERVICOS = {
   route: 'listar-servicos',
 };
 
-export function SERVICO_SELECIONADO(serviceName) {
+export function SERVICO_SELECIONADO(name, id) {
   return {
-    name: serviceName,
-    route: 'servico-selecionado',
+    name,
+    route: `servico-selecionado/${id}`,
   };
 }
 

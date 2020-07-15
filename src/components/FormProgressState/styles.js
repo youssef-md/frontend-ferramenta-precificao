@@ -7,14 +7,14 @@ export const Container = styled.div`
 `;
 
 export const Indicator = styled.div`
-  font-size: 2.6rem;
+  font-size: 2.2rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: ${props => (props.size === 'big' ? '44px' : '28px')};
-  height: ${props => (props.size === 'big' ? '44px' : '28px')};
+  width: ${props => (props.size === 'big' ? '38px' : '22px')};
+  height: ${props => (props.size === 'big' ? '38px' : '22px')};
   border-radius: 50%;
-  margin: 0 1rem;
+  margin: 0 0.7rem;
   background: ${props =>
     props.isValid || props.isCurrent
       ? props.theme.primary05

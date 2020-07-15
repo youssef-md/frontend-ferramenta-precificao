@@ -1,19 +1,16 @@
 import React from 'react';
 
 import { FaChevronRight } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 import { Container, TextContainer } from './styles';
 
-function Card({ info }) {
+function Card({ info, onServiceSelect }) {
   return (
-    <Container>
+    <Container onClick={() => onServiceSelect(info)}>
       <TextContainer>
         <strong>{info.nome}</strong>
         <p>{info.orgao.nomeOrgao}</p>
       </TextContainer>
-      <Link to="/servico-selecionado">
-        <FaChevronRight size={22} />
-      </Link>
+      <FaChevronRight size={22} />
     </Container>
   );
 }
