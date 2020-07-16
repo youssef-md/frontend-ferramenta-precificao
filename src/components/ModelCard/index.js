@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaCheck, FaDownload, FaTrash } from 'react-icons/fa';
 
-import { Card, ModelCardContainer } from './styles';
+import { ModelData, ModelCardContainer } from './styles';
 
 function ModelCard({ modelo }) {
   return (
@@ -9,20 +9,20 @@ function ModelCard({ modelo }) {
       <header>
         <FaCheck size={35} />
         <div>
-          <p style={{ color: '#2670E8' }}>
+          <button type="button">
             <FaDownload size={12} />
             Importar
-          </p>
-          <p style={{ color: '#e60000' }}>
+          </button>
+          <button type="button">
             <FaTrash size={12} />
             Apagar
-          </p>
+          </button>
         </div>
       </header>
-      <Card>
+      <ModelData>
         <strong>{modelo.nome}</strong>
         <p>{modelo.descricao}</p>
-      </Card>
+      </ModelData>
     </ModelCardContainer>
   );
 }

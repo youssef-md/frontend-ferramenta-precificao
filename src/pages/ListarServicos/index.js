@@ -18,8 +18,8 @@ function ListarServicos() {
   const [servicos, setServicos] = useState([]);
   const [qtd, setQtd] = useState(7);
   const [page, setPage] = useState(0);
-  const [isItemDropOpen, setIsItemDropOpen] = useState(true);
-  const [isPageDropOpen, setIsPageDropOpen] = useState(true);
+  const [isItemDropOpen, setIsItemDropOpen] = useState(false);
+  const [isPageDropOpen, setIsPageDropOpen] = useState(false);
 
   useEffect(() => {
     api.get(`servicos/?quantidade=${qtd}&pagina=${page}`).then(response => {
