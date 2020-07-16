@@ -24,13 +24,13 @@ function ServicoSelecioado() {
 
   return (
     <BasePage>
-      <h1>{servico.nome}</h1>
       <Breadcrumbs
         currentRouting={[
           LISTAR_SERVICOS,
           SERVICO_SELECIONADO(servico.nome, servico.idServico),
         ]}
       />
+      <h1>{servico.nome}</h1>
       {modelos.map(modelo => {
         return <ModelCard modelo={modelo} />;
       })}

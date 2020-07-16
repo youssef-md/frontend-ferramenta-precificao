@@ -32,7 +32,7 @@ export default createGlobalStyle`
 
   body, #root {
     width: 100%;
-    height: 100vh;
+    height: 100%;
   }
   
   button {

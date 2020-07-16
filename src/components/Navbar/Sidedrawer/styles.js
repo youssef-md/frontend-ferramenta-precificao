@@ -11,7 +11,7 @@ export const Backdrop = styled.div`
   z-index: 6;
 `;
 
-export const SideNav = styled.nav`
+export const SideNav = styled.aside`
   position: fixed;
   top: 0;
   display: block;

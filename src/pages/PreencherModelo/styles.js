@@ -4,7 +4,7 @@ import Button from '../../components/Button';
 
 export const Container = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   position: relative;
   overflow-x: hidden;
 
