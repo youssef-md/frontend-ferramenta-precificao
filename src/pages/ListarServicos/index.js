@@ -16,7 +16,7 @@ import api from '../../service/api';
 function ListarServicos() {
   const history = useHistory();
   const [servicos, setServicos] = useState([]);
-  const [qtd, setQtd] = useState(5);
+  const [qtd, setQtd] = useState(7);
   const [page, setPage] = useState(0);
   const [isItemDropOpen, setIsItemDropOpen] = useState(true);
   const [isPageDropOpen, setIsPageDropOpen] = useState(true);
