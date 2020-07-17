@@ -18,17 +18,34 @@ export const Footer = styled.footer`
     ul {
       position: absolute;
       top: 0;
-      margin-top: 3rem;
-      width: 10rem;
+      margin-top: 3.4rem;
+      width: 18rem;
+      display: flex;
+      flex-wrap: wrap;
       list-style: none;
       text-align: center;
       background: ${props => props.theme.secondary02};
       box-shadow: 0 0 0.35rem rgba(0, 0, 0, 0.35);
 
+      &::after {
+        content: '';
+        position: absolute;
+        top: -1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 1rem solid transparent;
+        border-right: 1rem solid transparent;
+        border-bottom: 1rem solid ${props => props.theme.secondary04};
+      }
+
       li {
         font-size: 1.4rem;
-        padding: 0.8rem 0;
+        padding: 0.7rem 0;
+        flex: 1 0 3.5rem;
         border-bottom: 1px solid ${props => props.theme.secondary04};
+        border-left: 1px solid ${props => props.theme.secondary04};
         cursor: pointer;
 
         &:hover {
@@ -84,9 +101,9 @@ export const Divider = styled.div`
 `;
 
 export const LeftDropDown = styled.ul`
-  left: 2.2rem;
+  left: -1.8rem;
 `;
 
 export const RightDropDown = styled.ul`
-  right: 14rem;
+  right: 10.1rem;
 `;
