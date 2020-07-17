@@ -17,9 +17,9 @@ import {
 
 function PaginationFooter({
   qtd,
-  totalQtd,
+  totalItems,
   page,
-  pageTotal,
+  totalPages,
   isItemDropOpen,
   setIsItemDropOpen,
   isPageDropOpen,
@@ -54,7 +54,7 @@ function PaginationFooter({
         </p>
         <Divider />
         <p>
-          1 - {qtd} de {totalQtd} itens
+          1 - {qtd} de {totalItems} itens
         </p>
       </div>
 
@@ -67,7 +67,7 @@ function PaginationFooter({
         )}
         <p>
           <PrimaryColorDetail>
-            {page}
+            {page + 1}
 
             <button
               type="button"
@@ -80,7 +80,7 @@ function PaginationFooter({
               )}
             </button>
           </PrimaryColorDetail>
-          de {pageTotal} páginas
+          de {totalPages} páginas
         </p>
 
         <Divider />
