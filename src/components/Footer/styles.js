@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.footer`
   background-color: ${props => props.theme.primary07};
   padding: 4rem 0;
-  margin-top: 12rem;
+  margin-top: 5rem;
 `;
 
 export const Content = styled.div`
