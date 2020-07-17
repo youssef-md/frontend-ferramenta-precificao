@@ -17,22 +17,33 @@ import {
 
 function PaginationFooter({
   qtd,
+  setQtd,
   totalItems,
   page,
+  setPage,
   totalPages,
   isItemDropOpen,
   setIsItemDropOpen,
   isPageDropOpen,
   setIsPageDropOpen,
 }) {
+  function generateRangeLi(total, start, type) {
+    return [...Array(total - start).keys()].map(item => {
+      const value = item + start + 1;
+      return (
+        <li
+          onClick={type === 'qtd' ? () => setQtd(value) : () => setPage(value)}
+        >
+          {value}
+        </li>
+      );
+    });
+  }
   return (
     <Footer>
       <div>
         {isItemDropOpen && (
-          <LeftDropDown>
-            <li>5</li>
-            <li>10</li>
-          </LeftDropDown>
+          <LeftDropDown>{generateRangeLi(totalItems, 4, 'qtd')}</LeftDropDown>
         )}
         <p>
           Exibir:
@@ -59,23 +70,12 @@ function PaginationFooter({
       <div>
         {isPageDropOpen && (
           <RightDropDown>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
-            <li>6</li>
-            <li>7</li>
-            <li>8</li>
-            <li>9</li>
-            <li>10</li>
-            <li>11</li>
-            <li>12</li>
+            {generateRangeLi(totalPages, 0, 'page')}
           </RightDropDown>
         )}
         <p>
           <PrimaryColorDetail>
-            {page + 1}
+            {page}
 
             <button
               type="button"

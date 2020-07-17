@@ -17,14 +17,14 @@ function ListarServicos() {
   const history = useHistory();
   const [servicos, setServicos] = useState([]);
   const [qtd, setQtd] = useState(5);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [isItemDropOpen, setIsItemDropOpen] = useState(false);
   const [isPageDropOpen, setIsPageDropOpen] = useState(false);
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
-    api.get(`servicos/?quantidade=${qtd}&pagina=${page}`).then(response => {
+    api.get(`servicos/?quantidade=${qtd}&pagina=${page - 1}`).then(response => {
       const {
         data: { content, totalElements, totalPages },
       } = response;
@@ -60,8 +60,10 @@ function ListarServicos() {
       ))}
       <PaginationFooter
         qtd={qtd}
+        setQtd={setQtd}
         totalItems={totalItems}
         page={page}
+        setPage={setPage}
         totalPages={totalPages}
         isItemDropOpen={isItemDropOpen}
         setIsItemDropOpen={setIsItemDropOpen}
