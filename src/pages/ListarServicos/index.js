@@ -56,6 +56,7 @@ function ListarServicos() {
           key={servico.idServico}
           info={servico}
           onServiceSelect={selectService}
+          constantes={false}
         />
       ))}
       <PaginationFooter

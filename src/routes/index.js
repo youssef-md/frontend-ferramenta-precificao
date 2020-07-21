@@ -5,6 +5,7 @@ import Home from '../pages/Home';
 import ListarServicos from '../pages/ListarServicos';
 import ServicoSelecionado from '../pages/ServicoSelecionado';
 import PreencherModelo from '../pages/PreencherModelo';
+import ListarPacotesConstantes from '../pages/ListarPacotesConstantes';
 import { useGeneralAppContext } from '../App';
 import { LISTAR_SERVICOS } from './routeObjects';
 
@@ -43,6 +44,11 @@ function Routes() {
         isPrivate
         path="/preencher-modelo"
         component={PreencherModelo}
+      />
+      <CustomRoute
+        isPrivate
+        path="/pacotes-constantes"
+        component={ListarPacotesConstantes}
       />
     </Switch>
   );

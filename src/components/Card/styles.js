@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.button`
   width: 100%;
-  padding: 1.5rem 2rem;
+  padding: 2.5rem 3rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -16,7 +16,8 @@ export const Container = styled.button`
   }
 
   svg {
-    color: ${props => props.theme.primary04};
+    color: ${props =>
+      props.constantes ? props.theme.secondary04 : props.theme.primary04};
   }
 
   &:hover {
@@ -26,6 +27,21 @@ export const Container = styled.button`
 `;
 
 export const TextContainer = styled.div`
-  width: 100%;
-  line-height: 3rem;
+  ${props =>
+    props.constantes
+      ? css`
+          padding: 0.5rem;
+          width: 100%;
+          line-height: 3rem;
+          display: flex;
+          flex-direction: row;
+
+          strong {
+            margin-right: 1rem;
+          }
+        `
+      : css`
+          width: 100%;
+          line-height: 3rem;
+        `}
 `;

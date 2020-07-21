@@ -12,7 +12,7 @@ export function SERVICO_SELECIONADO(name, id) {
 
 export const PACOTE_CONSTANTES = {
   name: 'Pacote de constantes',
-  route: '/pacote-constantes',
+  route: '/pacotes-constantes',
 };
 
 export const PREENCHER_MODELO = {

@@ -32,7 +32,7 @@ function ServicoSelecioado() {
       />
       <h1>{servico.nome}</h1>
       {modelos.map(modelo => {
-        return <ModelCard modelo={modelo} />;
+        return <ModelCard key={modelo.idModelo} modelo={modelo} />;
       })}
     </BasePage>
   );

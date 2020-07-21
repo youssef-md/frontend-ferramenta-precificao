@@ -32,6 +32,7 @@ function PaginationFooter({
       const value = item + start + 1;
       return (
         <li
+          key={value}
           onClick={type === 'qtd' ? () => setQtd(value) : () => setPage(value)}
         >
           {value}
