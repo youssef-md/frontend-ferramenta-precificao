@@ -37,12 +37,12 @@ function Routes() {
       />
       <CustomRoute
         isPrivate
-        path="/servico-selecionado"
+        path="/servico-selecionado/:id"
         component={ServicoSelecionado}
       />
       <CustomRoute
         isPrivate
-        path="/preencher-modelo"
+        path="/preencher-modelo-jornada-usuario"
         component={PreencherModelo}
       />
       <CustomRoute

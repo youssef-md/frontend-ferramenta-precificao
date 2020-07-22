@@ -1,17 +1,25 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import { Transition } from 'react-spring/renderprops';
+import { useLocation } from 'react-router-dom';
 
 import FormProgressState from '../../components/FormProgressState';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import PageStep from './PageStep';
-import { PREENCHER_MODELO } from '../../routes/routeObjects';
+import {
+  LISTAR_SERVICOS,
+  SERVICO_SELECIONADO,
+  PREENCHER_MODELO_JORNADA_USUARIO,
+} from '../../routes/routeObjects';
 
 import { jornadaUsuarioForms } from './pagesObject';
 import { Container, RightFormButton, LeftFormButton } from './styles';
 import BasePage from '../BasePage';
 
 function PreencherModelo() {
+  const {
+    state: { idServico, nomeServico },
+  } = useLocation();
   // receber o objeto com os campos via params ao cadastrar esse componente no react router
   // passar o id do modelo para a rota? pra saber onde deve fazer o post com o json? (vai que ele só copia e cola a url)
 
@@ -63,7 +71,13 @@ function PreencherModelo() {
   return (
     <BasePage>
       <Container>
-        <Breadcrumbs currentRouting={[PREENCHER_MODELO]} />
+        <Breadcrumbs
+          currentRouting={[
+            LISTAR_SERVICOS,
+            SERVICO_SELECIONADO(nomeServico, idServico),
+            PREENCHER_MODELO_JORNADA_USUARIO,
+          ]}
+        />
         <h2>{formPages[0].title}</h2>
         <FormProgressState
           formPages={formPages}

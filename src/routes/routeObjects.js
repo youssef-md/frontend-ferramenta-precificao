@@ -15,7 +15,7 @@ export const PACOTE_CONSTANTES = {
   route: '/pacotes-constantes',
 };
 
-export const PREENCHER_MODELO = {
-  name: 'Preencher modelo',
-  route: '/preencher-modelo',
+export const PREENCHER_MODELO_JORNADA_USUARIO = {
+  name: 'Jornada do Usuário',
+  route: `/preencher-modelo-jornada-usuario`,
 };

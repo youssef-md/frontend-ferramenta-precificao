@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 
 import BasePage from '../BasePage';
@@ -6,6 +6,7 @@ import Breadcrumbs from '../../components/Breadcrumbs';
 import {
   LISTAR_SERVICOS,
   SERVICO_SELECIONADO,
+  PREENCHER_MODELO_JORNADA_USUARIO,
 } from '../../routes/routeObjects';
 import api from '../../service/api';
 import ModelCard from '../../components/ModelCard';
@@ -31,6 +32,14 @@ function ServicoSelecioado() {
     });
   }, [servico]);
 
+  const navigateToJornadaUsuario = useCallback(() => {
+    const { idServico, nome } = servico;
+    history.push(PREENCHER_MODELO_JORNADA_USUARIO.route, {
+      idServico,
+      nomeServico: nome,
+    });
+  }, [history, servico]);
+
   return (
     <BasePage>
       <Breadcrumbs
@@ -44,10 +53,7 @@ function ServicoSelecioado() {
         <h4>{servico.orgao.nomeOrgao}</h4>
       </TitleHeader>
       <Buttons>
-        <Button
-          type="secondary"
-          onClick={() => history.push('/preencher-modelo')}
-        >
+        <Button type="secondary" onClick={navigateToJornadaUsuario}>
           Jornada do Usuário
         </Button>
 
