@@ -4,7 +4,6 @@ export const ModelCardContainer = styled.div`
   width: 100%;
   transition: 0.2s all;
   position: relative;
-  margin: 20px 0;
 
   header {
     display: flex;
