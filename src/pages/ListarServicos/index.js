@@ -46,7 +46,7 @@ function ListarServicos() {
     <BasePage>
       <Breadcrumbs currentRouting={[LISTAR_SERVICOS]} />
       <TitleHeader>
-        <h4>Lista de Serviços cadastrados</h4>
+        <h3>Lista de Serviços cadastrados</h3>
         <button type="button">
           <FaSearch size={22} />
         </button>
@@ -55,7 +55,7 @@ function ListarServicos() {
         <Card
           key={servico.idServico}
           info={servico}
-          onServiceSelect={selectService}
+          onPress={selectService}
           constantes={false}
         />
       ))}

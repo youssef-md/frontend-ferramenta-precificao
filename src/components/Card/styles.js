@@ -16,8 +16,7 @@ export const Container = styled.button`
   }
 
   svg {
-    color: ${props =>
-      props.constantes ? props.theme.secondary04 : props.theme.primary04};
+    color: ${props => props.theme.primary04};
   }
 
   &:hover {
@@ -27,21 +26,16 @@ export const Container = styled.button`
 `;
 
 export const TextContainer = styled.div`
-  ${props =>
-    props.constantes
-      ? css`
-          padding: 0.5rem;
-          width: 100%;
-          line-height: 3rem;
-          display: flex;
-          flex-direction: row;
+  line-height: 3rem;
 
-          strong {
-            margin-right: 1rem;
-          }
-        `
-      : css`
-          width: 100%;
-          line-height: 3rem;
-        `}
+  ${props =>
+    props.constantes &&
+    css`
+      display: flex;
+      align-items: center;
+
+      & strong {
+        margin-right: 1rem;
+      }
+    `}
 `;

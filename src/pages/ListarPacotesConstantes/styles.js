@@ -2,11 +2,10 @@ import styled from 'styled-components';
 
 export const ListPacksContainer = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
 
-  h1 {
-    margin-top: 2rem;
+  h3 {
+    margin-bottom: 3.3rem;
   }
 `;

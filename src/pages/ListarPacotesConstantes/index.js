@@ -43,9 +43,8 @@ function ListarPacotesConstantes() {
     <BasePage>
       <Breadcrumbs currentRouting={[PACOTE_CONSTANTES]} />
       <ListPacksContainer>
-        <h1>Pacotes de Constantes dos Modelos</h1>
+        <h3>Pacotes de Constantes dos Modelos</h3>
         {pacotes.map(pacote => {
-          formatDate(pacote);
           return (
             <Card
               constantes
@@ -53,7 +52,7 @@ function ListarPacotesConstantes() {
               info={{
                 date: formatDate(pacote),
               }}
-              onServiceSelect={() => console.log('clicou')}
+              onPress={() => console.log('clicou')}
             />
           );
         })}
