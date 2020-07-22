@@ -30,6 +30,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'no-underscore-dangle': 'off',
     'import/no-cycle': 'off',
+    'no-plusplus': 'off',
     'no-alert': 'off',
     camelcase: 'off',
     'no-console': ['error', { allow: ['tron'] }],
