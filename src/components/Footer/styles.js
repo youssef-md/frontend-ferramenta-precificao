@@ -8,6 +8,7 @@ export const Container = styled.footer`
 
 export const Content = styled.div`
   max-width: 1152px;
+  padding: 0 1rem;
   margin: auto;
   display: flex;
   justify-content: space-between;

@@ -19,6 +19,7 @@ export const Container = styled.nav`
 
 export const TopContainer = styled.div`
   max-width: 1152px;
+  padding: 0 1rem;
   height: 50%;
   margin: auto;
   padding-top: 1rem;
@@ -60,6 +61,7 @@ export const TopContainer = styled.div`
 
 export const BottomContainer = styled.div`
   max-width: 1152px;
+  padding: 0 1rem;
   height: 50%;
   margin: auto;
 
