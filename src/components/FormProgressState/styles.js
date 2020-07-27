@@ -11,8 +11,8 @@ export const Indicator = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: ${props => (props.size === 'big' ? '38px' : '22px')};
-  height: ${props => (props.size === 'big' ? '38px' : '22px')};
+  width: ${props => (props.size === 'big' ? '38px' : '26px')};
+  height: ${props => (props.size === 'big' ? '38px' : '26px')};
   border-radius: 50%;
   margin: 0 0.7rem;
   background: ${props =>
@@ -27,9 +27,7 @@ export const Indicator = styled.div`
   color: ${props => props.theme.secondary01};
   transition: all 0.2s;
 
-  img {
-    color: blue;
-    width: 1.5rem;
-    height: 1.5rem;
+  svg {
+    color: white;
   }
 `;

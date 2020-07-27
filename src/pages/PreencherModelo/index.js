@@ -85,7 +85,6 @@ function PreencherModelo() {
         />
 
         <LeftFormButton
-          style={{ backgroundColor: 'red' }}
           onClick={goToPreviousPage}
           type="secondary"
           disabled={currentFormIndex === 0}

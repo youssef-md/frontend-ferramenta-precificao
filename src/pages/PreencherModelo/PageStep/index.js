@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { uuid } from 'uuidv4';
 
+import { Form } from '@unform/web';
 import {
   Container,
   FormSide,
@@ -14,10 +15,11 @@ function PageStep({ page, style }) {
     return (
       <Input
         key={uuid()}
+        name={uuid()}
+        type={type}
         label={title}
         placeholder={placeholder}
         auxiliaryText={auxText}
-        type={type}
       />
     );
   }, []);
@@ -51,7 +53,7 @@ function PageStep({ page, style }) {
       <h3>{page.subTitle}</h3>
       {page.type === 'page-form' && <h4>{page.description}</h4>}
 
-      <form>
+      <Form>
         {page.form ? (
           createForm()
         ) : (
@@ -63,7 +65,7 @@ function PageStep({ page, style }) {
             <h4>{page.description}</h4>
           </ImageContainer>
         )}
-      </form>
+      </Form>
     </Container>
   );
 }

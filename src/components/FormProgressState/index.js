@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { FaCheck } from 'react-icons/fa';
 import { Container, Indicator } from './styles';
-import faCheck from '../../assets/fa-check.svg';
 
 function FormProgressState({ formPages, currentFormIndex }) {
   return (
@@ -19,7 +19,7 @@ function FormProgressState({ formPages, currentFormIndex }) {
             isCurrent={isCurrent}
           >
             {isPageIntro && page.step}
-            {!isPageIntro && isValid && <img src={faCheck} alt="check" />}
+            {!isPageIntro && isValid && <FaCheck size={14} />}
           </Indicator>
         );
       })}
