@@ -52,7 +52,6 @@ function PageStep({ page, style }) {
     <Container style={style}>
       <h3>{page.subTitle}</h3>
       {page.type === 'page-form' && <h4>{page.description}</h4>}
-
       <Form>
         {page.form ? (
           createForm()

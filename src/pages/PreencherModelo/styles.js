@@ -4,7 +4,6 @@ import Button from '../../components/Button';
 
 export const Container = styled.div`
   width: 100%;
-  height: 100vh;
   position: relative;
   overflow-x: hidden;
 
@@ -21,9 +20,9 @@ export const FormButton = styled(Button)`
 `;
 
 export const LeftFormButton = styled(FormButton)`
-  left: 0;
+  left: 0.5rem;
 `;
 
 export const RightFormButton = styled(FormButton)`
-  right: 0;
+  right: 0.5rem;
 `;

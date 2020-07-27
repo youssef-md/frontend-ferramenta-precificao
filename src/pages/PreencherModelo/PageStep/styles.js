@@ -11,16 +11,15 @@ export const InputsContainer = styled.div`
 
 export const FormSide = styled.div`
   flex: 1;
-  max-width: 50rem;
+
   h5 {
     margin-top: 0;
   }
 `;
 
 export const Container = styled(animated.div)`
-  will-change: transform, opacity;
-  position: absolute;
-  width: 100%;
+  max-width: 88%;
+  margin: 0 auto;
 
   h4 {
     margin-top: -1.5rem;
@@ -35,7 +34,7 @@ export const Container = styled(animated.div)`
   }
 
   form {
-    min-height: 450px;
+    min-height: 46rem;
     margin-top: 6rem;
     display: flex;
     justify-content: center;
@@ -55,6 +54,7 @@ export const Container = styled(animated.div)`
 export const CustomInput = styled(Input)`
   margin: 15px 5px;
   flex: 1;
+  flex-basis: 15rem;
 `;
 
 export const ImageContainer = styled.div`

@@ -100,16 +100,7 @@ function PreencherModelo() {
           <FaArrowRight size={22} />
         </RightFormButton>
 
-        <Transition
-          keys={Math.random()}
-          from={{ transform: 'translate3d(200%, 0, 0)', opacity: 0 }}
-          enter={{ transform: 'translate3d(0%, 0, 0)', opacity: 1 }}
-          leave={{ transform: 'translate3d(-200%, 0, 0)', opacity: 0 }}
-        >
-          {_ => props => (
-            <PageStep page={formPages[currentFormIndex]} style={props} />
-          )}
-        </Transition>
+        <PageStep page={formPages[currentFormIndex]} />
       </Container>
     </BasePage>
   );
