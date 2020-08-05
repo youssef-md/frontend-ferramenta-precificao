@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
-import { Transition } from 'react-spring/renderprops';
 import { useLocation } from 'react-router-dom';
 
 import FormProgressState from '../../components/FormProgressState';
@@ -28,12 +27,21 @@ function PreencherModelo() {
 
   const formPages = jornadaUsuarioForms;
   const [currentFormIndex, setCurrentFormIndex] = useState(0);
+  const currentPageRef = useRef(null);
 
   const goToNextPage = useCallback(
     event => {
       if (event) event.preventDefault();
-      if (currentFormIndex < formPages.length - 1)
-        setCurrentFormIndex(currentFormIndex + 1);
+      if (currentFormIndex < formPages.length - 1) {
+        const { current } = currentPageRef;
+        current.style.transform = 'translateX(-200px)';
+        current.style.opacity = 0;
+
+        setTimeout(() => {
+          setCurrentFormIndex(currentFormIndex + 1);
+          current.style.transform = 'translateX(200px)';
+        }, 200);
+      }
     },
     [currentFormIndex, formPages]
   );
@@ -41,7 +49,16 @@ function PreencherModelo() {
   const goToPreviousPage = useCallback(
     event => {
       if (event) event.preventDefault();
-      if (currentFormIndex > 0) setCurrentFormIndex(currentFormIndex - 1);
+      if (currentFormIndex > 0) {
+        const { current } = currentPageRef;
+        current.style.transform = 'translateX(200px)';
+        current.style.opacity = 0;
+
+        setTimeout(() => {
+          setCurrentFormIndex(currentFormIndex - 1);
+          current.style.transform = 'translateX(-200px)';
+        }, 200);
+      }
     },
     [currentFormIndex]
   );
@@ -67,6 +84,14 @@ function PreencherModelo() {
     },
     [handleKeyDownToSwitchPage]
   );
+
+  useEffect(() => {
+    const { current } = currentPageRef;
+    setTimeout(() => {
+      current.style.opacity = 1;
+      current.style.transform = 'translateX(0)';
+    }, 250);
+  }, [currentFormIndex]);
 
   return (
     <BasePage>
@@ -100,7 +125,7 @@ function PreencherModelo() {
           <FaArrowRight size={22} />
         </RightFormButton>
 
-        <PageStep page={formPages[currentFormIndex]} />
+        <PageStep ref={currentPageRef} page={formPages[currentFormIndex]} />
       </Container>
     </BasePage>
   );
