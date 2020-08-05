@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FaBars, FaUser, FaAdjust, FaPowerOff } from 'react-icons/fa';
 
 import {
@@ -21,9 +21,22 @@ function Navbar() {
   } = useGeneralAppContext();
 
   const [isSidedrawerOpen, setIsSidedrawerOpen] = useState(false);
+  const [isSmall, setIsSmall] = useState(false);
 
   const openSidedrawer = useCallback(() => setIsSidedrawerOpen(true), []);
   const closeSidedrawer = useCallback(() => setIsSidedrawerOpen(false), []);
+
+  useEffect(function resizeHeaderOnScroll() {
+    let prevScrollOffset = window.pageYOffset;
+
+    window.onscroll = () => {
+      const currentScrollOffset = window.pageYOffset;
+
+      setIsSmall(prevScrollOffset < currentScrollOffset);
+
+      prevScrollOffset = currentScrollOffset;
+    };
+  }, []);
 
   return (
     <>
@@ -32,7 +45,7 @@ function Navbar() {
         isOpen={isSidedrawerOpen}
       />
 
-      <Container>
+      <Container isSmall={isSmall}>
         <TopContainer>
           <a href="https://www.gov.br/pt-br">
             <img src={govBrLogo} alt="gov.br" />
