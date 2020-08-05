@@ -10,7 +10,7 @@ import {
   ImageContainer,
 } from './styles';
 
-function PageStep({ page, style }) {
+function PageStep({ page }, ref) {
   const createInputs = useCallback(({ title, placeholder, auxText, type }) => {
     return (
       <Input
@@ -49,7 +49,7 @@ function PageStep({ page, style }) {
   }, [page, createInputs]);
 
   return (
-    <Container style={style}>
+    <Container ref={ref}>
       <h3>{page.subTitle}</h3>
       {page.type === 'page-form' && <h4>{page.description}</h4>}
       <Form>
@@ -69,4 +69,4 @@ function PageStep({ page, style }) {
   );
 }
 
-export default PageStep;
+export default React.forwardRef(PageStep);

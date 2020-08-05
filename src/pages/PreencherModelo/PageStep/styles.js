@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { animated } from 'react-spring';
 
 import Input from '../../../components/Input';
 
@@ -17,9 +16,11 @@ export const FormSide = styled.div`
   }
 `;
 
-export const Container = styled(animated.div)`
+export const Container = styled.div`
+  opacity: 0;
   max-width: 88%;
   margin: 0 auto;
+  transition: all .3s;
 
   h4 {
     margin-top: -1.5rem;
