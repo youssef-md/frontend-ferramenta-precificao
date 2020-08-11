@@ -42,6 +42,14 @@ function ListarServicos() {
     [history]
   );
 
+  const goToNextPage = useCallback(() => {
+    if (page < totalPages) setPage(page + 1);
+  }, [page, totalPages]);
+
+  const goToPrevPage = useCallback(() => {
+    if (page > 1) setPage(page - 1);
+  }, [page]);
+
   return (
     <BasePage>
       <Breadcrumbs currentRouting={[LISTAR_SERVICOS]} />
@@ -70,6 +78,8 @@ function ListarServicos() {
         setIsItemDropOpen={setIsItemDropOpen}
         isPageDropOpen={isPageDropOpen}
         setIsPageDropOpen={setIsPageDropOpen}
+        goToNextPage={goToNextPage}
+        goToPrevPage={goToPrevPage}
       />
     </BasePage>
   );

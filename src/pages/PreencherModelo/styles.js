@@ -16,7 +16,7 @@ export const FormButton = styled(Button)`
   position: absolute;
   top: 60rem;
   padding: 0 1rem;
-  z-index: 10;
+  z-index: 5;
 `;
 
 export const LeftFormButton = styled(FormButton)`

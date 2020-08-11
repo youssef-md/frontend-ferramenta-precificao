@@ -26,6 +26,8 @@ function PaginationFooter({
   setIsItemDropOpen,
   isPageDropOpen,
   setIsPageDropOpen,
+  goToNextPage,
+  goToPrevPage,
 }) {
   function generateRangeLi(total, start, type) {
     return [...Array(total - start).keys()].map(item => {
@@ -94,10 +96,10 @@ function PaginationFooter({
 
         <Divider />
         <PaginationControls>
-          <button type="button">
+          <button type="button" onClick={goToPrevPage}>
             <FaChevronLeft size={20} />
           </button>
-          <button type="button">
+          <button type="button" onClick={goToNextPage}>
             <FaChevronRight size={20} />
           </button>
         </PaginationControls>
