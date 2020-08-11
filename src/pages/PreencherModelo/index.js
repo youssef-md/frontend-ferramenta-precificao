@@ -36,43 +36,52 @@ function PreencherModelo() {
     // Rota: muda
   }, []);
 
+  const animatePageStepContainer = useCallback((translateX, opacity) => {
+    const {
+      current: { containerPageStep },
+    } = currentPageRef;
+
+    containerPageStep.style.transform = `translateX(${translateX}px)`;
+    containerPageStep.style.opacity = opacity;
+  }, []);
+
   const goToNextPage = useCallback(
     event => {
       if (event) event.preventDefault();
+      const {
+        current: { formRef },
+      } = currentPageRef;
+
+      console.log(formRef.getData());
 
       // Sempre que for para proxima página revalidar e resalvar os dados;
       // Validar os inputs;
       // Fazer o merge com o mergedStepData;
+      animatePageStepContainer(-200, 0);
 
       if (currentFormIndex < formPages.length - 1) {
-        const { current } = currentPageRef;
-        current.style.transform = 'translateX(-200px)';
-        current.style.opacity = 0;
-
         setTimeout(() => {
           setCurrentFormIndex(currentFormIndex + 1);
-          current.style.transform = 'translateX(200px)';
-        }, 200);
+          animatePageStepContainer(200, 0);
+        }, 250);
       }
     },
-    [currentFormIndex, formPages]
+    [currentFormIndex, formPages, animatePageStepContainer]
   );
 
   const goToPreviousPage = useCallback(
     event => {
       if (event) event.preventDefault();
       if (currentFormIndex > 0) {
-        const { current } = currentPageRef;
-        current.style.transform = 'translateX(200px)';
-        current.style.opacity = 0;
+        animatePageStepContainer(200, 0);
 
         setTimeout(() => {
           setCurrentFormIndex(currentFormIndex - 1);
-          current.style.transform = 'translateX(-200px)';
-        }, 200);
+          animatePageStepContainer(-200, 0);
+        }, 250);
       }
     },
-    [currentFormIndex]
+    [currentFormIndex, animatePageStepContainer]
   );
 
   const handleKeyDownToSwitchPage = useCallback(
@@ -98,12 +107,10 @@ function PreencherModelo() {
   );
 
   useEffect(() => {
-    const { current } = currentPageRef;
     setTimeout(() => {
-      current.style.opacity = 1;
-      current.style.transform = 'translateX(0)';
+      animatePageStepContainer(0, 1);
     }, 250);
-  }, [currentFormIndex]);
+  }, [currentFormIndex, animatePageStepContainer]);
 
   return (
     <BasePage>

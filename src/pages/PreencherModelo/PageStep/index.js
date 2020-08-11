@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useImperativeHandle, useRef } from 'react';
 
 import { Form } from '@unform/web';
 import {
@@ -10,7 +10,19 @@ import {
 } from './styles';
 
 function PageStep({ page }, ref) {
+  const containerRef = useRef(null);
   const formRef = useRef(null);
+
+  useImperativeHandle(ref, () => {
+    return {
+      get containerPageStep() {
+        return containerRef.current;
+      },
+      get formRef() {
+        return formRef.current;
+      },
+    };
+  });
 
   const createInputs = useCallback(
     ({ title, name, placeholder, auxText, type }, formType) => {
@@ -53,7 +65,7 @@ function PageStep({ page }, ref) {
   }, [page, createInputs]);
 
   return (
-    <Container ref={ref}>
+    <Container ref={containerRef}>
       <h3>{page.subTitle}</h3>
       {page.type === 'page-form' && <h4>{page.description}</h4>}
       <Form ref={formRef}>
