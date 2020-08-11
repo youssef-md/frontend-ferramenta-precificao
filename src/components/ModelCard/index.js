@@ -13,10 +13,12 @@ function ModelCard({ modelo }) {
             <FaDownload size={12} />
             Importar
           </button>
-          <button type="button">
-            <FaTrash size={12} />
-            Apagar
-          </button>
+          {modelo.nome !== 'Modelo Principal' && (
+            <button type="button">
+              <FaTrash size={12} />
+              Apagar
+            </button>
+          )}
         </div>
       </header>
       <ModelData>

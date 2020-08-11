@@ -32,7 +32,9 @@ function Navbar() {
     window.onscroll = () => {
       const currentScrollOffset = window.pageYOffset;
 
-      setIsSmall(prevScrollOffset < currentScrollOffset);
+      setIsSmall(
+        prevScrollOffset < currentScrollOffset || currentScrollOffset !== 0
+      );
 
       prevScrollOffset = currentScrollOffset;
     };
