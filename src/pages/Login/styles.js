@@ -22,7 +22,6 @@ export const Backdrop = styled.div`
 export const Form = styled(UnformForm)`
   position: absolute;
   width: 50rem;
-  border-radius: 0.4rem;
   box-shadow: 0 0 2rem rgba(0, 0, 0, 0.2);
   background: white;
   padding: 2rem 5rem 6rem 5rem;

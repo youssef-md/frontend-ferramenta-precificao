@@ -8,14 +8,14 @@ function FormProgressState({ formPages, currentFormIndex }) {
     <Container>
       {formPages.map(function createProgressIndicator(page, pageIndex) {
         const isPageIntro = page.type === 'page-intro';
-        const isValid = page.valid;
+        const isValid = pageIndex < currentFormIndex;
         const isCurrent = pageIndex === currentFormIndex;
 
         return (
           <Indicator
             key={page.subTitle}
             size={isPageIntro ? 'big' : 'small'}
-            isValid={isValid}
+            isValid={isValid || isPageIntro}
             isCurrent={isCurrent}
           >
             {isPageIntro && page.step}

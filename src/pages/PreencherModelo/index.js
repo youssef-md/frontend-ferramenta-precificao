@@ -15,6 +15,8 @@ import { jornadaUsuarioForms } from './pagesObject';
 import { Container, RightFormButton, LeftFormButton } from './styles';
 import BasePage from '../BasePage';
 
+const mergedStepData = {};
+
 function PreencherModelo() {
   const {
     state: { idServico, nomeServico },
@@ -29,9 +31,19 @@ function PreencherModelo() {
   const [currentFormIndex, setCurrentFormIndex] = useState(0);
   const currentPageRef = useRef(null);
 
+  const submitData = useCallback(() => {
+    // fazer o post com o mergedStepData
+    // Rota: muda
+  }, []);
+
   const goToNextPage = useCallback(
     event => {
       if (event) event.preventDefault();
+
+      // Sempre que for para proxima página revalidar e resalvar os dados;
+      // Validar os inputs;
+      // Fazer o merge com o mergedStepData;
+
       if (currentFormIndex < formPages.length - 1) {
         const { current } = currentPageRef;
         current.style.transform = 'translateX(-200px)';

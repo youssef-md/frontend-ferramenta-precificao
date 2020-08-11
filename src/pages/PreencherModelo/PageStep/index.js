@@ -1,5 +1,4 @@
-import React, { useCallback } from 'react';
-import { uuid } from 'uuidv4';
+import React, { useCallback, useRef } from 'react';
 
 import { Form } from '@unform/web';
 import {
@@ -11,18 +10,23 @@ import {
 } from './styles';
 
 function PageStep({ page }, ref) {
-  const createInputs = useCallback(({ title, placeholder, auxText, type }) => {
-    return (
-      <Input
-        key={uuid()}
-        name={uuid()}
-        type={type}
-        label={title}
-        placeholder={placeholder}
-        auxiliaryText={auxText}
-      />
-    );
-  }, []);
+  const formRef = useRef(null);
+
+  const createInputs = useCallback(
+    ({ title, name, placeholder, auxText, type }, formType) => {
+      return (
+        <Input
+          key={name}
+          name={`${name}${formType && formType}`}
+          type={type}
+          label={title}
+          placeholder={placeholder}
+          auxiliaryText={auxText}
+        />
+      );
+    },
+    []
+  );
 
   const createForm = useCallback(() => {
     if (page.form.pre && page.form.pos) {
@@ -31,13 +35,13 @@ function PageStep({ page }, ref) {
           <FormSide>
             <h5>Pré Transformação</h5>
             <InputsContainer>
-              {page.form.inputs.map(createInputs)}
+              {page.form.inputs.map(map => createInputs(map, 'Pre'))}
             </InputsContainer>
           </FormSide>
           <FormSide>
             <h5>Pós Transformação</h5>
             <InputsContainer>
-              {page.form.inputs.map(createInputs)}
+              {page.form.inputs.map(map => createInputs(map, 'Pos'))}
             </InputsContainer>
           </FormSide>
         </>
@@ -52,7 +56,7 @@ function PageStep({ page }, ref) {
     <Container ref={ref}>
       <h3>{page.subTitle}</h3>
       {page.type === 'page-form' && <h4>{page.description}</h4>}
-      <Form>
+      <Form ref={formRef}>
         {page.form ? (
           createForm()
         ) : (
