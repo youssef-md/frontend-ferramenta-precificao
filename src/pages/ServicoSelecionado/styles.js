@@ -42,7 +42,18 @@ export const ModelSection = styled.section`
 export const Models = styled.div`
   flex: 1;
 
-  div + div {
+  div + div,
+  > button {
     margin-top: 2.5rem;
+  }
+
+  > button {
+    width: 100%;
+
+    svg {
+      color: ${props => props.theme.primary05};
+      margin: 0;
+      margin-right: 0.7rem;
+    }
   }
 `;

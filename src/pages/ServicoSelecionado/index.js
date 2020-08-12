@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 
+import { FaPlus } from 'react-icons/fa';
 import BasePage from '../BasePage';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import {
@@ -22,15 +23,23 @@ import {
 function ServicoSelecioado() {
   const history = useHistory();
   const [modelos, setModelos] = useState([]);
+  const [modeloSelecionado, setModeloSelecionado] = useState();
   const {
     state: { servico },
   } = useLocation();
 
+  const defaultSelectModel = useCallback(listaModelos => {
+    setModeloSelecionado(
+      listaModelos.filter(modelo => modelo.nome === 'Modelo Principal')[0]
+    );
+  }, []);
+
   useEffect(() => {
     api.get(`modelos/servico/${servico.idServico}/`).then(response => {
       setModelos(response.data);
+      defaultSelectModel(response.data);
     });
-  }, [servico]);
+  }, [servico, defaultSelectModel]);
 
   const navigateToJornadaUsuario = useCallback(() => {
     const { idServico, nome } = servico;
@@ -39,6 +48,10 @@ function ServicoSelecioado() {
       nomeServico: nome,
     });
   }, [history, servico]);
+
+  const selectModel = modelo => {
+    setModeloSelecionado(modelo);
+  };
 
   return (
     <BasePage>
@@ -78,8 +91,22 @@ function ServicoSelecioado() {
         <h4>Modelos</h4>
         <Models>
           {modelos.map(modelo => {
-            return <ModelCard key={modelo.idModelo} modelo={modelo} />;
+            return (
+              <ModelCard
+                key={modelo.idModelo}
+                handleFuntion={() => selectModel(modelo)}
+                selectModel={
+                  modeloSelecionado &&
+                  modeloSelecionado.idModelo === modelo.idModelo
+                }
+                modelo={modelo}
+              />
+            );
           })}
+          <Button type="secondary">
+            <FaPlus size={18} />
+            Criar novo modelo de custos
+          </Button>
         </Models>
       </ModelSection>
     </BasePage>

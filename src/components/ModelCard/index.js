@@ -3,11 +3,11 @@ import { FaCheck, FaDownload, FaTrash } from 'react-icons/fa';
 
 import { ModelData, ModelCardContainer } from './styles';
 
-function ModelCard({ modelo }) {
+function ModelCard({ modelo, handleFuntion, selectModel }) {
   return (
     <ModelCardContainer>
       <header>
-        <FaCheck size={35} />
+        {selectModel ? <FaCheck size={35} /> : <div />}
         <div>
           <button type="button">
             <FaDownload size={12} />
@@ -21,7 +21,7 @@ function ModelCard({ modelo }) {
           )}
         </div>
       </header>
-      <ModelData>
+      <ModelData onClick={handleFuntion}>
         <strong>{modelo.nome}</strong>
         <p>{modelo.descricao}</p>
       </ModelData>
