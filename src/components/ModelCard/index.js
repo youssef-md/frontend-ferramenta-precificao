@@ -1,9 +1,21 @@
 import React from 'react';
 import { FaCheck, FaDownload, FaTrash } from 'react-icons/fa';
+import { useHistory } from 'react-router-dom';
+import api from '../../service/api';
 
 import { ModelData, ModelCardContainer } from './styles';
 
-function ModelCard({ modelo, handleFuntion, selectModel }) {
+function ModelCard({
+  modelo,
+  handleSelectFunction,
+  handleDeleteFunction,
+  selectModel,
+}) {
+  async function deleteModel() {
+    await api.delete(`modelos/${modelo.idModelo}/`);
+    handleDeleteFunction(modelo);
+  }
+
   return (
     <ModelCardContainer>
       <header>
@@ -14,14 +26,14 @@ function ModelCard({ modelo, handleFuntion, selectModel }) {
             Importar
           </button>
           {modelo.nome !== 'Modelo Principal' && (
-            <button type="button">
+            <button type="button" onClick={deleteModel}>
               <FaTrash size={12} />
               Apagar
             </button>
           )}
         </div>
       </header>
-      <ModelData onClick={handleFuntion}>
+      <ModelData onClick={() => handleSelectFunction(modelo)}>
         <strong>{modelo.nome}</strong>
         <p>{modelo.descricao}</p>
       </ModelData>

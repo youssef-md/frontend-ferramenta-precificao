@@ -19,11 +19,14 @@ import {
   ModelSection,
   Models,
 } from './styles';
+import CreateModel from '../CreateModel';
 
 function ServicoSelecioado() {
   const history = useHistory();
+
   const [modelos, setModelos] = useState([]);
   const [modeloSelecionado, setModeloSelecionado] = useState();
+  const [showCreateModal, setShowCreateModal] = useState(false);
   const {
     state: { servico },
   } = useLocation();
@@ -33,6 +36,24 @@ function ServicoSelecioado() {
       listaModelos.filter(modelo => modelo.nome === 'Modelo Principal')[0]
     );
   }, []);
+
+  const addModel = useCallback(
+    modelo => {
+      setModelos([...modelos, modelo]);
+      setModeloSelecionado(modelo);
+    },
+    [modelos]
+  );
+
+  const deleteModel = useCallback(
+    modeloApagado => {
+      setModelos(
+        modelos.filter(modelo => modelo.idModelo !== modeloApagado.idModelo)
+      );
+      defaultSelectModel(modelos);
+    },
+    [modelos, defaultSelectModel]
+  );
 
   useEffect(() => {
     api.get(`modelos/servico/${servico.idServico}/`).then(response => {
@@ -52,6 +73,10 @@ function ServicoSelecioado() {
   const selectModel = modelo => {
     setModeloSelecionado(modelo);
   };
+
+  const closeCreateModal = useCallback(() => {
+    setShowCreateModal(false);
+  }, []);
 
   return (
     <BasePage>
@@ -87,6 +112,13 @@ function ServicoSelecioado() {
           Gerar Relatório
         </Button>
       </Buttons>
+      {showCreateModal && (
+        <CreateModel
+          closeCreateModal={closeCreateModal}
+          handleFunction={addModel}
+          servico={servico}
+        />
+      )}
       <ModelSection>
         <h4>Modelos</h4>
         <Models>
@@ -94,7 +126,8 @@ function ServicoSelecioado() {
             return (
               <ModelCard
                 key={modelo.idModelo}
-                handleFuntion={() => selectModel(modelo)}
+                handleSelectFunction={() => selectModel(modelo)}
+                handleDeleteFunction={() => deleteModel(modelo)}
                 selectModel={
                   modeloSelecionado &&
                   modeloSelecionado.idModelo === modelo.idModelo
@@ -103,7 +136,7 @@ function ServicoSelecioado() {
               />
             );
           })}
-          <Button type="secondary">
+          <Button type="secondary" onClick={() => setShowCreateModal(true)}>
             <FaPlus size={18} />
             Criar novo modelo de custos
           </Button>
