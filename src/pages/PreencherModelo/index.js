@@ -43,12 +43,11 @@ function PreencherModelo({ stepType }) {
   const {
     state: { idServico, nomeServico },
   } = useLocation();
+  const [currentFormIndex, setCurrentFormIndex] = useState(0);
 
   const formPages = useMemo(() => mappedFormObjectWithStepType[stepType], [
     stepType,
   ]);
-
-  const [currentFormIndex, setCurrentFormIndex] = useState(0);
 
   useEffect(
     function setValidatorCurrentPage() {
@@ -57,8 +56,12 @@ function PreencherModelo({ stepType }) {
       formPages[currentFormIndex].form.inputs.map(input => {
         const inputTypeValidation =
           input.type === 'string'
-            ? yup.string('O campo deve conter somente caracteres')
-            : yup.number('O campo deve conter somente números');
+            ? yup
+                .string('Somente letras são permitidas')
+                .typeError('Somente letras são permitidas')
+            : yup
+                .number('Somente números são permitidos')
+                .typeError('Somente números são permitidos');
 
         schemaObject[`${input.name}Pre`] = inputTypeValidation.required(
           'O campo é obrigatório'
@@ -121,9 +124,9 @@ function PreencherModelo({ stepType }) {
         }
       }
 
-      animatePageStepContainer(-200, 0);
-
       if (currentFormIndex < formPages.length - 1) {
+        animatePageStepContainer(-200, 0);
+
         setTimeout(() => {
           setCurrentFormIndex(currentFormIndex + 1);
           animatePageStepContainer(200, 0);
