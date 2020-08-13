@@ -31,6 +31,7 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'import/no-cycle': 'off',
     'no-plusplus': 'off',
+    'array-callback-return': 'off',
     'no-alert': 'off',
     camelcase: 'off',
     'no-console': ['error', { allow: ['tron'] }],

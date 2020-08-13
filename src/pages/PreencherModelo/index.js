@@ -1,6 +1,13 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  useMemo,
+} from 'react';
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
+import * as yup from 'yup';
 
 import FormProgressState from '../../components/FormProgressState';
 import Breadcrumbs from '../../components/Breadcrumbs';
@@ -12,24 +19,59 @@ import {
 } from '../../routes/routeObjects';
 
 import { jornadaUsuarioForms } from './pagesObject';
+
 import { Container, RightFormButton, LeftFormButton } from './styles';
 import BasePage from '../BasePage';
 
-const mergedStepData = {};
+// receber o objeto com os campos via params ao cadastrar esse componente no react router
+// passar o id do modelo para a rota? pra saber onde deve fazer o post com o json? (vai que ele só copia e cola a url)
 
-function PreencherModelo() {
+// Na tela do serviço selecionado, checar se estou recebendo o obj do serviço, se ele acessar a rota diretamente tem que fazer uma req
+// pegando o id que ta na url
+
+let mergedStepData = {};
+
+let schemaObject = {};
+let schemaValidator = {};
+
+const mappedFormObjectWithStepType = {
+  JORNADA_USUARIO: jornadaUsuarioForms,
+};
+
+function PreencherModelo({ stepType }) {
+  const currentPageRef = useRef(null);
   const {
     state: { idServico, nomeServico },
   } = useLocation();
-  // receber o objeto com os campos via params ao cadastrar esse componente no react router
-  // passar o id do modelo para a rota? pra saber onde deve fazer o post com o json? (vai que ele só copia e cola a url)
 
-  // Na tela do serviço selecionado, checar se estou recebendo o obj do serviço, se ele acessar a rota diretamente tem que fazer uma req
-  // pegando o id que ta na url
+  const formPages = useMemo(() => mappedFormObjectWithStepType[stepType], [
+    stepType,
+  ]);
 
-  const formPages = jornadaUsuarioForms;
   const [currentFormIndex, setCurrentFormIndex] = useState(0);
-  const currentPageRef = useRef(null);
+
+  useEffect(
+    function setValidatorCurrentPage() {
+      if (!formPages[currentFormIndex].form) return;
+
+      formPages[currentFormIndex].form.inputs.map(input => {
+        const inputTypeValidation =
+          input.type === 'string'
+            ? yup.string('O campo deve conter somente caracteres')
+            : yup.number('O campo deve conter somente números');
+
+        schemaObject[`${input.name}Pre`] = inputTypeValidation.required(
+          'O campo é obrigatório'
+        );
+        schemaObject[`${input.name}Pos`] = inputTypeValidation.required(
+          'O campo é obrigatório'
+        );
+      });
+
+      schemaValidator = yup.object().shape(schemaObject);
+    },
+    [formPages, currentFormIndex]
+  );
 
   const submitData = useCallback(() => {
     // fazer o post com o mergedStepData
@@ -46,17 +88,39 @@ function PreencherModelo() {
   }, []);
 
   const goToNextPage = useCallback(
-    event => {
+    async event => {
       if (event) event.preventDefault();
+
       const {
         current: { formRef },
       } = currentPageRef;
+      formRef.setErrors({}); // reset past errors
 
-      console.log(formRef.getData());
+      const inputsData = formRef.getData();
+      const isInInputPage = Object.keys(inputsData).length;
 
-      // Sempre que for para proxima página revalidar e resalvar os dados;
-      // Validar os inputs;
-      // Fazer o merge com o mergedStepData;
+      if (isInInputPage) {
+        try {
+          await schemaValidator.validate(inputsData, {
+            abortEarly: false,
+          });
+
+          mergedStepData = { ...mergedStepData, ...inputsData };
+          schemaObject = {};
+          schemaValidator = {};
+        } catch (error) {
+          const validationErrors = {};
+          if (error instanceof yup.ValidationError) {
+            error.inner.forEach(error => {
+              validationErrors[error.path] = error.message;
+            });
+
+            formRef.setErrors(validationErrors);
+          }
+          return;
+        }
+      }
+
       animatePageStepContainer(-200, 0);
 
       if (currentFormIndex < formPages.length - 1) {
