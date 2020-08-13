@@ -51,6 +51,9 @@ const variations = {
 
 export const ButtonStyle = styled.button`
   height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 0;
   padding: 0 40px;
   border-radius: 5rem;
