@@ -11,13 +11,11 @@ import { LISTAR_SERVICOS } from './routeObjects';
 
 function CustomRoute({ isPrivate, component: Component, ...rest }) {
   const { userToken } = useGeneralAppContext();
-
   return (
     <Route
-      {...rest}
       render={() => {
         return isPrivate === !!userToken ? (
-          <Component />
+          <Component {...rest} />
         ) : (
           <Redirect to={userToken ? LISTAR_SERVICOS.route : '/'} />
         );
@@ -43,6 +41,19 @@ function Routes() {
       <CustomRoute
         isPrivate
         path="/preencher-modelo-jornada-usuario"
+        stepType="JORNADA_USUARIO"
+        component={PreencherModelo}
+      />
+      <CustomRoute
+        isPrivate
+        path="/preencher-modelo-custos-orgao"
+        stepType="CUSTOS_ORGAO"
+        component={PreencherModelo}
+      />
+      <CustomRoute
+        isPrivate
+        path="/preencher-modelo-custos-transformacao"
+        stepType="CUSTOS_TRANSFORMAÇÃO"
         component={PreencherModelo}
       />
       <CustomRoute

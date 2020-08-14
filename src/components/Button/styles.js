@@ -65,7 +65,4 @@ export const ButtonStyle = styled.button`
   }
 
   ${props => variations[props.type]}
-  svg {
-    margin-top: 0.3rem;
-  }
 `;

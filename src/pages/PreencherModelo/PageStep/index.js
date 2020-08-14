@@ -7,7 +7,10 @@ import {
   CustomInput as Input,
   InputsContainer,
   ImageContainer,
+  PageEndCTA,
+  ButtonsContainer,
 } from './styles';
+import Button from '../../../components/Button';
 
 function PageStep({ page }, ref) {
   const containerRef = useRef(null);
@@ -64,14 +67,21 @@ function PageStep({ page }, ref) {
     );
   }, [page, createInputs]);
 
+  const isPageForm = useCallback(() => page.type === 'page-form', [page.type]);
+  const isPageIntro = useCallback(() => page.type === 'page-intro', [
+    page.type,
+  ]);
+  const isPageEnd = useCallback(() => page.type === 'page-end', [page.type]);
+
   return (
     <Container ref={containerRef}>
-      <h3>{page.subTitle}</h3>
-      {page.type === 'page-form' && <h4>{page.description}</h4>}
+      {!isPageEnd() && <h3>{page.subTitle}</h3>}
+      {isPageForm() && <h4>{page.description}</h4>}
+
       <Form ref={formRef}>
-        {page.form ? (
-          createForm()
-        ) : (
+        {isPageForm() && createForm()}
+
+        {isPageIntro() && (
           <ImageContainer>
             <img
               alt="img"
@@ -79,6 +89,20 @@ function PageStep({ page }, ref) {
             />
             <h4>{page.description}</h4>
           </ImageContainer>
+        )}
+
+        {isPageEnd() && (
+          <PageEndCTA>
+            <h3>{page.subTitle}</h3>
+            <h4>{page.description}</h4>
+            <ButtonsContainer>
+              {page.buttons.map(({ text, route }) => (
+                <Button key={route} type="secondary">
+                  {text}
+                </Button>
+              ))}
+            </ButtonsContainer>
+          </PageEndCTA>
         )}
       </Form>
     </Container>

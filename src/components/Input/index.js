@@ -33,7 +33,7 @@ function Input({
   }, [fieldName, registerField]);
 
   return (
-    <Container className={className} valid={valid} invalid={invalid}>
+    <Container className={className} valid={valid} invalid={error}>
       <label htmlFor={label}>{label}</label>
       <input
         ref={inputRef}
@@ -46,7 +46,7 @@ function Input({
           {seePassword ? <FaEyeSlash size={22} /> : <FaEye size={22} />}
         </TogglePassword>
       )}
-      <p>{!invalid && !valid && auxiliaryText}</p>
+      <p>{!error && !valid && auxiliaryText}</p>
       {valid && (
         <Valid>
           <FaCheckCircle size={16} />
@@ -54,10 +54,10 @@ function Input({
         </Valid>
       )}
 
-      {invalid && (
+      {error && (
         <Invalid>
           <FaTimesCircle size={16} />
-          <p>Texto inválido</p>
+          <p>{error}</p>
         </Invalid>
       )}
     </Container>
