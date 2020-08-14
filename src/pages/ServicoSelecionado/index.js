@@ -55,6 +55,21 @@ function ServicoSelecioado() {
     [modelos, defaultSelectModel]
   );
 
+  const updateImportedModel = useCallback(
+    modeloImportado => {
+      setModelos(
+        modelos.map(modelo => {
+          if (modelo.idModelo === modeloImportado.idModelo) {
+            return modeloImportado;
+          }
+          return modelo;
+        })
+      );
+      setModeloSelecionado(modeloImportado);
+    },
+    [modelos]
+  );
+
   useEffect(() => {
     api.get(`modelos/servico/${servico.idServico}/`).then(response => {
       setModelos(response.data);
@@ -126,8 +141,9 @@ function ServicoSelecioado() {
             return (
               <ModelCard
                 key={modelo.idModelo}
-                handleSelectFunction={() => selectModel(modelo)}
-                handleDeleteFunction={() => deleteModel(modelo)}
+                handleSelectFunction={selectModel}
+                handleDeleteFunction={deleteModel}
+                handleUpdateFunction={updateImportedModel}
                 selectModel={
                   modeloSelecionado &&
                   modeloSelecionado.idModelo === modelo.idModelo
