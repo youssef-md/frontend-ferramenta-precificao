@@ -97,12 +97,12 @@ function PreencherModelo({ stepType }) {
       const {
         current: { formRef },
       } = currentPageRef;
-      formRef.setErrors({}); // reset past errors
-
-      const inputsData = formRef.getData();
-      const isInInputPage = Object.keys(inputsData).length;
+      const isInInputPage = formPages[currentFormIndex].form;
 
       if (isInInputPage) {
+        const inputsData = formRef.getData();
+        formRef.setErrors({}); // reset past errors
+
         try {
           await schemaValidator.validate(inputsData, {
             abortEarly: false,
@@ -130,7 +130,7 @@ function PreencherModelo({ stepType }) {
         setTimeout(() => {
           setCurrentFormIndex(currentFormIndex + 1);
           animatePageStepContainer(200, 0);
-        }, 250);
+        }, 150);
       }
     },
     [currentFormIndex, formPages, animatePageStepContainer]
@@ -145,7 +145,7 @@ function PreencherModelo({ stepType }) {
         setTimeout(() => {
           setCurrentFormIndex(currentFormIndex - 1);
           animatePageStepContainer(-200, 0);
-        }, 250);
+        }, 150);
       }
     },
     [currentFormIndex, animatePageStepContainer]
@@ -176,7 +176,7 @@ function PreencherModelo({ stepType }) {
   useEffect(() => {
     setTimeout(() => {
       animatePageStepContainer(0, 1);
-    }, 250);
+    }, 280);
   }, [currentFormIndex, animatePageStepContainer]);
 
   return (

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { FaCheck } from 'react-icons/fa';
 
 export const Container = styled.div`
   display: flex;
@@ -30,4 +31,11 @@ export const Indicator = styled.div`
   svg {
     color: white;
   }
+`;
+
+export const EndPageCheck = styled(FaCheck)`
+  color: ${props =>
+    props.isCurrent
+      ? props.theme.secondary01
+      : props.theme.secondary04} !important;
 `;

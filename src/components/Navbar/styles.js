@@ -8,7 +8,7 @@ export const Container = styled.nav`
   top: 0;
   z-index: 4;
   background: ${props => props.theme.secondary01};
-  transition: transform 0.3s;
+  transition: transform 0.15s;
   transform: translateY(${props => (props.isSmall ? -65 : 0)}px);
 
   button {

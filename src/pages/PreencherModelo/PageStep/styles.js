@@ -20,7 +20,7 @@ export const Container = styled.div`
   opacity: 0;
   max-width: 88%;
   margin: 0 auto;
-  transition: all .3s;
+  transition: all .15s;
 
   h4 {
     margin-top: -1.5rem;
@@ -68,5 +68,23 @@ export const ImageContainer = styled.div`
     height: 40vh;
     margin-bottom: 50px;
     background-size: cover;
+  }
+`;
+
+export const PageEndCTA = styled.div`
+  padding: 4rem 1rem 1rem;
+  > h3 {
+    margin-bottom: 8rem;
+  }
+`;
+
+export const ButtonsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 10rem;
+
+  > button:first-child {
+    margin-right: 3rem;
   }
 `;
