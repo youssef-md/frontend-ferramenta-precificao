@@ -22,7 +22,7 @@ function Input({
   onSetSeePassword,
 }) {
   const inputRef = useRef(null);
-  const { fieldName, registerField, error } = useField(name);
+  const { fieldName, registerField, error, defaultValue } = useField(name);
 
   useEffect(() => {
     registerField({
@@ -37,6 +37,7 @@ function Input({
       <label htmlFor={label}>{label}</label>
       <input
         ref={inputRef}
+        value={defaultValue}
         id={label}
         placeholder={placeholder}
         type={seePassword ? 'text' : type}

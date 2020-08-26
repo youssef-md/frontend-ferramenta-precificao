@@ -51,6 +51,9 @@ function PreencherModelo({ stepType }) {
 
   useEffect(
     function setValidatorCurrentPage() {
+      schemaObject = {};
+      schemaValidator = {};
+
       if (!formPages[currentFormIndex].form) return;
 
       formPages[currentFormIndex].form.inputs.map(input => {
@@ -74,6 +77,18 @@ function PreencherModelo({ stepType }) {
       schemaValidator = yup.object().shape(schemaObject);
     },
     [formPages, currentFormIndex]
+  );
+
+  useEffect(
+    function updateDefaultFormInputValues() {
+      const {
+        current: { formRef },
+      } = currentPageRef;
+
+      const isInInputPage = formPages[currentFormIndex].form;
+      if (isInInputPage) formRef.setData(mergedStepData);
+    },
+    [currentFormIndex, formPages]
   );
 
   const submitData = useCallback(() => {
@@ -101,6 +116,8 @@ function PreencherModelo({ stepType }) {
 
       if (isInInputPage) {
         const inputsData = formRef.getData();
+        console.log(schemaValidator);
+
         formRef.setErrors({}); // reset past errors
 
         try {
@@ -109,8 +126,7 @@ function PreencherModelo({ stepType }) {
           });
 
           mergedStepData = { ...mergedStepData, ...inputsData };
-          schemaObject = {};
-          schemaValidator = {};
+          console.log(mergedStepData);
         } catch (error) {
           const validationErrors = {};
           if (error instanceof yup.ValidationError) {
@@ -139,6 +155,7 @@ function PreencherModelo({ stepType }) {
   const goToPreviousPage = useCallback(
     event => {
       if (event) event.preventDefault();
+
       if (currentFormIndex > 0) {
         animatePageStepContainer(200, 0);
 
