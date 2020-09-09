@@ -116,7 +116,6 @@ function PreencherModelo({ stepType }) {
 
       if (isInInputPage) {
         const inputsData = formRef.getData();
-        console.log(schemaValidator);
 
         formRef.setErrors({}); // reset past errors
 
@@ -126,7 +125,6 @@ function PreencherModelo({ stepType }) {
           });
 
           mergedStepData = { ...mergedStepData, ...inputsData };
-          console.log(mergedStepData);
         } catch (error) {
           const validationErrors = {};
           if (error instanceof yup.ValidationError) {

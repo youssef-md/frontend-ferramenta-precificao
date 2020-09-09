@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Card from '../../components/Card';
-import { PACOTE_CONSTANTES } from '../../routes/routeObjects';
+import {
+  PACOTE_CONSTANTES,
+  PACOTE_SELECIONADO,
+} from '../../routes/routeObjects';
 import api from '../../service/api';
 import BasePage from '../BasePage';
 
 import { ListPacksContainer } from './styles';
 
 function ListarPacotesConstantes() {
+  const history = useHistory();
   const [pacotes, setPacotes] = useState([]);
 
   useEffect(() => {
@@ -28,9 +33,7 @@ function ListarPacotesConstantes() {
 
     const [
       { value: day },
-      ,
       { value: month },
-      ,
       { value: year },
     ] = dateFormat.formatToParts(date);
 
@@ -52,7 +55,12 @@ function ListarPacotesConstantes() {
               info={{
                 date: formatDate(pacote),
               }}
-              onPress={() => console.log('clicou')}
+              onPress={() =>
+                history.push(
+                  PACOTE_SELECIONADO(pacote.dtPacote, pacote.idPacote).route,
+                  { pacote }
+                )
+              }
             />
           );
         })}

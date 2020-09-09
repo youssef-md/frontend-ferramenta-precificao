@@ -8,6 +8,7 @@ import PreencherModelo from '../pages/PreencherModelo';
 import ListarPacotesConstantes from '../pages/ListarPacotesConstantes';
 import { useGeneralAppContext } from '../App';
 import { LISTAR_SERVICOS } from './routeObjects';
+import ListarConstantes from '../pages/ListarConstantes';
 
 function CustomRoute({ isPrivate, component: Component, ...rest }) {
   const { userToken } = useGeneralAppContext();
@@ -60,6 +61,11 @@ function Routes() {
         isPrivate
         path="/pacotes-constantes"
         component={ListarPacotesConstantes}
+      />
+      <CustomRoute
+        isPrivate
+        path="/pacote-selecionado"
+        component={ListarConstantes}
       />
     </Switch>
   );
