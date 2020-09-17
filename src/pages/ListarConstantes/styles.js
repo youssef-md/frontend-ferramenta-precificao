@@ -21,13 +21,16 @@ export const Container = styled.div`
 export const Table = styled.div`
   margin-bottom: 5rem;
 
-  #smaller {
+  .smaller {
     flex: 0.7;
   }
 
-  header,
-  section {
+  header {
     padding: 2rem 1.5rem;
+  }
+
+  section {
+    padding: 0.5rem 1.5rem;
   }
 
   header {
@@ -48,8 +51,9 @@ export const Table = styled.div`
     p {
       flex: 2;
       position: relative;
+      font-size: 15px;
 
-      span {
+      .desc-popup {
         position: absolute;
         top: -1rem;
         left: -1rem;
@@ -62,14 +66,33 @@ export const Table = styled.div`
         z-index: 10;
       }
 
-      &:hover span {
+      &:hover .desc-popup {
         display: block;
+      }
+
+      .input-new-value {
+        width: 8rem;
+        height: 3rem;
+        border: 1px solid rgba(0, 0, 0, 0.8);
+        border-radius: 4px;
+        padding: 0 0.4rem;
+      }
+
+      .new-value {
+        display: flex;
+
+        button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-right: -1rem;
+        }
       }
     }
 
     button {
       padding: 1rem;
-      margin-left: 1rem;
+      margin-right: 1rem;
 
       svg {
         color: ${props => props.theme.primary04};

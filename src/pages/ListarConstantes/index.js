@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import { useLocation } from 'react-router-dom';
-import { FaEdit } from 'react-icons/fa';
+import { FaCheckCircle, FaEdit, FaTimesCircle } from 'react-icons/fa';
 import { Container, EOFButton, Table } from './styles';
 import BasePage from '../BasePage';
 import Breadcrumbs from '../../components/Breadcrumbs';
@@ -10,33 +10,62 @@ import {
   PACOTE_SELECIONADO,
 } from '../../routes/routeObjects';
 
+const newValueInputs = [];
+
 function ListarConstantes() {
   const {
     state: { pacote },
   } = useLocation();
 
-  function filterConstantesByEtapa(etapa) {
-    return pacote.constante.reduce((acc, constante) => {
-      if (constante.etapaPrecificacao === etapa)
-        return [...acc, { ...constante, isEditing: false }];
-      return acc;
-    }, []);
-  }
-
-  const [constantesPre, setConstantesPre] = useState(
-    filterConstantesByEtapa('Pré')
+  const filterConstantesByEtapa = useCallback(
+    etapa =>
+      pacote.constante.filter(
+        constante => constante.etapaPrecificacao === etapa
+      ),
+    [pacote.constante]
   );
 
-  const [constantesPos, setConstantesPos] = useState(
-    filterConstantesByEtapa('Pós')
+  const constantesGeral = filterConstantesByEtapa(null);
+  const [geralEdit, setGeralEdit] = useState(
+    Array(constantesGeral.length).fill(false)
   );
 
-  const [constantesGeral, setConstantesGeral] = useState(
-    filterConstantesByEtapa(null)
+  const constantesPre = filterConstantesByEtapa('Pré');
+
+  const constantesPos = filterConstantesByEtapa('Pós');
+
+  const generateDescription = useCallback(
+    descricao =>
+      `${descricao.substr(0, 40)}${descricao.length > 40 ? '...' : ''}` ||
+      '---',
+    []
+  );
+
+  const toggleEditGeral = useCallback(
+    index => {
+      const prev = [...geralEdit];
+      prev[index] = !prev[index];
+      setGeralEdit(prev);
+    },
+    [geralEdit]
+  );
+
+  const getEditOnActions = useCallback(
+    (okAction, noAction, index) => (
+      <span className="new-value">
+        <button type="button" onClick={() => okAction(index)}>
+          <FaCheckCircle size={22} color="#2670E8" />
+        </button>
+        <button type="button" onClick={() => noAction(index)}>
+          <FaTimesCircle size={22} color="#e60000" />
+        </button>
+      </span>
+    ),
+    []
   );
 
   const { idPacote, dtPacote } = pacote;
-  console.log(constantesGeral);
+
   return (
     <BasePage>
       <Breadcrumbs
@@ -57,80 +86,53 @@ function ListarConstantes() {
           <header>
             <p>Constantes Gerais</p>
             <p>Descrição</p>
-            <p id="smaller">Valor</p>
-            <p id="smaller">Ações</p>
+            <p className="smaller">Valor</p>
+            <p className="smaller">Ações</p>
           </header>
           {constantesGeral.map(
-            ({ idConstante, nome: { nome }, descricao, valor }) => (
+            ({ idConstante, nome: { nome }, descricao, valor }, index) => (
               <section key={idConstante}>
                 <p>{nome}</p>
                 <p>
-                  {`${descricao.substr(0, 40)}${
-                    descricao.length > 40 ? '...' : ''
-                  }` || '---'}
-                  {descricao.length > 40 && <span>{descricao}</span>}
+                  {descricao.length > 40 && (
+                    <span className="desc-popup">{descricao}</span>
+                  )}
+                  {generateDescription(descricao)}
                 </p>
-                <p id="smaller">R${valor}</p>
-                <p id="smaller">
-                  <button type="button">
-                    <FaEdit size={22} />
-                  </button>
+                <p className="smaller">
+                  {geralEdit[index] ? (
+                    <input
+                      className="input-new-value"
+                      type="number"
+                      placeholder={`R$ ${valor}`}
+                      onChange={e => {
+                        newValueInputs[index] = Number(e.target.value);
+                      }}
+                    />
+                  ) : (
+                    `R$ ${valor}`
+                  )}
                 </p>
-              </section>
-            )
-          )}
-        </Table>
-
-        <Table>
-          <header>
-            <p>Constantes Pré</p>
-            <p>Descrição</p>
-            <p id="smaller">Valor</p>
-            <p id="smaller">Ações</p>
-          </header>
-          {constantesPre.map(
-            ({ idConstante, nome: { nome }, descricao, valor }) => (
-              <section key={idConstante}>
-                <p>{nome}</p>
-                <p>
-                  {`${descricao.substr(0, 40)}${
-                    descricao.length > 40 ? '...' : ''
-                  }` || '---'}
-                  {descricao.length > 40 && <span>{descricao}</span>}
-                </p>
-                <p id="smaller">R${valor}</p>
-                <p id="smaller">
-                  <button type="button">
-                    <FaEdit size={22} />
-                  </button>
-                </p>
-              </section>
-            )
-          )}
-        </Table>
-
-        <Table>
-          <header>
-            <p>Constantes Pós</p>
-            <p>Descrição</p>
-            <p id="smaller">Valor</p>
-            <p id="smaller">Ações</p>
-          </header>
-          {constantesPos.map(
-            ({ idConstante, nome: { nome }, descricao, valor }) => (
-              <section key={idConstante}>
-                <p>{nome}</p>
-                <p>
-                  {`${descricao.substr(0, 40)}${
-                    descricao.length > 40 ? '...' : ''
-                  }` || '---'}
-                  {descricao.length > 40 && <span>{descricao}</span>}
-                </p>
-                <p id="smaller">R${valor}</p>
-                <p id="smaller">
-                  <button type="button">
-                    <FaEdit size={22} />
-                  </button>
+                <p className="smaller">
+                  {geralEdit[index] ? (
+                    getEditOnActions(
+                      () => {
+                        if (newValueInputs[index]) {
+                          constantesGeral[index].valor = newValueInputs[index];
+                        }
+                        toggleEditGeral(index);
+                      },
+                      toggleEditGeral,
+                      index
+                    )
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => toggleEditGeral(index)}
+                    >
+                      <FaEdit size={22} style={{ height: 18 }} />
+                    </button>
+                  )}
                 </p>
               </section>
             )
