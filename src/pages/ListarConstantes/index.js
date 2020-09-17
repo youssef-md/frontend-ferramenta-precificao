@@ -10,11 +10,13 @@ import {
   PACOTE_SELECIONADO,
 } from '../../routes/routeObjects';
 
-const newValueInputs = [];
+const geralNewValueInputs = [];
+const preNewValueInputs = [];
+const posNewValueInputs = [];
 
 function ListarConstantes() {
   const {
-    state: { pacote },
+    state: { pacote, canEditPack },
   } = useLocation();
 
   const filterConstantesByEtapa = useCallback(
@@ -87,7 +89,7 @@ function ListarConstantes() {
             <p>Constantes Gerais</p>
             <p>Descrição</p>
             <p className="smaller">Valor</p>
-            <p className="smaller">Ações</p>
+            {canEditPack && <p className="smaller">Ações</p>}
           </header>
           {constantesGeral.map(
             ({ idConstante, nome: { nome }, descricao, valor }, index) => (
@@ -106,34 +108,37 @@ function ListarConstantes() {
                       type="number"
                       placeholder={`R$ ${valor}`}
                       onChange={e => {
-                        newValueInputs[index] = Number(e.target.value);
+                        geralNewValueInputs[index] = Number(e.target.value);
                       }}
                     />
                   ) : (
                     `R$ ${valor}`
                   )}
                 </p>
-                <p className="smaller">
-                  {geralEdit[index] ? (
-                    getEditOnActions(
-                      () => {
-                        if (newValueInputs[index]) {
-                          constantesGeral[index].valor = newValueInputs[index];
-                        }
-                        toggleEditGeral(index);
-                      },
-                      toggleEditGeral,
-                      index
-                    )
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => toggleEditGeral(index)}
-                    >
-                      <FaEdit size={22} style={{ height: 18 }} />
-                    </button>
-                  )}
-                </p>
+                {canEditPack && (
+                  <p className="smaller">
+                    {geralEdit[index] ? (
+                      getEditOnActions(
+                        () => {
+                          if (geralNewValueInputs[index]) {
+                            constantesGeral[index].valor =
+                              geralNewValueInputs[index];
+                          }
+                          toggleEditGeral(index);
+                        },
+                        toggleEditGeral,
+                        index
+                      )
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => toggleEditGeral(index)}
+                      >
+                        <FaEdit size={22} style={{ height: 18 }} />
+                      </button>
+                    )}
+                  </p>
+                )}
               </section>
             )
           )}

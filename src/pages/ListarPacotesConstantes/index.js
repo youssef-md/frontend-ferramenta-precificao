@@ -47,7 +47,7 @@ function ListarPacotesConstantes() {
       <Breadcrumbs currentRouting={[PACOTE_CONSTANTES]} />
       <ListPacksContainer>
         <h3>Pacotes de Constantes dos Modelos</h3>
-        {pacotes.map(pacote => {
+        {pacotes.map((pacote, index) => {
           return (
             <Card
               constantes
@@ -58,7 +58,7 @@ function ListarPacotesConstantes() {
               onPress={() =>
                 history.push(
                   PACOTE_SELECIONADO(pacote.dtPacote, pacote.idPacote).route,
-                  { pacote }
+                  { pacote, canEditPack: index === 0 }
                 )
               }
             />
