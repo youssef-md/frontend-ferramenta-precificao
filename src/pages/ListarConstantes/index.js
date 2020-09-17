@@ -81,6 +81,62 @@ function ListarConstantes() {
           )}
         </Table>
 
+        <Table>
+          <header>
+            <p>Constantes Pré</p>
+            <p>Descrição</p>
+            <p id="smaller">Valor</p>
+            <p id="smaller">Ações</p>
+          </header>
+          {constantesPre.map(
+            ({ idConstante, nome: { nome }, descricao, valor }) => (
+              <section key={idConstante}>
+                <p>{nome}</p>
+                <p>
+                  {`${descricao.substr(0, 40)}${
+                    descricao.length > 40 ? '...' : ''
+                  }` || '---'}
+                  {descricao.length > 40 && <span>{descricao}</span>}
+                </p>
+                <p id="smaller">R${valor}</p>
+                <p id="smaller">
+                  <button type="button">
+                    <FaEdit size={22} />
+                  </button>
+                </p>
+              </section>
+            )
+          )}
+        </Table>
+
+        <Table>
+          <header>
+            <p>Constantes Pós</p>
+            <p>Descrição</p>
+            <p id="smaller">Valor</p>
+            <p id="smaller">Ações</p>
+          </header>
+          {constantesPos.map(
+            ({ idConstante, nome: { nome }, descricao, valor }) => (
+              <section key={idConstante}>
+                <p>{nome}</p>
+                <p>
+                  {`${descricao.substr(0, 40)}${
+                    descricao.length > 40 ? '...' : ''
+                  }` || '---'}
+                  {descricao.length > 40 && <span>{descricao}</span>}
+                </p>
+                <p id="smaller">R${valor}</p>
+                <p id="smaller">
+                  <button type="button">
+                    <FaEdit size={22} />
+                  </button>
+                </p>
+              </section>
+            )
+          )}
+        </Table>
+
         <EOFButton type="secondary">
           Salvar e criar um novo pacote de constantes
         </EOFButton>

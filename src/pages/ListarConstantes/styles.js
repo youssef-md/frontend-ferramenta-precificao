@@ -19,8 +19,10 @@ export const Container = styled.div`
 `;
 
 export const Table = styled.div`
+  margin-bottom: 5rem;
+
   #smaller {
-    flex: 0.8;
+    flex: 0.7;
   }
 
   header,
