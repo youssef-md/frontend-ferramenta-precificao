@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 
 import { useLocation } from 'react-router-dom';
 import { FaCheckCircle, FaEdit, FaTimesCircle } from 'react-icons/fa';
@@ -27,14 +27,21 @@ function ListarConstantes() {
     [pacote.constante]
   );
 
-  const constantesGeral = filterConstantesByEtapa(null);
+  const constantesGeral = useRef(filterConstantesByEtapa(null)).current;
+  const constantesPre = useRef(filterConstantesByEtapa('Pré')).current;
+  const constantesPos = useRef(filterConstantesByEtapa('Pós')).current;
+
   const [geralEdit, setGeralEdit] = useState(
     Array(constantesGeral.length).fill(false)
   );
 
-  const constantesPre = filterConstantesByEtapa('Pré');
+  const [preEdit, setPreEdit] = useState(
+    Array(constantesGeral.length).fill(false)
+  );
 
-  const constantesPos = filterConstantesByEtapa('Pós');
+  const [posEdit, setPosEdit] = useState(
+    Array(constantesGeral.length).fill(false)
+  );
 
   const generateDescription = useCallback(
     descricao =>
@@ -52,6 +59,24 @@ function ListarConstantes() {
     [geralEdit]
   );
 
+  const toggleEditPre = useCallback(
+    index => {
+      const prev = [...preEdit];
+      prev[index] = !prev[index];
+      setPreEdit(prev);
+    },
+    [preEdit]
+  );
+
+  const toggleEditPos = useCallback(
+    index => {
+      const prev = [...posEdit];
+      prev[index] = !prev[index];
+      setPosEdit(prev);
+    },
+    [posEdit]
+  );
+
   const getEditOnActions = useCallback(
     (okAction, noAction, index) => (
       <span className="new-value">
@@ -64,6 +89,64 @@ function ListarConstantes() {
       </span>
     ),
     []
+  );
+
+  const generateConstants = useCallback(
+    (constants, editArrayState, tempForNewValueInput, toggleEditConstantType) =>
+      constants.map(
+        (
+          { idConstante, nome: { nome }, descricao, valor, etapaPrecificacao },
+          index
+        ) => (
+          <section key={`${idConstante}-${etapaPrecificacao}`}>
+            <p>{nome}</p>
+            <p>
+              {descricao.length > 40 && (
+                <span className="desc-popup">{descricao}</span>
+              )}
+              {generateDescription(descricao)}
+            </p>
+            <p className="smaller">
+              {editArrayState[index] ? (
+                <input
+                  className="input-new-value"
+                  type="number"
+                  placeholder={`R$ ${valor}`}
+                  onChange={e => {
+                    tempForNewValueInput[index] = Number(e.target.value);
+                  }}
+                />
+              ) : (
+                `R$ ${valor}`
+              )}
+            </p>
+            {canEditPack && (
+              <p className="smaller">
+                {editArrayState[index] ? (
+                  getEditOnActions(
+                    () => {
+                      if (tempForNewValueInput[index]) {
+                        constants[index].valor = tempForNewValueInput[index];
+                      }
+                      toggleEditConstantType(index);
+                    },
+                    toggleEditConstantType,
+                    index
+                  )
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => toggleEditConstantType(index)}
+                  >
+                    <FaEdit size={22} style={{ height: 18 }} />
+                  </button>
+                )}
+              </p>
+            )}
+          </section>
+        )
+      ),
+    [canEditPack, generateDescription, getEditOnActions]
   );
 
   const { idPacote, dtPacote } = pacote;
@@ -91,56 +174,41 @@ function ListarConstantes() {
             <p className="smaller">Valor</p>
             {canEditPack && <p className="smaller">Ações</p>}
           </header>
-          {constantesGeral.map(
-            ({ idConstante, nome: { nome }, descricao, valor }, index) => (
-              <section key={idConstante}>
-                <p>{nome}</p>
-                <p>
-                  {descricao.length > 40 && (
-                    <span className="desc-popup">{descricao}</span>
-                  )}
-                  {generateDescription(descricao)}
-                </p>
-                <p className="smaller">
-                  {geralEdit[index] ? (
-                    <input
-                      className="input-new-value"
-                      type="number"
-                      placeholder={`R$ ${valor}`}
-                      onChange={e => {
-                        geralNewValueInputs[index] = Number(e.target.value);
-                      }}
-                    />
-                  ) : (
-                    `R$ ${valor}`
-                  )}
-                </p>
-                {canEditPack && (
-                  <p className="smaller">
-                    {geralEdit[index] ? (
-                      getEditOnActions(
-                        () => {
-                          if (geralNewValueInputs[index]) {
-                            constantesGeral[index].valor =
-                              geralNewValueInputs[index];
-                          }
-                          toggleEditGeral(index);
-                        },
-                        toggleEditGeral,
-                        index
-                      )
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={() => toggleEditGeral(index)}
-                      >
-                        <FaEdit size={22} style={{ height: 18 }} />
-                      </button>
-                    )}
-                  </p>
-                )}
-              </section>
-            )
+          {generateConstants(
+            constantesGeral,
+            geralEdit,
+            geralNewValueInputs,
+            toggleEditGeral
+          )}
+        </Table>
+
+        <Table>
+          <header>
+            <p>Constantes Pré</p>
+            <p>Descrição</p>
+            <p className="smaller">Valor</p>
+            {canEditPack && <p className="smaller">Ações</p>}
+          </header>
+          {generateConstants(
+            constantesPre,
+            preEdit,
+            preNewValueInputs,
+            toggleEditPre
+          )}
+        </Table>
+
+        <Table>
+          <header>
+            <p>Constantes Pós</p>
+            <p>Descrição</p>
+            <p className="smaller">Valor</p>
+            {canEditPack && <p className="smaller">Ações</p>}
+          </header>
+          {generateConstants(
+            constantesPos,
+            posEdit,
+            posNewValueInputs,
+            toggleEditPos
           )}
         </Table>
 
