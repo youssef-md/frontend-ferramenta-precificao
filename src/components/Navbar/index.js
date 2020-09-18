@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { FaBars, FaUser, FaAdjust, FaPowerOff, FaTimes } from 'react-icons/fa';
+import { FaBars, FaUser, FaAdjust, FaPowerOff } from 'react-icons/fa';
 
 import {
   Container,
@@ -22,7 +22,6 @@ function Navbar() {
 
   const [isSidedrawerOpen, setIsSidedrawerOpen] = useState(false);
   const [isSmall, setIsSmall] = useState(false);
-  const [isBurgerOpen, setIsBurgerOpen] = useState(false);
 
   const openSidedrawer = useCallback(() => setIsSidedrawerOpen(true), []);
   const closeSidedrawer = useCallback(() => setIsSidedrawerOpen(false), []);
@@ -49,24 +48,11 @@ function Navbar() {
       />
 
       <Container isSmall={isSmall}>
-        <TopContainer isBurgerOpen={isBurgerOpen}>
-          <div>
-            <a href="https://www.gov.br/pt-br">
-              <img src={govBrLogo} alt="gov.br" />
-            </a>
+        <TopContainer>
+          <a href="https://www.gov.br/pt-br">
+            <img src={govBrLogo} alt="gov.br" />
+          </a>
 
-            {isBurgerOpen ? (
-              <FaTimes
-                size={30}
-                onClick={() => setIsBurgerOpen(!isBurgerOpen)}
-              />
-            ) : (
-                <FaBars
-                  size={30}
-                  onClick={() => setIsBurgerOpen(!isBurgerOpen)}
-                />
-              )}
-          </div>
           <ul>
             <li>
               <a

@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 export const Container = styled.nav`
   height: 13.6rem;
@@ -30,19 +30,7 @@ export const TopContainer = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  > div {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  > div svg {
-    display: none;
-    color: ${props => props.theme.primary05};
-  }
-
-  > div a img {
+  > a img {
     width: 14rem;
     height: 5.3rem;
     margin-left: -0.5rem;
@@ -73,38 +61,13 @@ export const TopContainer = styled.div`
   }
 
   @media (max-width: 720px) {
-    flex-direction: column;
-
-    > div svg {
-      display: flex;
-    }
-
     ul {
-      display: none;
+      margin-right: 2rem;
+
+      li > a {
+        display: none;
+      }
     }
-
-    ${props =>
-    props.isBurgerOpen &&
-    css`
-        ul {
-          display: flex;
-          flex-direction: column;
-          background: ${props => props.theme.secondary01};
-          width: 100%;
-
-          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
-
-          z-index: 5;
-
-          li:first-child {
-            margin-top: 7rem;
-          }
-
-          li + li {
-            margin-bottom: 7rem;
-          }
-        }
-      `}
   }
 `;
 

@@ -23,6 +23,16 @@ export const SideNav = styled.aside`
   transition: all 0.2s;
   transform: translateX(${props => (props.isOpen ? 0 : '-47.5rem')});
 
+  div {
+    visibility: hidden;
+  }
+
+  @media (max-width: 720px) {
+    div {
+      visibility: visible;
+    }
+  }
+
   li {
     list-style: none;
   }

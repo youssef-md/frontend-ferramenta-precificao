@@ -23,6 +23,20 @@ function Sidedrawer({ onCloseSidedrawer, isOpen }) {
         </NavHead>
         <NavItem to={PACOTE_CONSTANTES.route}>Pacote de Constantes</NavItem>
         <NavItem to={LISTAR_SERVICOS.route}>Lista de Serviços</NavItem>
+        <div>
+          <NavItem to="https://www.gov.br/pt-br/orgaos-do-governo">
+            Órgãos do Governo
+          </NavItem>
+          <NavItem to="https://www.gov.br/acessoainformacao/pt-br">
+            Acesso à informação
+          </NavItem>
+          <NavItem to="http://www4.planalto.gov.br/legislacao">
+            Legislação
+          </NavItem>
+          <NavItem to="https://www.gov.br/governodigital/pt-br/acessibilidade-digital">
+            Acessibilidade
+          </NavItem>
+        </div>
       </SideNav>
       {isOpen && <Backdrop onClick={onCloseSidedrawer} />}
     </>
