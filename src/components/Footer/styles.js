@@ -34,4 +34,12 @@ export const Content = styled.div`
       margin-left: 4rem;
     }
   }
+
+  @media (max-width: 720px) {
+    flex-direction: column;
+
+    img {
+      margin-bottom: 7rem;
+    }
+  }
 `;
