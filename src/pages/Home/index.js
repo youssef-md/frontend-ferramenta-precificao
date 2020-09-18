@@ -26,8 +26,8 @@ function Home() {
       <Container>
         {showLoginModal && <Login />}
         <TitleHeader>
-          <h4>Bem vindo à Ferramenta de</h4>
-          <h3>Análise de Custos de Serviços</h3>
+          <h2>Bem vindo à Ferramenta de</h2>
+          <h1>Análise de Custos de Serviços</h1>
           <p>
             Logo abaixo estão as etapas para estimar os custos de seu serviço:
           </p>
@@ -44,15 +44,15 @@ function Home() {
           <Card>
             <img src={custosImg} alt="service" />
             <div>
-              <Indicator>1</Indicator>
-              <p>Selecione o serviço</p>
+              <Indicator>2</Indicator>
+              <p>Estime os Custos do Serviço</p>
             </div>
           </Card>
           <Card>
             <img src={relatorioImg} alt="service" />
             <div>
-              <Indicator>1</Indicator>
-              <p>Selecione o serviço</p>
+              <Indicator>3</Indicator>
+              <p>Gere Relatório com os Custos</p>
             </div>
           </Card>
         </CardsContainer>

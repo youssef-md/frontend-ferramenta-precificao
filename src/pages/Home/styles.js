@@ -14,36 +14,19 @@ export const TitleHeader = styled.div`
   text-align: center;
   margin-top: 2rem;
 
-  h4 {
-    font-size: 35px;
+  h2 {
     margin-bottom: 0px;
     color: ${props => props.theme.secondary08};
   }
 
-  h3 {
+  h1 {
     margin-top: 0;
-    font-size: 41px;
     color: ${props => props.theme.secondary08};
   }
 
   p {
-    font-size: 24px;
     color: black;
     margin: 5rem 0;
-  }
-
-  @media (max-width: 720px) {
-    h4 {
-      font-size: 25px;
-    }
-
-    h3 {
-      font-size: 30px;
-    }
-
-    p {
-      font-size: 18px;
-    }
   }
 `;
 
