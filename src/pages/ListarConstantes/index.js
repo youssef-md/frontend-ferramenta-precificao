@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef } from 'react';
 
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { FaCheckCircle, FaEdit, FaTimesCircle } from 'react-icons/fa';
 import { Container, EOFButton, Table } from './styles';
 import BasePage from '../BasePage';
@@ -9,6 +9,7 @@ import {
   PACOTE_CONSTANTES,
   PACOTE_SELECIONADO,
 } from '../../routes/routeObjects';
+import api from '../../service/api';
 
 const geralNewValueInputs = [];
 const preNewValueInputs = [];
@@ -18,6 +19,8 @@ function ListarConstantes() {
   const {
     state: { pacote, canEditPack },
   } = useLocation();
+
+  const history = useHistory();
 
   const filterConstantesByEtapa = useCallback(
     etapa =>
@@ -151,6 +154,22 @@ function ListarConstantes() {
 
   const { idPacote, dtPacote } = pacote;
 
+  const submitConstants = useCallback(async () => {
+    const now = new Date();
+    const formattedDate = `${now.getFullYear()}-${String(
+      now.getMonth()
+    ).padStart(2, 0)}-${String(now.getDate()).padStart(
+      2,
+      0
+    )} ${now.getHours()}:${now.getMinutes()}:${now.getMinutes()}`;
+
+    await api.post('pacote-constantes/create', {
+      dtPacote: formattedDate,
+      constante: [...constantesGeral, ...constantesPre, ...constantesPos],
+    });
+    history.goBack();
+  }, [history, constantesGeral, constantesPre, constantesPos]);
+
   return (
     <BasePage>
       <Breadcrumbs
@@ -162,7 +181,7 @@ function ListarConstantes() {
       <Container>
         <header>
           <h3>Lista de constantes do pacote selecionado</h3>
-          <button type="button">
+          <button type="button" onClick={submitConstants}>
             Salvar e criar um novo pacote de constantes
           </button>
         </header>
@@ -212,7 +231,7 @@ function ListarConstantes() {
           )}
         </Table>
 
-        <EOFButton type="secondary">
+        <EOFButton type="secondary" onClick={submitConstants}>
           Salvar e criar um novo pacote de constantes
         </EOFButton>
       </Container>

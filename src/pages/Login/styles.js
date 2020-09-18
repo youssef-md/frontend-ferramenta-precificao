@@ -37,6 +37,6 @@ export const Form = styled(UnformForm)`
 
   > button {
     width: 100%;
-    margin-top: 1.5rem;
+    margin-top: 3.5rem;
   }
 `;
