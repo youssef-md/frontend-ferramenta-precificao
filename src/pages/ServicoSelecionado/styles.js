@@ -19,12 +19,22 @@ export const Buttons = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 6rem 0;
+
+  @media (max-width: 720px) {
+    flex-direction: column;
+  }
 `;
 
 export const RightArrow = styled(FaArrowRight).attrs({
   size: 20,
 })`
   color: ${props => props.theme.primary05};
+
+  @media (max-width: 720px) {
+    transform: rotate(90deg);
+
+    margin: 1rem 0;
+  }
 `;
 
 export const ModelSection = styled.section`
@@ -36,6 +46,20 @@ export const ModelSection = styled.section`
     padding-right: 5rem;
     margin-right: 5rem;
     border-right: 2px solid ${props => props.theme.secondary04};
+  }
+
+  @media (max-width: 720px) {
+    flex-direction: column;
+
+    h4 {
+      padding: 0;
+      margin: 0 0 3rem 0;
+
+      text-align: center;
+
+      border-right: 0;
+      border-bottom: 2px solid ${props => props.theme.secondary04};
+    }
   }
 `;
 
