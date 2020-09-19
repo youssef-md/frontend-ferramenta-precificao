@@ -39,4 +39,8 @@ export const Form = styled(UnformForm)`
     width: 100%;
     margin-top: 3.5rem;
   }
+
+  @media (max-width: 720px) {
+    width: 90vw;
+  }
 `;
