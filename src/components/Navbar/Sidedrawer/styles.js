@@ -24,12 +24,12 @@ export const SideNav = styled.aside`
   transform: translateX(${props => (props.isOpen ? 0 : '-47.5rem')});
 
   div {
-    visibility: hidden;
+    display: none;
   }
 
   @media (max-width: 720px) {
     div {
-      visibility: visible;
+      display: block;
     }
   }
 
