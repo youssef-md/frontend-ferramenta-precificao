@@ -26,7 +26,7 @@ export default createGlobalStyle`
 
   body, input, button {
     font-family: 'Raleway', sans-serif;
-    background-color: ${props => props.theme.secondary01};
+    background-color: ${props => props.theme.secondary02};
     transition: background-color .3s;
   }
 
@@ -45,6 +45,10 @@ export default createGlobalStyle`
     line-height: 1.5;
     font-weight: 600;
     color: ${props => props.theme.primary07};
+  }
+
+  strong {
+    color: ${props => props.theme.secondary09};
   }
 
   h2, h3, h4, h5 {

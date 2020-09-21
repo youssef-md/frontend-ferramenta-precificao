@@ -21,7 +21,7 @@ export const TitleHeader = styled.div`
   }
 
   p {
-    color: black;
+    color: ${props => props.theme.secondary09};
     margin: 5rem 0;
   }
 `;
@@ -79,6 +79,7 @@ export const Indicator = styled.div`
 
   border-radius: 50%;
   background: transparent;
+  color: ${props => props.theme.primary05};
   height: 2.5rem;
   width: 2.5rem;
   border: 2px solid ${props => props.theme.primary05};

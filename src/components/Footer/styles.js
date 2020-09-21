@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 
 export const Container = styled.footer`
-  background-color: ${props => props.theme.primary07};
+  background-color: ${props =>
+    props.theme.type === 'default'
+      ? props.theme.primary07
+      : props.theme.secondary01};
   padding: 4rem 0;
   margin-top: 5rem;
 `;
