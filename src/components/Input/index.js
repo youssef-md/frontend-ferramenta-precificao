@@ -5,7 +5,6 @@ import {
   FaEye,
   FaEyeSlash,
 } from 'react-icons/fa';
-import StringMask from 'string-mask';
 import { useField } from '@unform/core';
 
 import { number } from 'yup';
@@ -51,9 +50,6 @@ function Input({
       e.target.value = '';
       return;
     }
-
-    // const formatter = new StringMask('#0,00', { reverse: true });
-    // const result = formatter.apply(String(value));
 
     const result = (value / 100).toFixed(2);
 
