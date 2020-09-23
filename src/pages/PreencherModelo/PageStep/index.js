@@ -28,13 +28,14 @@ function PageStep({ page }, ref) {
   });
 
   const createInputs = useCallback(
-    ({ title, name, placeholder, auxText, type }, formType) => {
+    ({ title, name, placeholder, auxText, type, maskType }, formType) => {
       return (
         <Input
           key={name}
           name={`${name}${formType && formType}`}
           type={type}
           label={title}
+          maskType={maskType}
           placeholder={placeholder}
           auxiliaryText={auxText}
         />

@@ -5,8 +5,10 @@ import {
   FaEye,
   FaEyeSlash,
 } from 'react-icons/fa';
+import StringMask from 'string-mask';
 import { useField } from '@unform/core';
 
+import { number } from 'yup';
 import { Container, Invalid, Valid, TogglePassword } from './styles';
 
 function Input({
@@ -20,6 +22,7 @@ function Input({
   className,
   seePassword,
   onSetSeePassword,
+  maskType,
 }) {
   const inputRef = useRef(null);
   const { fieldName, registerField, error, defaultValue } = useField(name);
@@ -32,6 +35,31 @@ function Input({
     });
   }, [fieldName, registerField]);
 
+  const handleNumber = e => {
+    const [, entryValue] = e.target.value.split(' ');
+
+    if (!entryValue) {
+      const result = (e.target.value / 100).toFixed(2);
+
+      e.target.value = `R$ ${result}`;
+      return;
+    }
+
+    const value = Number(entryValue.replace(',', '').replace('.', ''));
+
+    if (value === 0) {
+      e.target.value = '';
+      return;
+    }
+
+    // const formatter = new StringMask('#0,00', { reverse: true });
+    // const result = formatter.apply(String(value));
+
+    const result = (value / 100).toFixed(2);
+
+    e.target.value = `R$ ${result}`;
+  };
+
   return (
     <Container className={className} valid={valid} invalid={error}>
       <label htmlFor={label}>{label}</label>
@@ -41,6 +69,7 @@ function Input({
         id={label}
         placeholder={placeholder}
         type={seePassword ? 'text' : type}
+        onChange={maskType === 'money' ? handleNumber : null}
       />
       {type === 'password' && (
         <TogglePassword onClick={onSetSeePassword}>
