@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import {
   FaTimesCircle,
   FaCheckCircle,
@@ -33,7 +33,7 @@ function Input({
     });
   }, [fieldName, registerField]);
 
-  const handleNumber = e => {
+  const handleNumber = useCallback(e => {
     const [, entryValue] = e.target.value.split(' ');
 
     if (!entryValue) {
@@ -58,7 +58,7 @@ function Input({
     );
 
     e.target.value = `R$ ${result}`;
-  };
+  }, []);
 
   return (
     <Container className={className} valid={valid} invalid={error}>
