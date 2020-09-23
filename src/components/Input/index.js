@@ -7,7 +7,6 @@ import {
 } from 'react-icons/fa';
 import { useField } from '@unform/core';
 
-import { number } from 'yup';
 import { Container, Invalid, Valid, TogglePassword } from './styles';
 
 function Input({
@@ -38,20 +37,25 @@ function Input({
     const [, entryValue] = e.target.value.split(' ');
 
     if (!entryValue) {
-      const result = (e.target.value / 100).toFixed(2);
+      const result = Number(
+        (e.target.value / 100).toFixed(2)
+      ).toLocaleString('pt-br', { minimumFractionDigits: 2 });
 
       e.target.value = `R$ ${result}`;
       return;
     }
 
-    const value = Number(entryValue.replace(',', '').replace('.', ''));
+    const value = Number(entryValue.replaceAll('.', '').replaceAll(',', ''));
 
     if (value === 0) {
       e.target.value = '';
       return;
     }
 
-    const result = (value / 100).toFixed(2);
+    const result = parseFloat((value / 100).toFixed(2)).toLocaleString(
+      'pt-br',
+      { minimumFractionDigits: 2 }
+    );
 
     e.target.value = `R$ ${result}`;
   };
