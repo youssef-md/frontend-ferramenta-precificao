@@ -116,7 +116,6 @@ function PreencherModelo({ stepType }) {
 
       if (isInInputPage) {
         const inputsData = formRef.getData();
-
         formRef.setErrors({}); // reset past errors
 
         try {

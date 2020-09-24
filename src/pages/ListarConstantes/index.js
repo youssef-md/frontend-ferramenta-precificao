@@ -2,6 +2,7 @@ import React, { useState, useCallback, useRef } from 'react';
 
 import { useHistory, useLocation } from 'react-router-dom';
 import { FaCheckCircle, FaEdit, FaTimesCircle } from 'react-icons/fa';
+import { format } from 'date-fns';
 import { Container, EOFButton, Table } from './styles';
 import BasePage from '../BasePage';
 import Breadcrumbs from '../../components/Breadcrumbs';
@@ -10,6 +11,7 @@ import {
   PACOTE_SELECIONADO,
 } from '../../routes/routeObjects';
 import api from '../../service/api';
+import { formatDate } from '../../utils/formatDate';
 
 const geralNewValueInputs = [];
 const preNewValueInputs = [];
@@ -155,13 +157,7 @@ function ListarConstantes() {
   const { idPacote, dtPacote } = pacote;
 
   const submitConstants = useCallback(async () => {
-    const now = new Date();
-    const formattedDate = `${now.getFullYear()}-${String(
-      now.getMonth()
-    ).padStart(2, 0)}-${String(now.getDate()).padStart(
-      2,
-      0
-    )} ${now.getHours()}:${now.getMinutes()}:${now.getMinutes()}`;
+    const formattedDate = format(new Date(), "YYY-MM-dd' 'HH:mm:ss");
 
     await api.post('pacote-constantes/create', {
       dtPacote: formattedDate,
@@ -175,7 +171,7 @@ function ListarConstantes() {
       <Breadcrumbs
         currentRouting={[
           PACOTE_CONSTANTES,
-          PACOTE_SELECIONADO(dtPacote, idPacote),
+          PACOTE_SELECIONADO(formatDate(dtPacote), idPacote),
         ]}
       />
       <Container>

@@ -7,6 +7,7 @@ import {
   PACOTE_SELECIONADO,
 } from '../../routes/routeObjects';
 import api from '../../service/api';
+import { formatDate } from '../../utils/formatDate';
 import BasePage from '../BasePage';
 
 import { ListPacksContainer } from './styles';
@@ -21,46 +22,27 @@ function ListarPacotesConstantes() {
     });
   }, []);
 
-  const formatDate = pacote => {
-    const [dt, hrs] = pacote.dtPacote.split(' ');
-
-    const date = new Date(dt);
-    const dateFormat = new Intl.DateTimeFormat('pt-BR', {
-      year: 'numeric',
-      month: 'long',
-      day: '2-digit',
-    });
-
-    const [
-      { value: day },
-      { value: month },
-      { value: year },
-    ] = dateFormat.formatToParts(date);
-
-    const newDate = `${day} de ${month} de ${year}`;
-
-    return `${newDate} às ${hrs}`;
-  };
-
   return (
     <BasePage>
       <Breadcrumbs currentRouting={[PACOTE_CONSTANTES]} />
       <ListPacksContainer>
         <h3>Pacotes de Constantes dos Modelos</h3>
         {pacotes.map((pacote, index) => {
+          const formattedDate = formatDate(pacote.dtPacote);
+
           return (
             <Card
               constantes
               key={pacote.idPacote}
               info={{
-                date: formatDate(pacote),
+                date: formattedDate,
               }}
-              onPress={() =>
+              onPress={() => {
                 history.push(
-                  PACOTE_SELECIONADO(pacote.dtPacote, pacote.idPacote).route,
+                  PACOTE_SELECIONADO(formattedDate, pacote.idPacote).route,
                   { pacote, canEditPack: index === 0 }
-                )
-              }
+                );
+              }}
             />
           );
         })}
