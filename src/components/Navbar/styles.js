@@ -59,6 +59,16 @@ export const TopContainer = styled.div`
       margin-left: 2.2rem;
     }
   }
+
+  @media (max-width: 720px) {
+    ul {
+      margin-right: 2rem;
+
+      li > a {
+        display: none;
+      }
+    }
+  }
 `;
 
 export const BottomContainer = styled.div`
