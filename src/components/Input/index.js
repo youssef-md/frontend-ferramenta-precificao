@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import {
   FaTimesCircle,
   FaCheckCircle,
@@ -20,6 +20,7 @@ function Input({
   className,
   seePassword,
   onSetSeePassword,
+  maskType,
 }) {
   const inputRef = useRef(null);
   const { fieldName, registerField, error, defaultValue } = useField(name);
@@ -32,6 +33,33 @@ function Input({
     });
   }, [fieldName, registerField]);
 
+  const handleNumber = useCallback(e => {
+    const [, entryValue] = e.target.value.split(' ');
+
+    if (!entryValue) {
+      const result = Number(
+        (e.target.value / 100).toFixed(2)
+      ).toLocaleString('pt-br', { minimumFractionDigits: 2 });
+
+      e.target.value = `R$ ${result}`;
+      return;
+    }
+
+    const value = Number(entryValue.replaceAll('.', '').replaceAll(',', ''));
+
+    if (value === 0) {
+      e.target.value = '';
+      return;
+    }
+
+    const result = parseFloat((value / 100).toFixed(2)).toLocaleString(
+      'pt-br',
+      { minimumFractionDigits: 2 }
+    );
+
+    e.target.value = `R$ ${result}`;
+  }, []);
+
   return (
     <Container className={className} valid={valid} invalid={error}>
       <label htmlFor={label}>{label}</label>
@@ -41,6 +69,7 @@ function Input({
         id={label}
         placeholder={placeholder}
         type={seePassword ? 'text' : type}
+        onChange={maskType === 'money' ? handleNumber : null}
       />
       {type === 'password' && (
         <TogglePassword onClick={onSetSeePassword}>
