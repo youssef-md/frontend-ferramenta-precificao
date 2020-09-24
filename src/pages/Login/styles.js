@@ -23,7 +23,7 @@ export const Form = styled(UnformForm)`
   position: absolute;
   width: 50rem;
   box-shadow: 0 0 2rem rgba(0, 0, 0, 0.2);
-  background: white;
+  background: ${props => props.theme.secondary01};
   padding: 2rem 5rem 6rem 5rem;
 
   > h4 {
