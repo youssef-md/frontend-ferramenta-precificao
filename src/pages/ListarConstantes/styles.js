@@ -58,7 +58,7 @@ export const Table = styled.div`
         top: -1rem;
         left: -1rem;
         opacity: 1;
-        background: white;
+        background: ${props => props.theme.secondary01};
         box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
         border-radius: 8px;
         padding: 1.5rem;

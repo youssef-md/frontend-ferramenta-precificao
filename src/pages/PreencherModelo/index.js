@@ -123,6 +123,10 @@ function PreencherModelo({ stepType }) {
             abortEarly: false,
           });
 
+          Object.keys(inputsData).map(key => {
+            inputsData[key] = inputsData[key].replace('R$ ', '');
+          });
+
           mergedStepData = { ...mergedStepData, ...inputsData };
         } catch (error) {
           const validationErrors = {};

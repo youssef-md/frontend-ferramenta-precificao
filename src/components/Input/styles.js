@@ -23,6 +23,7 @@ export const Container = styled.div`
 
     &::placeholder {
       font-style: italic;
+      color: rgba(0, 0, 0, 0.5);
     }
 
     &:focus {
