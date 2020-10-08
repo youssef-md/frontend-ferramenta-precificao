@@ -39,6 +39,7 @@ function Routes() {
         path="/servico-selecionado/:id"
         component={ServicoSelecionado}
       />
+
       <CustomRoute
         isPrivate
         path="/preencher-modelo-jornada-usuario"
@@ -57,6 +58,7 @@ function Routes() {
         stepType="CUSTOS_TRANSFORMAÇÃO"
         component={PreencherModelo}
       />
+
       <CustomRoute
         isPrivate
         path="/pacotes-constantes"

@@ -21,20 +21,29 @@ import {
 } from './styles';
 import CreateModel from '../CreateModel';
 
+let etapaAtividadesIds = null;
+
 function ServicoSelecioado() {
   const history = useHistory();
-
-  const [modelos, setModelos] = useState([]);
-  const [modeloSelecionado, setModeloSelecionado] = useState();
-  const [showCreateModal, setShowCreateModal] = useState(false);
   const {
     state: { servico },
   } = useLocation();
 
-  const defaultSelectModel = useCallback(listaModelos => {
-    setModeloSelecionado(
-      listaModelos.filter(modelo => modelo.nome === 'Modelo Principal')[0]
-    );
+  const [modelos, setModelos] = useState([]);
+  const [modeloSelecionado, setModeloSelecionado] = useState();
+  const [showCreateModal, setShowCreateModal] = useState(false);
+
+  // const defaultSelectModel = useCallback(listaModelos => {
+  //   setModeloSelecionado(
+  //     listaModelos.filter(modelo => modelo.nome === 'Modelo Principal')[0]
+  //   );
+  // }, []);
+
+  const getEtapaAtividadesIds = useCallback(idModelo => {
+    api.get(`modelos/etapaAtividades/${idModelo}`).then(response => {
+      console.log(response.data);
+      etapaAtividadesIds = response.data;
+    });
   }, []);
 
   const addModel = useCallback(
@@ -50,9 +59,10 @@ function ServicoSelecioado() {
       setModelos(
         modelos.filter(modelo => modelo.idModelo !== modeloApagado.idModelo)
       );
-      defaultSelectModel(modelos);
+      // defaultSelectModel(modelos);
+      setModeloSelecionado(modelos[0]);
     },
-    [modelos, defaultSelectModel]
+    [modelos]
   );
 
   const updateImportedModel = useCallback(
@@ -70,13 +80,6 @@ function ServicoSelecioado() {
     [modelos]
   );
 
-  useEffect(() => {
-    api.get(`modelos/servico/${servico.idServico}/`).then(response => {
-      setModelos(response.data);
-      defaultSelectModel(response.data);
-    });
-  }, [servico, defaultSelectModel]);
-
   const navigateToJornadaUsuario = useCallback(() => {
     const { idServico, nome } = servico;
     history.push(PREENCHER_MODELO_JORNADA_USUARIO.route, {
@@ -92,6 +95,19 @@ function ServicoSelecioado() {
   const closeCreateModal = useCallback(() => {
     setShowCreateModal(false);
   }, []);
+
+  useEffect(() => {
+    if (modeloSelecionado && modeloSelecionado.idModelo) {
+      getEtapaAtividadesIds(modeloSelecionado.idModelo);
+    }
+  }, [modeloSelecionado, getEtapaAtividadesIds]);
+
+  useEffect(() => {
+    api.get(`modelos/servico/${servico.idServico}/`).then(async response => {
+      setModeloSelecionado(response.data[0]);
+      setModelos(response.data);
+    });
+  }, [servico, getEtapaAtividadesIds]);
 
   return (
     <BasePage>

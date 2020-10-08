@@ -29,6 +29,9 @@ function PageStep({ page }, ref) {
 
   const createInputs = useCallback(
     ({ title, name, placeholder, auxText, type, maskType }, formType) => {
+      // name={`tempoMedio-etapa${response[step-1].etapa}-atividade${response[etapa].atividades[activity-1]}`}
+      // name=tempoMedio-etapa:123123123-atividade:123123
+
       return (
         <Input
           key={name}
@@ -51,13 +54,13 @@ function PageStep({ page }, ref) {
           <FormSide>
             <h5>Pré Transformação</h5>
             <InputsContainer>
-              {page.form.inputs.map(map => createInputs(map, 'Pre'))}
+              {page.form.inputs.map(map => createInputs(map, '-pre'))}
             </InputsContainer>
           </FormSide>
           <FormSide>
             <h5>Pós Transformação</h5>
             <InputsContainer>
-              {page.form.inputs.map(map => createInputs(map, 'Pos'))}
+              {page.form.inputs.map(map => createInputs(map, '-pos'))}
             </InputsContainer>
           </FormSide>
         </>
