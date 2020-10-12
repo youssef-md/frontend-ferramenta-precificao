@@ -54,9 +54,12 @@ function PreencherModelo({ stepType }) {
       schemaObject = {};
       schemaValidator = {};
 
-      if (!formPages[currentFormIndex].form) return;
+      const currentPage = formPages[currentFormIndex];
 
-      formPages[currentFormIndex].form.inputs.map(input => {
+      if (!currentPage.form) return;
+
+      currentPage.form.inputs.map(input => {
+        const { step, activity } = currentPage;
         const inputTypeValidation =
           input.type === 'string'
             ? yup
@@ -66,12 +69,12 @@ function PreencherModelo({ stepType }) {
                 .number('Somente números são permitidos')
                 .typeError('Somente números são permitidos');
 
-        schemaObject[`${input.name}Pre`] = inputTypeValidation.required(
-          'O campo é obrigatório'
-        );
-        schemaObject[`${input.name}Pos`] = inputTypeValidation.required(
-          'O campo é obrigatório'
-        );
+        schemaObject[
+          `${input.name}-pre-${step}-${activity}`
+        ] = inputTypeValidation.required('O campo é obrigatório');
+        schemaObject[
+          `${input.name}-pos-${step}-${activity}`
+        ] = inputTypeValidation.required('O campo é obrigatório');
       });
 
       schemaValidator = yup.object().shape(schemaObject);
@@ -91,11 +94,6 @@ function PreencherModelo({ stepType }) {
     [currentFormIndex, formPages]
   );
 
-  const submitData = useCallback(() => {
-    // fazer o post com o mergedStepData
-    // Rota: muda
-  }, []);
-
   const animatePageStepContainer = useCallback((translateX, opacity) => {
     const {
       current: { containerPageStep },
@@ -112,8 +110,7 @@ function PreencherModelo({ stepType }) {
       const {
         current: { formRef },
       } = currentPageRef;
-      const isInInputPage = formPages[currentFormIndex].form;
-
+      const isInInputPage = formPages[currentFormIndex].type === 'page-form';
       if (isInInputPage) {
         const inputsData = formRef.getData();
         formRef.setErrors({}); // reset past errors
@@ -128,8 +125,11 @@ function PreencherModelo({ stepType }) {
           });
 
           mergedStepData = { ...mergedStepData, ...inputsData };
+          console.log(mergedStepData);
+          formRef.reset();
         } catch (error) {
           const validationErrors = {};
+
           if (error instanceof yup.ValidationError) {
             error.inner.forEach(error => {
               validationErrors[error.path] = error.message;
@@ -137,6 +137,7 @@ function PreencherModelo({ stepType }) {
 
             formRef.setErrors(validationErrors);
           }
+
           return;
         }
       }

@@ -28,14 +28,11 @@ function PageStep({ page }, ref) {
   });
 
   const createInputs = useCallback(
-    ({ title, name, placeholder, auxText, type, maskType }, formType) => {
-      // name={`tempoMedio-etapa${response[step-1].etapa}-atividade${response[etapa].atividades[activity-1]}`}
-      // name=tempoMedio-etapa:123123123-atividade:123123
-
+    ({ title, name, placeholder, auxText, type, maskType }, suffix) => {
       return (
         <Input
           key={name}
-          name={`${name}${formType && formType}`}
+          name={`${name}${suffix}`}
           type={type}
           label={title}
           maskType={maskType}
@@ -49,18 +46,24 @@ function PageStep({ page }, ref) {
 
   const createForm = useCallback(() => {
     if (page.form.pre && page.form.pos) {
+      const { step, activity } = page;
+
       return (
         <>
           <FormSide>
             <h5>Pré Transformação</h5>
             <InputsContainer>
-              {page.form.inputs.map(map => createInputs(map, '-pre'))}
+              {page.form.inputs.map(map =>
+                createInputs(map, `-pre-${step}-${activity}`)
+              )}
             </InputsContainer>
           </FormSide>
           <FormSide>
             <h5>Pós Transformação</h5>
             <InputsContainer>
-              {page.form.inputs.map(map => createInputs(map, '-pos'))}
+              {page.form.inputs.map(map =>
+                createInputs(map, `-pos-${step}-${activity}`)
+              )}
             </InputsContainer>
           </FormSide>
         </>

@@ -27,39 +27,82 @@ export const jornadaUsuarioForms = [
           name: 'tempoMedio',
           placeholder: '123',
           type: 'number',
-          auxText: 'Tempo em horas',
           maskType: '',
         },
         {
           title: 'Frequência:',
-          name: '2',
+          name: 'frequencia',
           placeholder: '123',
           type: 'number',
-          auxText: 'Frequência anual',
           maskType: '',
         },
         {
           title: 'Quantidade de Usuários:',
-          name: '3',
+          name: 'quantidadeUsuarios',
           placeholder: '123',
           type: 'number',
-          auxText: 'Quantidade de usuários',
           maskType: '',
         },
         {
           title: 'Renda Média:',
-          name: '4',
+          name: 'rendimentoMedio',
           placeholder: 'R$ 123,12',
           type: 'string',
-          auxText: 'Renda média',
           maskType: 'money',
         },
         {
           title: 'Custo Monetário da Atividade:',
-          name: '5',
+          name: 'custoMonetario',
           placeholder: 'R$ 123,12',
           type: 'string',
-          auxText: 'Custo monetário',
+          maskType: 'money',
+        },
+      ],
+    },
+  },
+  {
+    type: 'page-form',
+    step: 1,
+    activity: 2,
+    subTitle: 'Etapa 1 - Atividade: Presencial',
+    description: 'Buscar informaçes por canal presencial',
+    form: {
+      pre: true,
+      pos: true,
+      inputs: [
+        {
+          title: 'Tempo Médio:',
+          name: 'tempoMedio',
+          placeholder: '123',
+          type: 'number',
+          maskType: '',
+        },
+        {
+          title: 'Frequência:',
+          name: 'frequencia',
+          placeholder: '123',
+          type: 'number',
+          maskType: '',
+        },
+        {
+          title: 'Quantidade de Usuários:',
+          name: 'quantidadeUsuarios',
+          placeholder: '123',
+          type: 'number',
+          maskType: '',
+        },
+        {
+          title: 'Renda Média:',
+          name: 'rendimentoMedio',
+          placeholder: 'R$ 123,12',
+          type: 'string',
+          maskType: 'money',
+        },
+        {
+          title: 'Custo Monetário da Atividade:',
+          name: 'custoMonetario',
+          placeholder: 'R$ 123,12',
+          type: 'string',
           maskType: 'money',
         },
       ],
@@ -76,25 +119,25 @@ export const jornadaUsuarioForms = [
       'Nesta etapa você deverá que preencher não sei o que, bla bla bla buscar informações lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
   },
 
-  // ETAPA 3
-  {
-    type: 'page-intro',
-    step: 3,
-    subTitle: 'Etapa 3: Solicitar serviços',
-    image: 'fake-image',
-    description:
-      'Nesta etapa você deverá que preencher não sei o que, bla bla bla buscar informações lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
-  },
+  // // ETAPA 3
+  // {
+  //   type: 'page-intro',
+  //   step: 3,
+  //   subTitle: 'Etapa 3: Solicitar serviços',
+  //   image: 'fake-image',
+  //   description:
+  //     'Nesta etapa você deverá que preencher não sei o que, bla bla bla buscar informações lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
+  // },
 
-  // ETAPA 4
-  {
-    type: 'page-intro',
-    step: 4,
-    subTitle: 'Etapa 4: Receber o Serviço',
-    image: 'fake-image',
-    description:
-      'Nesta etapa você deverá que preencher não sei o que, bla bla bla buscar informações lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
-  },
+  // // ETAPA 4
+  // {
+  //   type: 'page-intro',
+  //   step: 4,
+  //   subTitle: 'Etapa 4: Receber o Serviço',
+  //   image: 'fake-image',
+  //   description:
+  //     'Nesta etapa você deverá que preencher não sei o que, bla bla bla buscar informações lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
+  // },
 
   // FIM
   {
