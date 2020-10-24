@@ -22,6 +22,8 @@ import { jornadaUsuarioForms } from './pagesObject';
 
 import { Container, RightFormButton, LeftFormButton } from './styles';
 import BasePage from '../BasePage';
+import api from '../../service/api';
+import { getAtividadeRequestObject } from './requestObject/atividades';
 
 // receber o objeto com os campos via params ao cadastrar esse componente no react router
 // passar o id do modelo para a rota? pra saber onde deve fazer o post com o json? (vai que ele só copia e cola a url)
@@ -38,10 +40,17 @@ const mappedFormObjectWithStepType = {
   JORNADA_USUARIO: jornadaUsuarioForms,
 };
 
+const mappedEndpointWithStepType = {
+  JORNADA_USUARIO: {
+    pre: 'atividades-pre/',
+    pos: 'atividades-pos/',
+  },
+};
+
 function PreencherModelo({ stepType }) {
   const currentPageRef = useRef(null);
   const {
-    state: { idServico, nomeServico },
+    state: { idServico, nomeServico, etapaAtividadesIds },
   } = useLocation();
   const [currentFormIndex, setCurrentFormIndex] = useState(0);
 
@@ -110,10 +119,52 @@ function PreencherModelo({ stepType }) {
       const {
         current: { formRef },
       } = currentPageRef;
-      const isInInputPage = formPages[currentFormIndex].type === 'page-form';
-      if (isInInputPage) {
+
+      const currentPage = formPages[currentFormIndex];
+
+      if (currentPage.type === 'page-form') {
         const inputsData = formRef.getData();
         formRef.setErrors({}); // reset past errors
+
+        const etapaAtividadesIdsPre = etapaAtividadesIds.filter(
+          etapa => etapa.etapaPre
+        );
+        const etapaAtividadesIdsPos = etapaAtividadesIds.filter(
+          etapa => etapa.etapaPos
+        );
+        const etapa = Number(currentPage.step);
+        const atividade = Number(currentPage.activity);
+        const idEtapaPre = etapaAtividadesIdsPre[etapa - 1].etapaPre;
+        const idEtapaPos = etapaAtividadesIdsPos[etapa - 1].etapaPos;
+        const idAtividadePre = etapaAtividadesIdsPre[
+          etapa - 1
+        ].atividadesPre.split(' ')[atividade - 1];
+        const idAtividadePos = etapaAtividadesIdsPos[
+          etapa - 1
+        ].atividadesPos.split(' ')[atividade - 1];
+        const inputsPre = Object.keys(inputsData).filter(el =>
+          el.includes('-pre-')
+        );
+        const inputsPos = Object.keys(inputsData).filter(el =>
+          el.includes('-pos-')
+        );
+        const sanitizedInputsPre = inputsPre.reduce((acc, curr) => {
+          return {
+            ...acc,
+            [curr.split('-')[0]]: inputsData[curr],
+          };
+        }, {});
+        const sanitizedInputsPos = inputsPos.reduce((acc, curr) => {
+          return {
+            ...acc,
+            [curr.split('-')[0]]: inputsData[curr],
+          };
+        }, {});
+
+        console.log({ sanitizedInputsPos, sanitizedInputsPre });
+
+        // console.log(`/atividades-pre/etapa/${idEtapaPre}`);
+        // console.log(`/atividades-pre/etapa/${idEtapaPos}`);
 
         try {
           await schemaValidator.validate(inputsData, {
@@ -125,7 +176,9 @@ function PreencherModelo({ stepType }) {
           });
 
           mergedStepData = { ...mergedStepData, ...inputsData };
-          console.log(mergedStepData);
+
+          // api.put(`atividades-pre/etapa/${idEtapaPre}`);
+
           formRef.reset();
         } catch (error) {
           const validationErrors = {};
@@ -151,7 +204,7 @@ function PreencherModelo({ stepType }) {
         }, 150);
       }
     },
-    [currentFormIndex, formPages, animatePageStepContainer]
+    [currentFormIndex, formPages, animatePageStepContainer, etapaAtividadesIds]
   );
 
   const goToPreviousPage = useCallback(

@@ -7,7 +7,10 @@ import ServicoSelecionado from '../pages/ServicoSelecionado';
 import PreencherModelo from '../pages/PreencherModelo';
 import ListarPacotesConstantes from '../pages/ListarPacotesConstantes';
 import { useGeneralAppContext } from '../App';
-import { LISTAR_SERVICOS } from './routeObjects';
+import {
+  LISTAR_SERVICOS,
+  PREENCHER_MODELO_JORNADA_USUARIO,
+} from './routeObjects';
 import ListarConstantes from '../pages/ListarConstantes';
 
 function CustomRoute({ isPrivate, component: Component, ...rest }) {
@@ -42,7 +45,7 @@ function Routes() {
 
       <CustomRoute
         isPrivate
-        path="/preencher-modelo-jornada-usuario"
+        path={PREENCHER_MODELO_JORNADA_USUARIO.route}
         stepType="JORNADA_USUARIO"
         component={PreencherModelo}
       />

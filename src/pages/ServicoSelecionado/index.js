@@ -41,7 +41,6 @@ function ServicoSelecioado() {
 
   const getEtapaAtividadesIds = useCallback(idModelo => {
     api.get(`modelos/etapaAtividades/${idModelo}`).then(response => {
-      console.log(response.data);
       etapaAtividadesIds = response.data;
     });
   }, []);
@@ -85,6 +84,7 @@ function ServicoSelecioado() {
     history.push(PREENCHER_MODELO_JORNADA_USUARIO.route, {
       idServico,
       nomeServico: nome,
+      etapaAtividadesIds,
     });
   }, [history, servico]);
 
