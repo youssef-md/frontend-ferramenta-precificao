@@ -115,56 +115,14 @@ function PreencherModelo({ stepType }) {
   const goToNextPage = useCallback(
     async event => {
       if (event) event.preventDefault();
-
       const {
         current: { formRef },
       } = currentPageRef;
-
       const currentPage = formPages[currentFormIndex];
 
       if (currentPage.type === 'page-form') {
         const inputsData = formRef.getData();
         formRef.setErrors({}); // reset past errors
-
-        const etapaAtividadesIdsPre = etapaAtividadesIds.filter(
-          etapa => etapa.etapaPre
-        );
-        const etapaAtividadesIdsPos = etapaAtividadesIds.filter(
-          etapa => etapa.etapaPos
-        );
-        const etapa = Number(currentPage.step);
-        const atividade = Number(currentPage.activity);
-        const idEtapaPre = etapaAtividadesIdsPre[etapa - 1].etapaPre;
-        const idEtapaPos = etapaAtividadesIdsPos[etapa - 1].etapaPos;
-        const idAtividadePre = etapaAtividadesIdsPre[
-          etapa - 1
-        ].atividadesPre.split(' ')[atividade - 1];
-        const idAtividadePos = etapaAtividadesIdsPos[
-          etapa - 1
-        ].atividadesPos.split(' ')[atividade - 1];
-        const inputsPre = Object.keys(inputsData).filter(el =>
-          el.includes('-pre-')
-        );
-        const inputsPos = Object.keys(inputsData).filter(el =>
-          el.includes('-pos-')
-        );
-        const sanitizedInputsPre = inputsPre.reduce((acc, curr) => {
-          return {
-            ...acc,
-            [curr.split('-')[0]]: inputsData[curr],
-          };
-        }, {});
-        const sanitizedInputsPos = inputsPos.reduce((acc, curr) => {
-          return {
-            ...acc,
-            [curr.split('-')[0]]: inputsData[curr],
-          };
-        }, {});
-
-        console.log({ sanitizedInputsPos, sanitizedInputsPre });
-
-        // console.log(`/atividades-pre/etapa/${idEtapaPre}`);
-        // console.log(`/atividades-pre/etapa/${idEtapaPos}`);
 
         try {
           await schemaValidator.validate(inputsData, {
@@ -172,8 +130,62 @@ function PreencherModelo({ stepType }) {
           });
 
           Object.keys(inputsData).map(key => {
-            inputsData[key] = inputsData[key].replace('R$ ', '');
+            inputsData[key] = inputsData[key]
+              .replace('R$ ', '')
+              .replace('.', '')
+              .replace(',', '.');
           });
+
+          const etapaAtividadesIdsPre = etapaAtividadesIds.filter(
+            etapa => etapa.etapaPre
+          );
+          const etapaAtividadesIdsPos = etapaAtividadesIds.filter(
+            etapa => etapa.etapaPos
+          );
+          const etapa = Number(currentPage.step);
+          const atividade = Number(currentPage.activity);
+          const idEtapaPre = etapaAtividadesIdsPre[etapa - 1].etapaPre;
+          const idEtapaPos = etapaAtividadesIdsPos[etapa - 1].etapaPos;
+          const idAtividadePre = etapaAtividadesIdsPre[
+            etapa - 1
+          ].atividadesPre.split(' ')[atividade - 1];
+          const idAtividadePos = etapaAtividadesIdsPos[
+            etapa - 1
+          ].atividadesPos.split(' ')[atividade - 1];
+          const inputsPre = Object.keys(inputsData).filter(el =>
+            el.includes('-pre-')
+          );
+          const inputsPos = Object.keys(inputsData).filter(el =>
+            el.includes('-pos-')
+          );
+          const sanitizedInputsPre = inputsPre.reduce((acc, curr) => {
+            return {
+              ...acc,
+              [curr.split('-')[0]]: inputsData[curr],
+            };
+          }, {});
+          const sanitizedInputsPos = inputsPos.reduce((acc, curr) => {
+            return {
+              ...acc,
+              [curr.split('-')[0]]: inputsData[curr],
+            };
+          }, {});
+          const reqPreObject = getAtividadeRequestObject({
+            idEtapa: idEtapaPre,
+            idAtividade: idAtividadePre,
+            ...sanitizedInputsPre,
+          });
+          const reqPosObject = getAtividadeRequestObject({
+            idEtapa: idEtapaPos,
+            idAtividade: idAtividadePos,
+            ...sanitizedInputsPos,
+          });
+
+          console.log({ sanitizedInputsPre, sanitizedInputsPos });
+          console.log({ reqPreObject, reqPosObject });
+
+          // console.log(`/atividades-pre/etapa/${idEtapaPre}`);
+          // console.log(`/atividades-pre/etapa/${idEtapaPos}`);
 
           mergedStepData = { ...mergedStepData, ...inputsData };
 
