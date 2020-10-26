@@ -189,7 +189,12 @@ function PreencherModelo({ stepType }) {
 
           mergedStepData = { ...mergedStepData, ...inputsData };
 
-          // api.put(`atividades-pre/etapa/${idEtapaPre}`);
+          Promise.all([
+            api.put(`atividades-pre/etapa/${idEtapaPre}`, [reqPreObject]),
+            api.put(`atividades-pos/etapa/${idEtapaPos}`, [reqPosObject]),
+          ])
+            .then(res => console.log(res))
+            .catch(() => {});
 
           formRef.reset();
         } catch (error) {
