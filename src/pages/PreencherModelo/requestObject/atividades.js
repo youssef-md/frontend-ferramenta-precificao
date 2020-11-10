@@ -1,4 +1,4 @@
-export function getAtividadeRequestObject({
+export function getJornadaUsuarioAtividadeReqObj({
   idEtapa,
   idAtividade,
   quantidadeUsuarios,

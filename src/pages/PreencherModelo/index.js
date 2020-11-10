@@ -23,7 +23,7 @@ import { jornadaUsuarioForms } from './pagesObject';
 import { Container, RightFormButton, LeftFormButton } from './styles';
 import BasePage from '../BasePage';
 import api from '../../service/api';
-import { getAtividadeRequestObject } from './requestObject/atividades';
+import { getJornadaUsuarioAtividadeReqObj } from './requestObject/atividades';
 
 // receber o objeto com os campos via params ao cadastrar esse componente no react router
 // passar o id do modelo para a rota? pra saber onde deve fazer o post com o json? (vai que ele só copia e cola a url)
@@ -170,12 +170,12 @@ function PreencherModelo({ stepType }) {
               [curr.split('-')[0]]: inputsData[curr],
             };
           }, {});
-          const reqPreObject = getAtividadeRequestObject({
+          const reqPreObject = getJornadaUsuarioAtividadeReqObj({
             idEtapa: idEtapaPre,
             idAtividade: idAtividadePre,
             ...sanitizedInputsPre,
           });
-          const reqPosObject = getAtividadeRequestObject({
+          const reqPosObject = getJornadaUsuarioAtividadeReqObj({
             idEtapa: idEtapaPos,
             idAtividade: idAtividadePos,
             ...sanitizedInputsPos,
