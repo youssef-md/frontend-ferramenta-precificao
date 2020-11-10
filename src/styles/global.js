@@ -21,7 +21,7 @@ export default createGlobalStyle`
 
   html {
     /* 1rem = 10px, 10px(target)/16px(browser-default) = 62.5% */
-    font-size: 62.5%; 
+    font-size: 62.5%;
   }
 
   body, input, button {
