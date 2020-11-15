@@ -34,3 +34,82 @@ export function getJornadaUsuarioAtividadeReqObj({
     volumeSolicitacoes: null,
   };
 }
+
+export function getCustosOrgaoAtividadeReqObj({
+  idCustosAlocacaoPessoas,
+  idCustosArmazenamentoPapel,
+  idCustosImovel,
+  idCustosInfraestrutura,
+  idCustosPessoalTercerizado,
+  idCustosPessoalServidores,
+  idCustosOrgao,
+  idCustosOrgaoPre,
+  idCustosOrgaoPos,
+  quantidadePapelArmazenado,
+  mediaSalarialTercerizados,
+  mediaSalarialServidores,
+  qtdFuncionariosTercerizados,
+  qtdFuncionariosServidores,
+  tempoDedicacaoTercerizados,
+  tempoDedicacaoServidores,
+  idModelo,
+}) {
+  return {
+    custosOrgao: {
+      cadastroCustosPessoal: true,
+      custosImovel: {
+        custosAlocacaoPessoas: {
+          custoOcupacao: 0,
+          custoTotalOcupacao: 0,
+          espacoOcupadoPessoa: 0,
+          idCustosAlocacaoPessoas,
+          memoriaCalculo: '',
+          quantidadePessoasAlocadas: 0,
+          totalEspacoOcupado: 0,
+        },
+        custosArmazenamentoPapel: {
+          custoArmazenamento: 0,
+          custoTotalArmazenamento: 0,
+          idCustosArmazenamentoPapel,
+          memoriaCalculo: '',
+          quantidadePapelArmazenado,
+        },
+        idCustosImovel,
+      },
+      custosInfraestrutura: {
+        custoManutencao: 0,
+        custoTreinamento: 0,
+        idCustosInfraestrutura,
+        memoriaCalculo: 'Balcão',
+      },
+      custosPersonalizado: [],
+      custosPessoal: [
+        {
+          descricao: '',
+          idCustosPessoal: idCustosPessoalTercerizado,
+          mediaSalarial: mediaSalarialTercerizados,
+          memoriaCalculo: '',
+          nome: 'Tercerizados',
+          posicao: 0,
+          quantidadeFuncionarios: qtdFuncionariosTercerizados,
+          tempoDedicacao: tempoDedicacaoTercerizados,
+        },
+        {
+          descricao: '',
+          idCustosPessoal: idCustosPessoalServidores,
+          mediaSalarial: mediaSalarialServidores,
+          memoriaCalculo: '',
+          nome: 'Servidores',
+          posicao: 0,
+          quantidadeFuncionarios: qtdFuncionariosServidores,
+          tempoDedicacao: tempoDedicacaoServidores,
+        },
+      ],
+      idCustosOrgao,
+    },
+    idCustosOrgaoPre,
+    idCustosOrgaoPos,
+    tipo: '',
+    idModelo,
+  };
+}

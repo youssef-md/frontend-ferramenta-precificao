@@ -5,7 +5,10 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import api from '../../service/api';
 
-import { createEtapasAtividadeJornadaUsuario } from './createEtapasAtividades';
+import {
+  createEtapasAtividadeJornadaUsuario,
+  createEtapasCustoOrgao,
+} from './createEtapasAtividades';
 
 function CreateModel({ servico, closeCreateModal, handleFunction }) {
   const [loading, setIsLoading] = useState(false);
@@ -23,14 +26,18 @@ function CreateModel({ servico, closeCreateModal, handleFunction }) {
           }
         );
 
-        Promise.all([
-          createEtapasAtividadeJornadaUsuario(response.data.idModelo, 'pre'),
-          createEtapasAtividadeJornadaUsuario(response.data.idModelo, 'pos'),
-        ])
-          .then(() => handleFunction(response.data))
-          .catch(() => {
-            throw new Error();
-          });
+        const { idModelo } = response.data;
+        console.log(response.data, { idModelo, servico: servico.idServico });
+        // Promise.all([
+        await createEtapasAtividadeJornadaUsuario(idModelo, 'pre');
+        await createEtapasAtividadeJornadaUsuario(idModelo, 'pos');
+        await createEtapasCustoOrgao(servico.idServico, 'pre');
+        await createEtapasCustoOrgao(servico.idServico, 'pos');
+        // ])
+        // .then(() => handleFunction(response.data))
+        // .catch(() => {
+        // throw new Error();
+        // });
 
         // CRIA CUSTOS DO ÓRGÃO
         // response = await api.post(``)

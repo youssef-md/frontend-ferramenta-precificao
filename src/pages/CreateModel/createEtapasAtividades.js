@@ -177,3 +177,10 @@ export async function createEtapasAtividadeJornadaUsuario(idModelo, preOuPos) {
     ]),
   ]);
 }
+
+export async function createEtapasCustoOrgao(idModelo, preOuPos) {
+  const response = await api.get(
+    `/custos-orgao-${preOuPos}/modelo/${idModelo}/fisica/`
+  );
+  await api.post(`/custos-orgao-${preOuPos}/modelo/${idModelo}/`, response);
+}
