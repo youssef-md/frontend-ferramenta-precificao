@@ -15,7 +15,7 @@ function FormProgressState({ formPages, currentFormIndex }) {
 
         return (
           <Indicator
-            key={page.subTitle}
+            key={page.subTitle + page.description}
             size={isPageIntro || isPageEnd ? 'big' : 'small'}
             isValid={isValid || isPageIntro}
             isCurrent={isCurrent}

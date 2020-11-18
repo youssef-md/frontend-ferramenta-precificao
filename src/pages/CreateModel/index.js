@@ -5,11 +5,6 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import api from '../../service/api';
 
-import {
-  createEtapasAtividadeJornadaUsuario,
-  createEtapasCustoOrgao,
-} from './createEtapasAtividades';
-
 function CreateModel({ servico, closeCreateModal, handleFunction }) {
   const [loading, setIsLoading] = useState(false);
 
@@ -24,20 +19,6 @@ function CreateModel({ servico, closeCreateModal, handleFunction }) {
             descricao,
           })
           .then(response => handleFunction(response.data));
-
-        // Promise.all([
-        // await createEtapasAtividadeJornadaUsuario(idModelo, 'pre');
-        // await createEtapasAtividadeJornadaUsuario(idModelo, 'pos');
-        // await createEtapasCustoOrgao(servico.idServico, 'pre');
-        // await createEtapasCustoOrgao(servico.idServico, 'pos');
-        // ])
-        // .then(() => handleFunction(response.data))
-        // .catch(() => {
-        // throw new Error();
-        // });
-
-        // CRIA CUSTOS DO ÓRGÃO
-        // response = await api.post(``)
       } catch (error) {
         alert('Erro ao criar modelo de custos');
       } finally {
