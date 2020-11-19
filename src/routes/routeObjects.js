@@ -22,7 +22,7 @@ export function PACOTE_SELECIONADO(dtPacote, id) {
   };
 }
 
-export const PREENCHER_MODELO_JORNADA_USUARIO = {
-  name: 'Jornada do Usuário',
-  route: `/preencher-modelo-jornada-usuario/`,
+export const PREENCHER_MODELO = {
+  name: 'Preencher Modelo',
+  route: `/preencher-modelo`,
 };

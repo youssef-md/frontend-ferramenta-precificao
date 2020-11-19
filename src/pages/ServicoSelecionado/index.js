@@ -7,7 +7,7 @@ import Breadcrumbs from '../../components/Breadcrumbs';
 import {
   LISTAR_SERVICOS,
   SERVICO_SELECIONADO,
-  PREENCHER_MODELO_JORNADA_USUARIO,
+  PREENCHER_MODELO,
 } from '../../routes/routeObjects';
 import api from '../../service/api';
 import ModelCard from '../../components/ModelCard';
@@ -32,12 +32,6 @@ function ServicoSelecioado() {
   const [modelos, setModelos] = useState([]);
   const [modeloSelecionado, setModeloSelecionado] = useState();
   const [showCreateModal, setShowCreateModal] = useState(false);
-
-  // const defaultSelectModel = useCallback(listaModelos => {
-  //   setModeloSelecionado(
-  //     listaModelos.filter(modelo => modelo.nome === 'Modelo Principal')[0]
-  //   );
-  // }, []);
 
   const getEtapaAtividadesIds = useCallback(async idModelo => {
     await api.get(`modelos/etapaAtividades/${idModelo}`).then(response => {
@@ -79,14 +73,18 @@ function ServicoSelecioado() {
     [modelos]
   );
 
-  const navigateToJornadaUsuario = useCallback(() => {
-    const { idServico, nome } = servico;
-    history.push(PREENCHER_MODELO_JORNADA_USUARIO.route, {
-      idServico,
-      nomeServico: nome,
-      etapaAtividadesIds,
-    });
-  }, [history, servico]);
+  const navigateToJornadaUsuario = useCallback(
+    stepType => {
+      const { idServico, nome } = servico;
+      history.push(PREENCHER_MODELO.route, {
+        idServico,
+        nomeServico: nome,
+        etapaAtividadesIds,
+        stepType,
+      });
+    },
+    [history, servico]
+  );
 
   const selectModel = async modelo => {
     await getEtapaAtividadesIds(modeloSelecionado.idModelo);
@@ -123,26 +121,33 @@ function ServicoSelecioado() {
         <h4>{servico.orgao.nomeOrgao}</h4>
       </TitleHeader>
       <Buttons>
-        <Button type="secondary" onClick={navigateToJornadaUsuario}>
+        <Button
+          type="secondary"
+          onClick={() => navigateToJornadaUsuario('JORNADA_USUARIO')}
+        >
           Jornada do Usuário
         </Button>
 
         <RightArrow />
 
-        <Button type="secondary" disabled>
+        <Button
+          type="secondary"
+          onClick={() => navigateToJornadaUsuario('CUSTOS_ORGAO')}
+        >
           Custos do Órgão
         </Button>
         <RightArrow />
 
-        <Button type="secondary" disabled>
+        <Button
+          type="secondary"
+          onClick={() => navigateToJornadaUsuario('CUSTOS_TRANSFORMACAO')}
+        >
           Custos de Transformação
         </Button>
 
         <RightArrow />
 
-        <Button type="primary" disabled>
-          Gerar Relatório
-        </Button>
+        <Button type="primary">Gerar Relatório</Button>
       </Buttons>
       {showCreateModal && (
         <CreateModel

@@ -15,7 +15,7 @@ import PageStep from './PageStep';
 import {
   LISTAR_SERVICOS,
   SERVICO_SELECIONADO,
-  PREENCHER_MODELO_JORNADA_USUARIO,
+  PREENCHER_MODELO,
 } from '../../routes/routeObjects';
 
 import { jornadaUsuarioForms } from './pagesObject';
@@ -24,12 +24,6 @@ import { Container, RightFormButton, LeftFormButton } from './styles';
 import BasePage from '../BasePage';
 import api from '../../service/api';
 import { getJornadaUsuarioAtividadeReqObj } from './requestObject/atividades';
-
-// receber o objeto com os campos via params ao cadastrar esse componente no react router
-// passar o id do modelo para a rota? pra saber onde deve fazer o post com o json? (vai que ele só copia e cola a url)
-
-// Na tela do serviço selecionado, checar se estou recebendo o obj do serviço, se ele acessar a rota diretamente tem que fazer uma req
-// pegando o id que ta na url
 
 let mergedStepData = {};
 
@@ -47,13 +41,13 @@ const mappedEndpointWithStepType = {
   },
 };
 
-function PreencherModelo({ stepType }) {
+function PreencherModelo() {
   const currentPageRef = useRef(null);
   const {
-    state: { idServico, nomeServico, etapaAtividadesIds },
+    state: { idServico, nomeServico, etapaAtividadesIds, stepType },
   } = useLocation();
   const [currentFormIndex, setCurrentFormIndex] = useState(0);
-
+  console.log({ stepType });
   const formPages = useMemo(() => mappedFormObjectWithStepType[stepType], [
     stepType,
   ]);
@@ -184,9 +178,6 @@ function PreencherModelo({ stepType }) {
           console.log({ sanitizedInputsPre, sanitizedInputsPos });
           console.log({ reqPreObject, reqPosObject });
 
-          // console.log(`/atividades-pre/etapa/${idEtapaPre}`);
-          // console.log(`/atividades-pre/etapa/${idEtapaPos}`);
-
           mergedStepData = { ...mergedStepData, ...inputsData };
 
           Promise.all([
@@ -275,7 +266,7 @@ function PreencherModelo({ stepType }) {
           currentRouting={[
             LISTAR_SERVICOS,
             SERVICO_SELECIONADO(nomeServico, idServico),
-            PREENCHER_MODELO_JORNADA_USUARIO,
+            PREENCHER_MODELO,
           ]}
         />
         <h2>{formPages[0].title}</h2>
