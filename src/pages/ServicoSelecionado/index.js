@@ -39,8 +39,8 @@ function ServicoSelecioado() {
   //   );
   // }, []);
 
-  const getEtapaAtividadesIds = useCallback(idModelo => {
-    api.get(`modelos/etapaAtividades/${idModelo}`).then(response => {
+  const getEtapaAtividadesIds = useCallback(async idModelo => {
+    await api.get(`modelos/etapaAtividades/${idModelo}`).then(response => {
       etapaAtividadesIds = response.data;
     });
   }, []);
@@ -88,7 +88,8 @@ function ServicoSelecioado() {
     });
   }, [history, servico]);
 
-  const selectModel = modelo => {
+  const selectModel = async modelo => {
+    await getEtapaAtividadesIds(modeloSelecionado.idModelo);
     setModeloSelecionado(modelo);
   };
 
