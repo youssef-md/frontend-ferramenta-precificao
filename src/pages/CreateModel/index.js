@@ -18,21 +18,18 @@ function CreateModel({ servico, closeCreateModal, handleFunction }) {
       setIsLoading(true);
 
       try {
-        const response = await api.post(
-          `modelos/servico/${servico.idServico}/`,
-          {
+        api
+          .post(`modelos/servico/${servico.idServico}/`, {
             nome,
             descricao,
-          }
-        );
+          })
+          .then(response => handleFunction(response.data));
 
-        const { idModelo } = response.data;
-        console.log(response.data, { idModelo, servico: servico.idServico });
         // Promise.all([
-        await createEtapasAtividadeJornadaUsuario(idModelo, 'pre');
-        await createEtapasAtividadeJornadaUsuario(idModelo, 'pos');
-        await createEtapasCustoOrgao(servico.idServico, 'pre');
-        await createEtapasCustoOrgao(servico.idServico, 'pos');
+        // await createEtapasAtividadeJornadaUsuario(idModelo, 'pre');
+        // await createEtapasAtividadeJornadaUsuario(idModelo, 'pos');
+        // await createEtapasCustoOrgao(servico.idServico, 'pre');
+        // await createEtapasCustoOrgao(servico.idServico, 'pos');
         // ])
         // .then(() => handleFunction(response.data))
         // .catch(() => {
