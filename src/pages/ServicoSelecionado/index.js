@@ -7,7 +7,9 @@ import Breadcrumbs from '../../components/Breadcrumbs';
 import {
   LISTAR_SERVICOS,
   SERVICO_SELECIONADO,
-  PREENCHER_MODELO,
+  PREENCHER_JORNADA_USUARIO,
+  PREENCHER_CUSTOS_ORGAO,
+  PREENCHER_CUSTOS_TRANSFORMACAO,
 } from '../../routes/routeObjects';
 import api from '../../service/api';
 import ModelCard from '../../components/ModelCard';
@@ -74,13 +76,12 @@ function ServicoSelecioado() {
   );
 
   const navigateToJornadaUsuario = useCallback(
-    stepType => {
+    route => {
       const { idServico, nome } = servico;
-      history.push(PREENCHER_MODELO.route, {
+      history.push(route, {
         idServico,
         nomeServico: nome,
         etapaAtividadesIds,
-        stepType,
       });
     },
     [history, servico]
@@ -123,7 +124,9 @@ function ServicoSelecioado() {
       <Buttons>
         <Button
           type="secondary"
-          onClick={() => navigateToJornadaUsuario('JORNADA_USUARIO')}
+          onClick={() =>
+            navigateToJornadaUsuario(PREENCHER_JORNADA_USUARIO.route)
+          }
         >
           Jornada do Usuário
         </Button>
@@ -132,7 +135,7 @@ function ServicoSelecioado() {
 
         <Button
           type="secondary"
-          onClick={() => navigateToJornadaUsuario('CUSTOS_ORGAO')}
+          onClick={() => navigateToJornadaUsuario(PREENCHER_CUSTOS_ORGAO.route)}
         >
           Custos do Órgão
         </Button>
@@ -140,7 +143,9 @@ function ServicoSelecioado() {
 
         <Button
           type="secondary"
-          onClick={() => navigateToJornadaUsuario('CUSTOS_TRANSFORMACAO')}
+          onClick={() =>
+            navigateToJornadaUsuario(PREENCHER_CUSTOS_TRANSFORMACAO.route)
+          }
         >
           Custos de Transformação
         </Button>

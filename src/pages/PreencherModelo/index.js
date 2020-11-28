@@ -15,7 +15,9 @@ import PageStep from './PageStep';
 import {
   LISTAR_SERVICOS,
   SERVICO_SELECIONADO,
-  PREENCHER_MODELO,
+  PREENCHER_JORNADA_USUARIO,
+  PREENCHER_CUSTOS_ORGAO,
+  PREENCHER_CUSTOS_TRANSFORMACAO,
 } from '../../routes/routeObjects';
 
 import { jornadaUsuarioForms } from './pagesObject';
@@ -32,6 +34,8 @@ let schemaValidator = {};
 
 const mappedFormObjectWithStepType = {
   JORNADA_USUARIO: jornadaUsuarioForms,
+  CUSTOS_ORGAO: jornadaUsuarioForms,
+  CUSTOS_TRANSFORMAÇÃO: jornadaUsuarioForms,
 };
 
 const mappedEndpointWithStepType = {
@@ -41,13 +45,19 @@ const mappedEndpointWithStepType = {
   },
 };
 
-function PreencherModelo() {
+const mappedRouteWithStepType = {
+  JORNADA_USUARIO: PREENCHER_JORNADA_USUARIO,
+  CUSTOS_ORGAO: PREENCHER_CUSTOS_ORGAO,
+  CUSTOS_TRANSFORMAÇÃO: PREENCHER_CUSTOS_TRANSFORMACAO,
+};
+
+function PreencherModelo({ stepType }) {
   const currentPageRef = useRef(null);
   const {
-    state: { idServico, nomeServico, etapaAtividadesIds, stepType },
+    state: { idServico, nomeServico, etapaAtividadesIds },
   } = useLocation();
   const [currentFormIndex, setCurrentFormIndex] = useState(0);
-  console.log({ stepType });
+
   const formPages = useMemo(() => mappedFormObjectWithStepType[stepType], [
     stepType,
   ]);
@@ -81,6 +91,12 @@ function PreencherModelo() {
       });
 
       schemaValidator = yup.object().shape(schemaObject);
+
+      return function resetValidatorAndMergedObj() {
+        schemaObject = {};
+        schemaValidator = {};
+        mergedStepData = {};
+      };
     },
     [formPages, currentFormIndex]
   );
@@ -175,9 +191,6 @@ function PreencherModelo() {
             ...sanitizedInputsPos,
           });
 
-          console.log({ sanitizedInputsPre, sanitizedInputsPos });
-          console.log({ reqPreObject, reqPosObject });
-
           mergedStepData = { ...mergedStepData, ...inputsData };
 
           Promise.all([
@@ -266,7 +279,7 @@ function PreencherModelo() {
           currentRouting={[
             LISTAR_SERVICOS,
             SERVICO_SELECIONADO(nomeServico, idServico),
-            PREENCHER_MODELO,
+            mappedRouteWithStepType[stepType],
           ]}
         />
         <h2>{formPages[0].title}</h2>

@@ -7,18 +7,18 @@ const data = [
       subTitle: 'Etapa 1 - Atividade: Digital',
       description: 'Buscar informações por canal digital',
     },
-    {
-      subTitle: 'Etapa 1 - Atividade: Presencial',
-      description: 'Buscar informações por canal presencial',
-    },
-    {
-      subTitle: 'Etapa 1 - Atividade: Postal',
-      description: 'Buscar informações por canal postal',
-    },
-    {
-      subTitle: 'Etapa 1 - Atividade: Telefone',
-      description: 'Buscar informações por canal telefônico',
-    },
+    // {
+    //   subTitle: 'Etapa 1 - Atividade: Presencial',
+    //   description: 'Buscar informações por canal presencial',
+    // },
+    // {
+    //   subTitle: 'Etapa 1 - Atividade: Postal',
+    //   description: 'Buscar informações por canal postal',
+    // },
+    // {
+    //   subTitle: 'Etapa 1 - Atividade: Telefone',
+    //   description: 'Buscar informações por canal telefônico',
+    // },
   ],
   [
     {
@@ -133,38 +133,38 @@ export const jornadaUsuarioForms = [
       'Nesta etapa você deverá que preencher não sei o que, bla bla bla buscar informações lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
   },
   ...generateAtividadesEtapa(1),
-  // ETAPA 2
-  {
-    type: 'page-intro',
-    step: 2,
-    subTitle: 'Etapa 2: Buscar Informações',
-    image: 'fake-image',
-    description:
-      'Nesta etapa você deverá que preencher não sei o que, bla bla bla buscar informações lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
-  },
-  ...generateAtividadesEtapa(2),
+  // // ETAPA 2
+  // {
+  //   type: 'page-intro',
+  //   step: 2,
+  //   subTitle: 'Etapa 2: Buscar Informações',
+  //   image: 'fake-image',
+  //   description:
+  //     'Nesta etapa você deverá que preencher não sei o que, bla bla bla buscar informações lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
+  // },
+  // ...generateAtividadesEtapa(2),
 
-  // ETAPA 3
-  {
-    type: 'page-intro',
-    step: 3,
-    subTitle: 'Etapa 3: Solicitar serviços',
-    image: 'fake-image',
-    description:
-      'Nesta etapa você deverá que preencher não sei o que, bla bla bla buscar informações lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
-  },
-  ...generateAtividadesEtapa(3),
+  // // ETAPA 3
+  // {
+  //   type: 'page-intro',
+  //   step: 3,
+  //   subTitle: 'Etapa 3: Solicitar serviços',
+  //   image: 'fake-image',
+  //   description:
+  //     'Nesta etapa você deverá que preencher não sei o que, bla bla bla buscar informações lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
+  // },
+  // ...generateAtividadesEtapa(3),
 
-  // ETAPA 4
-  {
-    type: 'page-intro',
-    step: 4,
-    subTitle: 'Etapa 4: Receber o Serviço',
-    image: 'fake-image',
-    description:
-      'Nesta etapa você deverá que preencher não sei o que, bla bla bla buscar informações lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
-  },
-  ...generateAtividadesEtapa(4),
+  // // ETAPA 4
+  // {
+  //   type: 'page-intro',
+  //   step: 4,
+  //   subTitle: 'Etapa 4: Receber o Serviço',
+  //   image: 'fake-image',
+  //   description:
+  //     'Nesta etapa você deverá que preencher não sei o que, bla bla bla buscar informações lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
+  // },
+  // ...generateAtividadesEtapa(4),
 
   // FIM
   {

@@ -7,7 +7,12 @@ import ServicoSelecionado from '../pages/ServicoSelecionado';
 import PreencherModelo from '../pages/PreencherModelo';
 import ListarPacotesConstantes from '../pages/ListarPacotesConstantes';
 import { useGeneralAppContext } from '../App';
-import { LISTAR_SERVICOS, PREENCHER_MODELO } from './routeObjects';
+import {
+  LISTAR_SERVICOS,
+  PREENCHER_JORNADA_USUARIO,
+  PREENCHER_CUSTOS_ORGAO,
+  PREENCHER_CUSTOS_TRANSFORMACAO,
+} from './routeObjects';
 import ListarConstantes from '../pages/ListarConstantes';
 
 function CustomRoute({ isPrivate, component: Component, ...rest }) {
@@ -42,21 +47,22 @@ function Routes() {
 
       <CustomRoute
         isPrivate
-        path={PREENCHER_MODELO.route}
-        component={PreencherModelo}
-      />
-      {/* <CustomRoute
-        isPrivate
-        path="/preencher-modelo-custos-orgao"
-        stepType="CUSTOS_ORGAO"
+        stepType="JORNADA_USUARIO"
+        path={PREENCHER_JORNADA_USUARIO.route}
         component={PreencherModelo}
       />
       <CustomRoute
         isPrivate
-        path="/preencher-modelo-custos-transformacao"
-        stepType="CUSTOS_TRANSFORMAÇÃO"
+        stepType="CUSTOS_ORGAO"
+        path={PREENCHER_CUSTOS_ORGAO.route}
         component={PreencherModelo}
-      /> */}
+      />
+      <CustomRoute
+        isPrivate
+        stepType="CUSTOS_TRANSFORMAÇÃO"
+        path={PREENCHER_CUSTOS_TRANSFORMACAO.route}
+        component={PreencherModelo}
+      />
 
       <CustomRoute
         isPrivate
