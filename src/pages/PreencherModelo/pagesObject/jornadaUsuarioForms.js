@@ -171,16 +171,6 @@ export const jornadaUsuarioForms = [
     type: 'page-end',
     subTitle: 'Todas as etapas foram preenchidas',
     description:
-      'Você conclui o preenchimento da Jornada do Usuário, os dados já estão salvos. Deseja retornar para a tela de serviço ou continuar o preenchimento para a seção de Custos do Órgão ?',
-    buttons: [
-      {
-        text: 'Voltar para tela de serviço',
-        route: '',
-      },
-      {
-        text: 'Preencher custos do órgão',
-        route: '',
-      },
-    ],
+      'Você conclui o preenchimento da Jornada do Usuário, os dados já estão salvos.',
   },
 ];

@@ -1,6 +1,7 @@
 import React, { useCallback, useImperativeHandle, useRef } from 'react';
 
 import { Form } from '@unform/web';
+import { useHistory } from 'react-router-dom';
 import {
   Container,
   FormSide,
@@ -11,8 +12,10 @@ import {
   ButtonsContainer,
 } from './styles';
 import Button from '../../../components/Button';
+import { SERVICO_SELECIONADO } from '../../../routes/routeObjects';
 
-function PageStep({ page }, ref) {
+function PageStep({ page, servico }, ref) {
+  const history = useHistory();
   const containerRef = useRef(null);
   const formRef = useRef(null);
 
@@ -103,11 +106,17 @@ function PageStep({ page }, ref) {
             <h3>{page.subTitle}</h3>
             <h4>{page.description}</h4>
             <ButtonsContainer>
-              {page.buttons.map(({ text, route }) => (
-                <Button key={route} type="secondary">
-                  {text}
-                </Button>
-              ))}
+              <Button
+                type="secondary"
+                onClick={() => {
+                  history.push(
+                    SERVICO_SELECIONADO(servico.nome, servico.idServico).route,
+                    { servico }
+                  );
+                }}
+              >
+                Voltar para tela de serviço
+              </Button>
             </ButtonsContainer>
           </PageEndCTA>
         )}

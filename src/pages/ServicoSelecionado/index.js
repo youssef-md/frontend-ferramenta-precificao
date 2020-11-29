@@ -77,10 +77,8 @@ function ServicoSelecioado() {
 
   const navigateToJornadaUsuario = useCallback(
     route => {
-      const { idServico, nome } = servico;
       history.push(route, {
-        idServico,
-        nomeServico: nome,
+        servico,
         etapaAtividadesIds,
       });
     },

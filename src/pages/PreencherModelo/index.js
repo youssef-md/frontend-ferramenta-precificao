@@ -54,14 +54,14 @@ const mappedRouteWithStepType = {
 function PreencherModelo({ stepType }) {
   const currentPageRef = useRef(null);
   const {
-    state: { idServico, nomeServico, etapaAtividadesIds },
+    state: { servico, etapaAtividadesIds },
   } = useLocation();
+  const { idServico, nome: nomeServico } = servico;
   const [currentFormIndex, setCurrentFormIndex] = useState(0);
 
   const formPages = useMemo(() => mappedFormObjectWithStepType[stepType], [
     stepType,
   ]);
-
   useEffect(
     function setValidatorCurrentPage() {
       schemaObject = {};
@@ -103,23 +103,23 @@ function PreencherModelo({ stepType }) {
 
   useEffect(
     function updateDefaultFormInputValues() {
-      const {
-        current: { formRef },
-      } = currentPageRef;
-
-      const isInInputPage = formPages[currentFormIndex].form;
-      if (isInInputPage) formRef.setData(mergedStepData);
+      const { current } = currentPageRef;
+      if (current && current.formRef) {
+        const { formRef } = current;
+        const isInInputPage = formPages[currentFormIndex].form;
+        if (isInInputPage) formRef.setData(mergedStepData);
+      }
     },
     [currentFormIndex, formPages]
   );
 
   const animatePageStepContainer = useCallback((translateX, opacity) => {
-    const {
-      current: { containerPageStep },
-    } = currentPageRef;
-
-    containerPageStep.style.transform = `translateX(${translateX}px)`;
-    containerPageStep.style.opacity = opacity;
+    const { current } = currentPageRef;
+    if (current && current.containerPageStep) {
+      const { containerPageStep } = current;
+      containerPageStep.style.transform = `translateX(${translateX}px)`;
+      containerPageStep.style.opacity = opacity;
+    }
   }, []);
 
   const goToNextPage = useCallback(
@@ -304,7 +304,11 @@ function PreencherModelo({ stepType }) {
           <FaArrowRight size={22} />
         </RightFormButton>
 
-        <PageStep ref={currentPageRef} page={formPages[currentFormIndex]} />
+        <PageStep
+          ref={currentPageRef}
+          page={formPages[currentFormIndex]}
+          servico={servico}
+        />
       </Container>
     </BasePage>
   );
