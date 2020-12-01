@@ -177,9 +177,11 @@ function ListarConstantes() {
       <Container>
         <header>
           <h3>Lista de constantes do pacote selecionado</h3>
-          <button type="button" onClick={submitConstants}>
-            Salvar e criar um novo pacote de constantes
-          </button>
+          {canEditPack && (
+            <button type="button" onClick={submitConstants}>
+              Salvar e criar um novo pacote de constantes
+            </button>
+          )}
         </header>
 
         <Table>
@@ -227,9 +229,11 @@ function ListarConstantes() {
           )}
         </Table>
 
-        <EOFButton type="secondary" onClick={submitConstants}>
-          Salvar e criar um novo pacote de constantes
-        </EOFButton>
+        {canEditPack && (
+          <EOFButton type="secondary" onClick={submitConstants}>
+            Salvar e criar um novo pacote de constantes
+          </EOFButton>
+        )}
       </Container>
     </BasePage>
   );

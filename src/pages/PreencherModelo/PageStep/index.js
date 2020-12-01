@@ -12,7 +12,10 @@ import {
   ButtonsContainer,
 } from './styles';
 import Button from '../../../components/Button';
-import { SERVICO_SELECIONADO } from '../../../routes/routeObjects';
+import {
+  LISTAR_SERVICOS,
+  SERVICO_SELECIONADO,
+} from '../../../routes/routeObjects';
 
 function PageStep({ page, servico }, ref) {
   const history = useHistory();
@@ -109,6 +112,7 @@ function PageStep({ page, servico }, ref) {
               <Button
                 type="secondary"
                 onClick={() => {
+                  history.push(LISTAR_SERVICOS.route);
                   history.push(
                     SERVICO_SELECIONADO(servico.nome, servico.idServico).route,
                     { servico }
