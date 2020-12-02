@@ -36,3 +36,8 @@ export const PREENCHER_CUSTOS_TRANSFORMACAO = {
   name: 'Preencher Modelo - Custos de Transformação',
   route: `/preencher-custos-transformacao`,
 };
+
+export const GERAR_RELATORIO = {
+  name: 'Relatório',
+  route: '/relatorio',
+};

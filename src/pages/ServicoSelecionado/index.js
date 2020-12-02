@@ -10,6 +10,7 @@ import {
   PREENCHER_JORNADA_USUARIO,
   PREENCHER_CUSTOS_ORGAO,
   PREENCHER_CUSTOS_TRANSFORMACAO,
+  GERAR_RELATORIO,
 } from '../../routes/routeObjects';
 import api from '../../service/api';
 import ModelCard from '../../components/ModelCard';
@@ -150,7 +151,17 @@ function ServicoSelecioado() {
 
         <RightArrow />
 
-        <Button type="primary">Gerar Relatório</Button>
+        <Button
+          type="primary"
+          onClick={() =>
+            history.push(GERAR_RELATORIO.route, {
+              servico,
+              modelo: modeloSelecionado,
+            })
+          }
+        >
+          Gerar Relatório
+        </Button>
       </Buttons>
       {showCreateModal && (
         <CreateModel

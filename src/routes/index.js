@@ -12,8 +12,10 @@ import {
   PREENCHER_JORNADA_USUARIO,
   PREENCHER_CUSTOS_ORGAO,
   PREENCHER_CUSTOS_TRANSFORMACAO,
+  GERAR_RELATORIO,
 } from './routeObjects';
 import ListarConstantes from '../pages/ListarConstantes';
+import Relatorio from '../pages/Relatorio';
 
 function CustomRoute({ isPrivate, component: Component, ...rest }) {
   const { userToken } = useGeneralAppContext();
@@ -62,6 +64,11 @@ function Routes() {
         stepType="CUSTOS_TRANSFORMAÇÃO"
         path={PREENCHER_CUSTOS_TRANSFORMACAO.route}
         component={PreencherModelo}
+      />
+      <CustomRoute
+        isPrivate
+        path={GERAR_RELATORIO.route}
+        component={Relatorio}
       />
 
       <CustomRoute
