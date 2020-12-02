@@ -62,6 +62,14 @@ function PreencherModelo({ stepType }) {
   const formPages = useMemo(() => mappedFormObjectWithStepType[stepType], [
     stepType,
   ]);
+
+  const etapaAtividadesIdsPre = etapaAtividadesIds.filter(
+    etapa => etapa.etapaPre
+  );
+  const etapaAtividadesIdsPos = etapaAtividadesIds.filter(
+    etapa => etapa.etapaPos
+  );
+
   useEffect(
     function setValidatorCurrentPage() {
       schemaObject = {};
@@ -92,25 +100,13 @@ function PreencherModelo({ stepType }) {
 
       schemaValidator = yup.object().shape(schemaObject);
 
-      return function resetValidatorAndMergedObj() {
-        schemaObject = {};
-        schemaValidator = {};
-        mergedStepData = {};
-      };
+      // return function resetValidatorAndMergedObj() {
+      //   schemaObject = {};
+      //   schemaValidator = {};
+      //   mergedStepData = {};
+      // };
     },
     [formPages, currentFormIndex]
-  );
-
-  useEffect(
-    function updateDefaultFormInputValues() {
-      const { current } = currentPageRef;
-      if (current && current.formRef) {
-        const { formRef } = current;
-        const isInInputPage = formPages[currentFormIndex].form;
-        if (isInInputPage) formRef.setData(mergedStepData);
-      }
-    },
-    [currentFormIndex, formPages]
   );
 
   const animatePageStepContainer = useCallback((translateX, opacity) => {
@@ -121,6 +117,76 @@ function PreencherModelo({ stepType }) {
       containerPageStep.style.opacity = opacity;
     }
   }, []);
+
+  const populateInputsWithSavedValues = useCallback(
+    (etapaPreenchida, etapa, type) => {
+      etapaPreenchida.data.map((atividade, index) => {
+        const {
+          custos: {
+            custoMonetario,
+            frequencia,
+            quantidadeUsuarios,
+            rendimentoMedio,
+            tempoMedio,
+          },
+        } = atividade;
+        const custoMonetarioInput = `custoMonetario-${type}-${etapa}-${
+          index + 1
+        }`;
+        const frequenciaInput = `frequencia-${type}-${etapa}-${index + 1}`;
+        const quantidadeUsuariosInput = `quantidadeUsuarios-${type}-${etapa}-${
+          index + 1
+        }`;
+        const rendimentoMedioInput = `rendimentoMedio-${type}-${etapa}-${
+          index + 1
+        }`;
+        const tempoMedioInput = `tempoMedio-${type}-${etapa}-${index + 1}`;
+
+        mergedStepData[custoMonetarioInput] = custoMonetario;
+        mergedStepData[frequenciaInput] = frequencia;
+        mergedStepData[quantidadeUsuariosInput] = quantidadeUsuarios;
+        mergedStepData[rendimentoMedioInput] = rendimentoMedio;
+        mergedStepData[tempoMedioInput] = tempoMedio;
+      });
+    },
+    []
+  );
+
+  useEffect(
+    function updateDefaultFormInputValues() {
+      const { current } = currentPageRef;
+      if (current && current.formRef) {
+        const { formRef } = current;
+        const isInInputPage = formPages[currentFormIndex].form;
+        if (isInInputPage) formRef.setData(mergedStepData);
+
+        const currentPage = formPages[currentFormIndex];
+
+        if (currentPage.type === 'page-form') {
+          const etapa = Number(currentPage.step);
+          const idEtapaPre = etapaAtividadesIdsPre[etapa - 1].etapaPre;
+          const idEtapaPos = etapaAtividadesIdsPos[etapa - 1].etapaPos;
+
+          Promise.all([
+            api.get(`/atividades-pre/etapa/${idEtapaPre}/`),
+            api.get(`/atividades-pos/etapa/${idEtapaPos}/`),
+          ]).then(([pre, pos]) => {
+            populateInputsWithSavedValues(pre, etapa, 'pre');
+            populateInputsWithSavedValues(pos, etapa, 'pos');
+            formRef.setData(mergedStepData);
+          });
+        }
+      }
+    },
+    [
+      currentFormIndex,
+      formPages,
+      etapaAtividadesIdsPre,
+      etapaAtividadesIdsPos,
+      etapaAtividadesIds,
+      populateInputsWithSavedValues,
+    ]
+  );
 
   const goToNextPage = useCallback(
     async event => {
@@ -146,12 +212,6 @@ function PreencherModelo({ stepType }) {
               .replace(',', '.');
           });
 
-          const etapaAtividadesIdsPre = etapaAtividadesIds.filter(
-            etapa => etapa.etapaPre
-          );
-          const etapaAtividadesIdsPos = etapaAtividadesIds.filter(
-            etapa => etapa.etapaPos
-          );
           const etapa = Number(currentPage.step);
           const atividade = Number(currentPage.activity);
           const idEtapaPre = etapaAtividadesIdsPre[etapa - 1].etapaPre;
@@ -180,16 +240,22 @@ function PreencherModelo({ stepType }) {
               [curr.split('-')[0]]: inputsData[curr],
             };
           }, {});
-          const reqPreObject = getJornadaUsuarioAtividadeReqObj({
-            idEtapa: idEtapaPre,
-            idAtividade: idAtividadePre,
-            ...sanitizedInputsPre,
-          });
-          const reqPosObject = getJornadaUsuarioAtividadeReqObj({
-            idEtapa: idEtapaPos,
-            idAtividade: idAtividadePos,
-            ...sanitizedInputsPos,
-          });
+
+          let reqPreObject = null;
+          let reqPosObject = null;
+
+          if (stepType === 'JORNADA_USUARIO') {
+            reqPreObject = getJornadaUsuarioAtividadeReqObj({
+              idEtapa: idEtapaPre,
+              idAtividade: idAtividadePre,
+              ...sanitizedInputsPre,
+            });
+            reqPosObject = getJornadaUsuarioAtividadeReqObj({
+              idEtapa: idEtapaPos,
+              idAtividade: idAtividadePos,
+              ...sanitizedInputsPos,
+            });
+          }
 
           mergedStepData = { ...mergedStepData, ...inputsData };
 
@@ -197,7 +263,7 @@ function PreencherModelo({ stepType }) {
             api.put(`atividades-pre/etapa/${idEtapaPre}/`, [reqPreObject]),
             api.put(`atividades-pos/etapa/${idEtapaPos}/`, [reqPosObject]),
           ])
-            .then(res => console.log(res))
+            .then(() => {})
             .catch(() => {});
 
           formRef.reset();
@@ -225,7 +291,14 @@ function PreencherModelo({ stepType }) {
         }, 150);
       }
     },
-    [currentFormIndex, formPages, animatePageStepContainer, etapaAtividadesIds]
+    [
+      currentFormIndex,
+      formPages,
+      animatePageStepContainer,
+      etapaAtividadesIdsPos,
+      etapaAtividadesIdsPre,
+      stepType,
+    ]
   );
 
   const goToPreviousPage = useCallback(
