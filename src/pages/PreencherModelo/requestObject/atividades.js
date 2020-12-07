@@ -1,3 +1,7 @@
+function formatCurrency(string) {
+  return Number(string.replace('R$ ', '').replace('.', '').replace(',', '.'));
+}
+
 export function getJornadaUsuarioAtividadeReqObj({
   idEtapa,
   idAtividade,
@@ -14,9 +18,9 @@ export function getJornadaUsuarioAtividadeReqObj({
     custos: {
       quantidadeUsuarios: Number(quantidadeUsuarios),
       frequencia: Number(frequencia),
-      custoMonetario: parseFloat(custoMonetario),
+      custoMonetario: formatCurrency(custoMonetario),
       tempoMedio: Number(tempoMedio),
-      rendimentoMedio: parseFloat(rendimentoMedio),
+      rendimentoMedio: formatCurrency(rendimentoMedio),
       memoriaCalculo: {
         mcQuantidadeUsuarios: null,
         mcFrequencia: null,
@@ -34,15 +38,6 @@ export function getJornadaUsuarioAtividadeReqObj({
 }
 
 export function getCustosOrgaoAtividadeReqObj({
-  idCustosAlocacaoPessoas,
-  idCustosArmazenamentoPapel,
-  idCustosImovel,
-  idCustosInfraestrutura,
-  idCustosPessoalTercerizado,
-  idCustosPessoalServidores,
-  idCustosOrgao,
-  idCustosOrgaoPre,
-  idCustosOrgaoPos,
   quantidadePapelArmazenado,
   mediaSalarialTercerizados,
   mediaSalarialServidores,
@@ -50,17 +45,17 @@ export function getCustosOrgaoAtividadeReqObj({
   qtdFuncionariosServidores,
   tempoDedicacaoTercerizados,
   tempoDedicacaoServidores,
-  idModelo,
+  dropdownSolucao,
 }) {
   return {
     custosOrgao: {
-      cadastroCustosPessoal: true,
+      cadastroCustosPessoal: false,
       custosImovel: {
         custosAlocacaoPessoas: {
           custoOcupacao: 0,
           custoTotalOcupacao: 0,
           espacoOcupadoPessoa: 0,
-          idCustosAlocacaoPessoas,
+          idCustosAlocacaoPessoas: '?',
           memoriaCalculo: '',
           quantidadePessoasAlocadas: 0,
           totalEspacoOcupado: 0,
@@ -68,46 +63,53 @@ export function getCustosOrgaoAtividadeReqObj({
         custosArmazenamentoPapel: {
           custoArmazenamento: 0,
           custoTotalArmazenamento: 0,
-          idCustosArmazenamentoPapel,
+          idCustosArmazenamentoPapel: '?',
           memoriaCalculo: '',
           quantidadePapelArmazenado,
         },
-        idCustosImovel,
+        idCustosImovel: '?',
       },
       custosInfraestrutura: {
         custoManutencao: 0,
         custoTreinamento: 0,
-        idCustosInfraestrutura,
-        memoriaCalculo: 'Balcão',
+        idCustosInfraestrutura: '?',
+        memoriaCalculo: dropdownSolucao,
       },
       custosPersonalizado: [],
       custosPessoal: [
         {
           descricao: '',
-          idCustosPessoal: idCustosPessoalTercerizado,
-          mediaSalarial: mediaSalarialTercerizados,
-          memoriaCalculo: '',
-          nome: 'Tercerizados',
           posicao: 0,
-          quantidadeFuncionarios: qtdFuncionariosTercerizados,
-          tempoDedicacao: tempoDedicacaoTercerizados,
+          memoriaCalculo: '',
+
+          mediaSalarial:
+            mediaSalarialTercerizados &&
+            formatCurrency(mediaSalarialTercerizados),
+          nome: mediaSalarialTercerizados && 'Tercerizados',
+          quantidadeFuncionarios:
+            qtdFuncionariosTercerizados && Number(qtdFuncionariosTercerizados),
+          tempoDedicacao:
+            tempoDedicacaoTercerizados && Number(tempoDedicacaoTercerizados),
         },
         {
           descricao: '',
-          idCustosPessoal: idCustosPessoalServidores,
-          mediaSalarial: mediaSalarialServidores,
-          memoriaCalculo: '',
-          nome: 'Servidores',
           posicao: 0,
-          quantidadeFuncionarios: qtdFuncionariosServidores,
-          tempoDedicacao: tempoDedicacaoServidores,
+          memoriaCalculo: '',
+
+          mediaSalarial:
+            mediaSalarialServidores && formatCurrency(mediaSalarialServidores),
+          nome: mediaSalarialServidores && 'Servidores',
+          quantidadeFuncionarios:
+            qtdFuncionariosServidores && Number(qtdFuncionariosServidores),
+          tempoDedicacao:
+            tempoDedicacaoServidores && Number(tempoDedicacaoServidores),
         },
       ],
-      idCustosOrgao,
+      idCustosOrgao: '?',
     },
-    idCustosOrgaoPre,
-    idCustosOrgaoPos,
+    idCustosOrgaoPre: '?',
+    idCustosOrgaoPos: '?',
     tipo: '',
-    idModelo,
+    idModelo: '?',
   };
 }

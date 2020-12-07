@@ -76,7 +76,7 @@ function ServicoSelecioado() {
     [modelos]
   );
 
-  const navigateToJornadaUsuario = useCallback(
+  const navigateToEtapasPreenchimento = useCallback(
     route => {
       history.push(route, {
         servico,
@@ -124,7 +124,7 @@ function ServicoSelecioado() {
         <Button
           type="secondary"
           onClick={() =>
-            navigateToJornadaUsuario(PREENCHER_JORNADA_USUARIO.route)
+            navigateToEtapasPreenchimento(PREENCHER_JORNADA_USUARIO.route)
           }
         >
           Jornada do Usuário
@@ -134,7 +134,9 @@ function ServicoSelecioado() {
 
         <Button
           type="secondary"
-          onClick={() => navigateToJornadaUsuario(PREENCHER_CUSTOS_ORGAO.route)}
+          onClick={() =>
+            navigateToEtapasPreenchimento(PREENCHER_CUSTOS_ORGAO.route)
+          }
         >
           Custos do Órgão
         </Button>
@@ -143,7 +145,7 @@ function ServicoSelecioado() {
         <Button
           type="secondary"
           onClick={() =>
-            navigateToJornadaUsuario(PREENCHER_CUSTOS_TRANSFORMACAO.route)
+            navigateToEtapasPreenchimento(PREENCHER_CUSTOS_TRANSFORMACAO.route)
           }
         >
           Custos de Transformação
