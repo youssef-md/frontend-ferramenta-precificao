@@ -20,12 +20,15 @@ import {
   PREENCHER_CUSTOS_TRANSFORMACAO,
 } from '../../routes/routeObjects';
 
-import { jornadaUsuarioForms } from './pagesObject';
+import { jornadaUsuarioForms, custoOrgaoForms } from './pagesObject';
 
 import { Container, RightFormButton, LeftFormButton } from './styles';
 import BasePage from '../BasePage';
 import api from '../../service/api';
-import { getJornadaUsuarioAtividadeReqObj } from './requestObject/atividades';
+import {
+  getCustosOrgaoAtividadeReqObj,
+  getJornadaUsuarioAtividadeReqObj,
+} from './requestObject/atividades';
 
 let mergedStepData = {};
 
@@ -34,15 +37,8 @@ let schemaValidator = {};
 
 const mappedFormObjectWithStepType = {
   JORNADA_USUARIO: jornadaUsuarioForms,
-  CUSTOS_ORGAO: jornadaUsuarioForms,
+  CUSTOS_ORGAO: custoOrgaoForms,
   CUSTOS_TRANSFORMAÇÃO: jornadaUsuarioForms,
-};
-
-const mappedEndpointWithStepType = {
-  JORNADA_USUARIO: {
-    pre: 'atividades-pre/',
-    pos: 'atividades-pos/',
-  },
 };
 
 const mappedRouteWithStepType = {
@@ -118,7 +114,7 @@ function PreencherModelo({ stepType }) {
     }
   }, []);
 
-  const populateInputsWithSavedValues = useCallback(
+  const populateAtividadeInputsWithSavedValues = useCallback(
     (etapaPreenchida, etapa, type) => {
       etapaPreenchida.data.map((atividade, index) => {
         const {
@@ -171,8 +167,8 @@ function PreencherModelo({ stepType }) {
             api.get(`/atividades-pre/etapa/${idEtapaPre}/`),
             api.get(`/atividades-pos/etapa/${idEtapaPos}/`),
           ]).then(([pre, pos]) => {
-            populateInputsWithSavedValues(pre, etapa, 'pre');
-            populateInputsWithSavedValues(pos, etapa, 'pos');
+            populateAtividadeInputsWithSavedValues(pre, etapa, 'pre');
+            populateAtividadeInputsWithSavedValues(pos, etapa, 'pos');
             formRef.setData(mergedStepData);
           });
         }
@@ -184,8 +180,102 @@ function PreencherModelo({ stepType }) {
       etapaAtividadesIdsPre,
       etapaAtividadesIdsPos,
       etapaAtividadesIds,
-      populateInputsWithSavedValues,
+      populateAtividadeInputsWithSavedValues,
     ]
+  );
+
+  function getSanitizedInputsPrePos(inputsData) {
+    function separator(match) {
+      return Object.keys(inputsData).filter(el => el.includes(match));
+    }
+
+    function sanitizer(data) {
+      return data.reduce((acc, curr) => {
+        return {
+          ...acc,
+          [curr.split('-')[0]]: inputsData[curr],
+        };
+      }, {});
+    }
+
+    const inputsPre = separator('-pre-');
+    const inputsPos = separator('-pos-');
+    const sanitizedInputsPre = sanitizer(inputsPre);
+    const sanitizedInputsPos = sanitizer(inputsPos);
+
+    return [sanitizedInputsPre, sanitizedInputsPos];
+  }
+
+  const sendAtividadeData = useCallback(
+    inputsData => {
+      const currentPage = formPages[currentFormIndex];
+
+      const etapa = Number(currentPage.step);
+      const atividade = Number(currentPage.activity);
+      const idEtapaPre = etapaAtividadesIdsPre[etapa - 1].etapaPre;
+      const idEtapaPos = etapaAtividadesIdsPos[etapa - 1].etapaPos;
+      const idAtividadePre = etapaAtividadesIdsPre[
+        etapa - 1
+      ].atividadesPre.split(' ')[atividade - 1];
+      const idAtividadePos = etapaAtividadesIdsPos[
+        etapa - 1
+      ].atividadesPos.split(' ')[atividade - 1];
+      const [sanitizedPre, sanitizedPos] = getSanitizedInputsPrePos(inputsData);
+
+      let reqPreObject = null;
+      let reqPosObject = null;
+
+      reqPreObject = getJornadaUsuarioAtividadeReqObj({
+        idEtapa: idEtapaPre,
+        idAtividade: idAtividadePre,
+        ...sanitizedPre,
+      });
+      reqPosObject = getJornadaUsuarioAtividadeReqObj({
+        idEtapa: idEtapaPos,
+        idAtividade: idAtividadePos,
+        ...sanitizedPos,
+      });
+
+      Promise.all([
+        api.put(`atividades-pre/etapa/${idEtapaPre}/`, [reqPreObject]),
+        api.put(`atividades-pos/etapa/${idEtapaPos}/`, [reqPosObject]),
+      ])
+        .then(() => {})
+        .catch(() => {});
+    },
+    [currentFormIndex, etapaAtividadesIdsPos, etapaAtividadesIdsPre, formPages]
+  );
+
+  const sendOrgaoData = useCallback(
+    inputsData => {
+      const currentPage = formPages[currentFormIndex];
+      const [sanitizedPre, sanitizedPos] = getSanitizedInputsPrePos(inputsData);
+
+      if (currentPage.pessoaTipo === 'Servidores') {
+        const reqPre = getCustosOrgaoAtividadeReqObj({
+          mediaSalarialServidores: sanitizedPre.mediaSalarial,
+          qtdFuncionariosServidores: sanitizedPre.quantidadeFuncionarios,
+          tempoDedicacaoServidores: sanitizedPre.tempoDedicacao,
+        });
+        const reqPos = getCustosOrgaoAtividadeReqObj({
+          mediaSalarialServidores: sanitizedPos.mediaSalarial,
+          qtdFuncionariosServidores: sanitizedPos.quantidadeFuncionarios,
+          tempoDedicacaoServidores: sanitizedPos.tempoDedicacao,
+        });
+        // JSON INCOMPLETO, vai ter que mandar tudo no final então...
+        Promise.all([
+          api.put(`custos-orgao-pre/modelo/${idServico}/`, [reqPre]),
+          api.put(`custos-orgao-pos/modelo/${idServico}/`, [reqPos]),
+        ])
+          .then(() => {})
+          .catch(() => {});
+      }
+
+      function cleanEmptyObjsProps(obj) {
+        return JSON.parse(JSON.stringify(obj));
+      }
+    },
+    [currentFormIndex, formPages, idServico]
   );
 
   const goToNextPage = useCallback(
@@ -197,6 +287,11 @@ function PreencherModelo({ stepType }) {
       const currentPage = formPages[currentFormIndex];
 
       if (currentPage.type === 'page-form') {
+        const formTypeMethods = {
+          JORNADA_USUARIO: sendAtividadeData,
+          CUSTOS_ORGAO: sendOrgaoData,
+          CUSTOS_TRANSFORMACAO: sendAtividadeData,
+        };
         const inputsData = formRef.getData();
         formRef.setErrors({}); // reset past errors
 
@@ -205,69 +300,13 @@ function PreencherModelo({ stepType }) {
             abortEarly: false,
           });
 
-          Object.keys(inputsData).map(key => {
-            inputsData[key] = inputsData[key]
-              .replace('R$ ', '')
-              .replace('.', '')
-              .replace(',', '.');
-          });
-
-          const etapa = Number(currentPage.step);
-          const atividade = Number(currentPage.activity);
-          const idEtapaPre = etapaAtividadesIdsPre[etapa - 1].etapaPre;
-          const idEtapaPos = etapaAtividadesIdsPos[etapa - 1].etapaPos;
-          const idAtividadePre = etapaAtividadesIdsPre[
-            etapa - 1
-          ].atividadesPre.split(' ')[atividade - 1];
-          const idAtividadePos = etapaAtividadesIdsPos[
-            etapa - 1
-          ].atividadesPos.split(' ')[atividade - 1];
-          const inputsPre = Object.keys(inputsData).filter(el =>
-            el.includes('-pre-')
-          );
-          const inputsPos = Object.keys(inputsData).filter(el =>
-            el.includes('-pos-')
-          );
-          const sanitizedInputsPre = inputsPre.reduce((acc, curr) => {
-            return {
-              ...acc,
-              [curr.split('-')[0]]: inputsData[curr],
-            };
-          }, {});
-          const sanitizedInputsPos = inputsPos.reduce((acc, curr) => {
-            return {
-              ...acc,
-              [curr.split('-')[0]]: inputsData[curr],
-            };
-          }, {});
-
-          let reqPreObject = null;
-          let reqPosObject = null;
-
-          if (stepType === 'JORNADA_USUARIO') {
-            reqPreObject = getJornadaUsuarioAtividadeReqObj({
-              idEtapa: idEtapaPre,
-              idAtividade: idAtividadePre,
-              ...sanitizedInputsPre,
-            });
-            reqPosObject = getJornadaUsuarioAtividadeReqObj({
-              idEtapa: idEtapaPos,
-              idAtividade: idAtividadePos,
-              ...sanitizedInputsPos,
-            });
-          }
+          formTypeMethods[stepType](inputsData);
 
           mergedStepData = { ...mergedStepData, ...inputsData };
 
-          Promise.all([
-            api.put(`atividades-pre/etapa/${idEtapaPre}/`, [reqPreObject]),
-            api.put(`atividades-pos/etapa/${idEtapaPos}/`, [reqPosObject]),
-          ])
-            .then(() => {})
-            .catch(() => {});
-
           formRef.reset();
         } catch (error) {
+          console.log(error);
           const validationErrors = {};
 
           if (error instanceof yup.ValidationError) {
@@ -295,9 +334,9 @@ function PreencherModelo({ stepType }) {
       currentFormIndex,
       formPages,
       animatePageStepContainer,
-      etapaAtividadesIdsPos,
-      etapaAtividadesIdsPre,
       stepType,
+      sendAtividadeData,
+      sendOrgaoData,
     ]
   );
 
