@@ -38,7 +38,17 @@ function ServicoSelecioado() {
 
   const getEtapaAtividadesIds = useCallback(async idModelo => {
     await api.get(`modelos/etapaAtividades/${idModelo}`).then(response => {
-      etapaAtividadesIds = response.data;
+      etapaAtividadesIds = response.data.slice(0, -3);
+      const [orgaoPreIds, orgaoPosIds, transformacaoIds] = response.data.slice(
+        -3
+      );
+
+      console.log({
+        etapaAtividadesIds,
+        orgaoPreIds,
+        orgaoPosIds,
+        transformacaoIds,
+      });
     });
   }, []);
 
@@ -81,9 +91,10 @@ function ServicoSelecioado() {
       history.push(route, {
         servico,
         etapaAtividadesIds,
+        idModelo: modeloSelecionado && modeloSelecionado.idModelo,
       });
     },
-    [history, servico]
+    [history, servico, modeloSelecionado]
   );
 
   const selectModel = async modelo => {

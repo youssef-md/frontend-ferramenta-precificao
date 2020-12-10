@@ -51,36 +51,36 @@ export function getCustosOrgaoAtividadeReqObj({
     custosOrgao: {
       cadastroCustosPessoal: false,
       custosImovel: {
-        custosAlocacaoPessoas: {
-          custoOcupacao: 0,
-          custoTotalOcupacao: 0,
-          espacoOcupadoPessoa: 0,
-          idCustosAlocacaoPessoas: '?',
-          memoriaCalculo: '',
-          quantidadePessoasAlocadas: 0,
-          totalEspacoOcupado: 0,
-        },
+        // custosAlocacaoPessoas: {
+        //   custoOcupacao: 0,
+        //   custoTotalOcupacao: 0,
+        //   espacoOcupadoPessoa: 0,
+        //   idCustosAlocacaoPessoas: '?',
+        //   memoriaCalculo: '',
+        //   quantidadePessoasAlocadas: 0,
+        //   totalEspacoOcupado: 0,
+        // },
         custosArmazenamentoPapel: {
-          custoArmazenamento: 0,
-          custoTotalArmazenamento: 0,
-          idCustosArmazenamentoPapel: '?',
-          memoriaCalculo: '',
+          // custoArmazenamento: 0,
+          // custoTotalArmazenamento: 0,
+          // idCustosArmazenamentoPapel: '?',
+          // memoriaCalculo: '',
           quantidadePapelArmazenado,
         },
-        idCustosImovel: '?',
+        // idCustosImovel: '?',
       },
       custosInfraestrutura: {
-        custoManutencao: 0,
-        custoTreinamento: 0,
-        idCustosInfraestrutura: '?',
+        // custoManutencao: 0,
+        // custoTreinamento: 0,
+        // idCustosInfraestrutura: '?',
         memoriaCalculo: dropdownSolucao,
       },
-      custosPersonalizado: [],
+      // custosPersonalizado: [],
       custosPessoal: [
         {
-          descricao: '',
-          posicao: 0,
-          memoriaCalculo: '',
+          // descricao: '',
+          // posicao: 0,
+          // memoriaCalculo: '',
 
           mediaSalarial:
             mediaSalarialTercerizados &&
@@ -92,9 +92,9 @@ export function getCustosOrgaoAtividadeReqObj({
             tempoDedicacaoTercerizados && Number(tempoDedicacaoTercerizados),
         },
         {
-          descricao: '',
-          posicao: 0,
-          memoriaCalculo: '',
+          // descricao: '',
+          // posicao: 0,
+          // memoriaCalculo: '',
 
           mediaSalarial:
             mediaSalarialServidores && formatCurrency(mediaSalarialServidores),
@@ -105,11 +105,10 @@ export function getCustosOrgaoAtividadeReqObj({
             tempoDedicacaoServidores && Number(tempoDedicacaoServidores),
         },
       ],
-      idCustosOrgao: '?',
+      // idCustosOrgao: '?',
     },
-    idCustosOrgaoPre: '?',
-    idCustosOrgaoPos: '?',
-    tipo: '',
-    idModelo: '?',
+    // idCustosOrgaoPre: '?',
+    // idCustosOrgaoPos: '?',
+    // tipo: '',
   };
 }

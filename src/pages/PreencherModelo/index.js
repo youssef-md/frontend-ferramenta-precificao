@@ -50,7 +50,7 @@ const mappedRouteWithStepType = {
 function PreencherModelo({ stepType }) {
   const currentPageRef = useRef(null);
   const {
-    state: { servico, etapaAtividadesIds },
+    state: { servico, etapaAtividadesIds, idModelo },
   } = useLocation();
   const { idServico, nome: nomeServico } = servico;
   const [currentFormIndex, setCurrentFormIndex] = useState(0);
@@ -262,10 +262,11 @@ function PreencherModelo({ stepType }) {
           qtdFuncionariosServidores: sanitizedPos.quantidadeFuncionarios,
           tempoDedicacaoServidores: sanitizedPos.tempoDedicacao,
         });
-        // JSON INCOMPLETO, vai ter que mandar tudo no final então...
+        console.log(reqPre);
+
         Promise.all([
-          api.put(`custos-orgao-pre/modelo/${idServico}/`, [reqPre]),
-          api.put(`custos-orgao-pos/modelo/${idServico}/`, [reqPos]),
+          api.put(`custos-orgao-pre/modelo/${idModelo}/`, [reqPre]),
+          api.put(`custos-orgao-pos/modelo/${idModelo}/`, [reqPos]),
         ])
           .then(() => {})
           .catch(() => {});
@@ -275,7 +276,7 @@ function PreencherModelo({ stepType }) {
         return JSON.parse(JSON.stringify(obj));
       }
     },
-    [currentFormIndex, formPages, idServico]
+    [currentFormIndex, formPages, idModelo]
   );
 
   const goToNextPage = useCallback(
