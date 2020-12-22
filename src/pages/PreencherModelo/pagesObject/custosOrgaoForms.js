@@ -21,21 +21,21 @@ export const custoOrgaoForms = [
       inputs: [
         {
           title: 'Renda Média:',
-          name: 'mediaSalarial',
+          name: 'mediaSalarialServidores',
           placeholder: 'R$ 123,12',
           type: 'string',
           maskType: 'money',
         },
         {
           title: 'Quantidade de Servidores:',
-          name: 'quantidadeFuncionarios',
+          name: 'qtdFuncionariosServidores',
           placeholder: '123',
           type: 'number',
           maskType: '',
         },
         {
           title: 'Tempo dedicação:',
-          name: 'tempoDedicacao',
+          name: 'tempoDedicacaoServidores',
           placeholder: '123',
           type: 'number',
           maskType: '',
@@ -56,21 +56,21 @@ export const custoOrgaoForms = [
       inputs: [
         {
           title: 'Renda Média:',
-          name: 'mediaSalarial',
+          name: 'mediaSalarialTercerizados',
           placeholder: 'R$ 123,12',
           type: 'string',
           maskType: 'money',
         },
         {
           title: 'Quantidade de Servidores:',
-          name: 'quantidadeFuncionarios',
+          name: 'qtdFuncionariosTercerizados',
           placeholder: '123',
           type: 'number',
           maskType: '',
         },
         {
           title: 'Tempo dedicação:',
-          name: 'tempoDedicacao',
+          name: 'tempoDedicacaoTercerizados',
           placeholder: '123',
           type: 'number',
           maskType: '',
@@ -136,12 +136,20 @@ export const custoOrgaoForms = [
             'Solução Própria',
           ],
           title: 'Solução de Transformação:',
-          name: 'memoriaCalculo',
+          name: 'dropdownSolucao',
           placeholder: 'Solução Própria',
-          type: 'number',
+          type: 'string',
           maskType: '',
         },
       ],
     },
+  },
+
+  // FIM
+  {
+    type: 'page-end',
+    subTitle: 'Todas as etapas foram preenchidas',
+    description:
+      'Você conclui o preenchimento do Custos do Órgão, os dados já estão salvos.',
   },
 ];

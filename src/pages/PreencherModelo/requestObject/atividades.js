@@ -46,69 +46,91 @@ export function getCustosOrgaoAtividadeReqObj({
   tempoDedicacaoTercerizados,
   tempoDedicacaoServidores,
   dropdownSolucao,
+  // IDS
+  custosAlocacaoPessoasPreId,
+  custosAlocacaoPessoasPosId,
+  custosArmazenamentoPapelPreId,
+  custosArmazenamentoPapelPosId,
+  custosImovelPreId,
+  custosImovelPosId,
+  custosInfraestruturaPreId,
+  custosInfraestruturaPosId,
+  custosPessoalPreServidores,
+  custosPessoalPosServidores,
+  custosPessoalPreTerceirizados,
+  custosPessoalPosTerceirizados,
+  idCustosOrgaoPre,
+  idCustosOrgaoPos,
+  // idCustosAlocacaoPessoas,
+  // idCustosArmazenamentoPapel,
+  // idCustosImovel,
+  // idCustosInfraestrutura,
+  // idCustosPessoal,
+  // idCustosOrgao,
+  // idCustosOrgaoPre,
+  // idCustosOrgaoPos,
+  idModelo,
 }) {
   return {
     custosOrgao: {
       cadastroCustosPessoal: false,
       custosImovel: {
-        // custosAlocacaoPessoas: {
-        //   custoOcupacao: 0,
-        //   custoTotalOcupacao: 0,
-        //   espacoOcupadoPessoa: 0,
-        //   idCustosAlocacaoPessoas: '?',
-        //   memoriaCalculo: '',
-        //   quantidadePessoasAlocadas: 0,
-        //   totalEspacoOcupado: 0,
-        // },
+        custosAlocacaoPessoas: {
+          custoOcupacao: null,
+          custoTotalOcupacao: null,
+          espacoOcupadoPessoa: null,
+          idCustosAlocacaoPessoas:
+            custosAlocacaoPessoasPreId || custosAlocacaoPessoasPosId,
+          memoriaCalculo: '',
+          quantidadePessoasAlocadas: null,
+          totalEspacoOcupado: null,
+        },
         custosArmazenamentoPapel: {
-          // custoArmazenamento: 0,
-          // custoTotalArmazenamento: 0,
-          // idCustosArmazenamentoPapel: '?',
-          // memoriaCalculo: '',
+          custoArmazenamento: null,
+          custoTotalArmazenamento: null,
+          idCustosArmazenamentoPapel:
+            custosArmazenamentoPapelPreId || custosArmazenamentoPapelPosId,
+          memoriaCalculo: '',
           quantidadePapelArmazenado,
         },
-        // idCustosImovel: '?',
+        idCustosImovel: custosImovelPreId || custosImovelPosId,
       },
       custosInfraestrutura: {
-        // custoManutencao: 0,
-        // custoTreinamento: 0,
-        // idCustosInfraestrutura: '?',
+        custoManutencao: null,
+        custoTreinamento: null,
+        idCustosInfraestrutura:
+          custosInfraestruturaPreId || custosInfraestruturaPosId,
         memoriaCalculo: dropdownSolucao,
       },
-      // custosPersonalizado: [],
+      custosPersonalizado: [],
       custosPessoal: [
         {
-          // descricao: '',
-          // posicao: 0,
-          // memoriaCalculo: '',
-
-          mediaSalarial:
-            mediaSalarialTercerizados &&
-            formatCurrency(mediaSalarialTercerizados),
-          nome: mediaSalarialTercerizados && 'Tercerizados',
-          quantidadeFuncionarios:
-            qtdFuncionariosTercerizados && Number(qtdFuncionariosTercerizados),
-          tempoDedicacao:
-            tempoDedicacaoTercerizados && Number(tempoDedicacaoTercerizados),
+          descricao: null,
+          idCustosPessoal:
+            custosPessoalPreServidores || custosPessoalPosServidores,
+          posicao: 0,
+          memoriaCalculo: null,
+          mediaSalarial: formatCurrency(mediaSalarialServidores),
+          nome: 'Servidores',
+          quantidadeFuncionarios: Number(qtdFuncionariosServidores),
+          tempoDedicacao: Number(tempoDedicacaoServidores),
         },
         {
-          // descricao: '',
-          // posicao: 0,
-          // memoriaCalculo: '',
-
-          mediaSalarial:
-            mediaSalarialServidores && formatCurrency(mediaSalarialServidores),
-          nome: mediaSalarialServidores && 'Servidores',
-          quantidadeFuncionarios:
-            qtdFuncionariosServidores && Number(qtdFuncionariosServidores),
-          tempoDedicacao:
-            tempoDedicacaoServidores && Number(tempoDedicacaoServidores),
+          descricao: null,
+          idCustosPessoal:
+            custosPessoalPreTerceirizados || custosPessoalPosTerceirizados,
+          posicao: 1,
+          memoriaCalculo: null,
+          mediaSalarial: formatCurrency(mediaSalarialTercerizados),
+          nome: 'Tercerizados',
+          quantidadeFuncionarios: Number(qtdFuncionariosTercerizados),
+          tempoDedicacao: Number(tempoDedicacaoTercerizados),
         },
       ],
-      // idCustosOrgao: '?',
+      idCustosOrgao: idCustosOrgaoPre || idCustosOrgaoPos,
     },
-    // idCustosOrgaoPre: '?',
-    // idCustosOrgaoPos: '?',
-    // tipo: '',
+    idCustosOrgao: idCustosOrgaoPre || idCustosOrgaoPos,
+    idModelo,
+    tipo: 'física',
   };
 }

@@ -25,6 +25,9 @@ import {
 import CreateModel from '../CreateModel';
 
 let etapaAtividadesIds = null;
+let orgaoPreIds = null;
+let orgaoPosIds = null;
+let transformacaoIds = null;
 
 function ServicoSelecioado() {
   const history = useHistory();
@@ -38,10 +41,12 @@ function ServicoSelecioado() {
 
   const getEtapaAtividadesIds = useCallback(async idModelo => {
     await api.get(`modelos/etapaAtividades/${idModelo}`).then(response => {
+      const [preIds, posIds, transfIds] = response.data.slice(-3);
+
       etapaAtividadesIds = response.data.slice(0, -3);
-      const [orgaoPreIds, orgaoPosIds, transformacaoIds] = response.data.slice(
-        -3
-      );
+      orgaoPreIds = preIds;
+      orgaoPosIds = posIds;
+      transformacaoIds = transfIds;
 
       console.log({
         etapaAtividadesIds,
@@ -91,6 +96,9 @@ function ServicoSelecioado() {
       history.push(route, {
         servico,
         etapaAtividadesIds,
+        orgaoPreIds,
+        orgaoPosIds,
+        transformacaoIds,
         idModelo: modeloSelecionado && modeloSelecionado.idModelo,
       });
     },

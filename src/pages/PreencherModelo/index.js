@@ -30,11 +30,6 @@ import {
   getJornadaUsuarioAtividadeReqObj,
 } from './requestObject/atividades';
 
-let mergedStepData = {};
-
-let schemaObject = {};
-let schemaValidator = {};
-
 const mappedFormObjectWithStepType = {
   JORNADA_USUARIO: jornadaUsuarioForms,
   CUSTOS_ORGAO: custoOrgaoForms,
@@ -47,11 +42,26 @@ const mappedRouteWithStepType = {
   CUSTOS_TRANSFORMAÇÃO: PREENCHER_CUSTOS_TRANSFORMACAO,
 };
 
+let mergedDataAtividade = {};
+let mergedDataOrgao = {};
+let mergedDataTransformacao = {};
+
+let schemaObject = {};
+let schemaValidator = {};
+
 function PreencherModelo({ stepType }) {
   const currentPageRef = useRef(null);
   const {
-    state: { servico, etapaAtividadesIds, idModelo },
+    state: {
+      servico,
+      idModelo,
+      etapaAtividadesIds,
+      orgaoPreIds,
+      orgaoPosIds,
+      transformacaoIds,
+    },
   } = useLocation();
+  console.log({ orgaoPosIds, orgaoPreIds });
   const { idServico, nome: nomeServico } = servico;
   const [currentFormIndex, setCurrentFormIndex] = useState(0);
 
@@ -99,7 +109,9 @@ function PreencherModelo({ stepType }) {
       // return function resetValidatorAndMergedObj() {
       //   schemaObject = {};
       //   schemaValidator = {};
-      //   mergedStepData = {};
+      //   mergedDataAtividade = {};
+      //   mergedDataOrgao = {};
+      //   mergedDataTransformacao = {};
       // };
     },
     [formPages, currentFormIndex]
@@ -138,11 +150,11 @@ function PreencherModelo({ stepType }) {
         }`;
         const tempoMedioInput = `tempoMedio-${type}-${etapa}-${index + 1}`;
 
-        mergedStepData[custoMonetarioInput] = custoMonetario;
-        mergedStepData[frequenciaInput] = frequencia;
-        mergedStepData[quantidadeUsuariosInput] = quantidadeUsuarios;
-        mergedStepData[rendimentoMedioInput] = rendimentoMedio;
-        mergedStepData[tempoMedioInput] = tempoMedio;
+        mergedDataAtividade[custoMonetarioInput] = custoMonetario;
+        mergedDataAtividade[frequenciaInput] = frequencia;
+        mergedDataAtividade[quantidadeUsuariosInput] = quantidadeUsuarios;
+        mergedDataAtividade[rendimentoMedioInput] = rendimentoMedio;
+        mergedDataAtividade[tempoMedioInput] = tempoMedio;
       });
     },
     []
@@ -153,13 +165,16 @@ function PreencherModelo({ stepType }) {
       const { current } = currentPageRef;
       if (current && current.formRef) {
         const { formRef } = current;
-        const isInInputPage = formPages[currentFormIndex].form;
-        if (isInInputPage) formRef.setData(mergedStepData);
+        // const isInInputPage = formPages[currentFormIndex].form;
+        // if (isInInputPage) formRef.setData(mergedStepData);
 
         const currentPage = formPages[currentFormIndex];
 
         if (currentPage.type === 'page-form') {
           const etapa = Number(currentPage.step);
+
+          // Melhorar para atender Orgao e Transformação
+
           const idEtapaPre = etapaAtividadesIdsPre[etapa - 1].etapaPre;
           const idEtapaPos = etapaAtividadesIdsPos[etapa - 1].etapaPos;
 
@@ -169,7 +184,7 @@ function PreencherModelo({ stepType }) {
           ]).then(([pre, pos]) => {
             populateAtividadeInputsWithSavedValues(pre, etapa, 'pre');
             populateAtividadeInputsWithSavedValues(pos, etapa, 'pos');
-            formRef.setData(mergedStepData);
+            formRef.setData(mergedDataAtividade);
           });
         }
       }
@@ -249,32 +264,21 @@ function PreencherModelo({ stepType }) {
   const sendOrgaoData = useCallback(
     inputsData => {
       const currentPage = formPages[currentFormIndex];
-      const [sanitizedPre, sanitizedPos] = getSanitizedInputsPrePos(inputsData);
 
-      if (currentPage.pessoaTipo === 'Servidores') {
-        const reqPre = getCustosOrgaoAtividadeReqObj({
-          mediaSalarialServidores: sanitizedPre.mediaSalarial,
-          qtdFuncionariosServidores: sanitizedPre.quantidadeFuncionarios,
-          tempoDedicacaoServidores: sanitizedPre.tempoDedicacao,
-        });
-        const reqPos = getCustosOrgaoAtividadeReqObj({
-          mediaSalarialServidores: sanitizedPos.mediaSalarial,
-          qtdFuncionariosServidores: sanitizedPos.quantidadeFuncionarios,
-          tempoDedicacaoServidores: sanitizedPos.tempoDedicacao,
-        });
-        console.log(reqPre);
+      const [sanitizedPre, sanitizedPos] = getSanitizedInputsPrePos(
+        mergedDataOrgao
+      );
 
-        Promise.all([
-          api.put(`custos-orgao-pre/modelo/${idModelo}/`, [reqPre]),
-          api.put(`custos-orgao-pos/modelo/${idModelo}/`, [reqPos]),
-        ])
-          .then(() => {})
-          .catch(() => {});
-      }
+      const reqPre = getCustosOrgaoAtividadeReqObj({ ...sanitizedPre });
+      const reqPos = getCustosOrgaoAtividadeReqObj({ ...sanitizedPos });
+      console.log({ reqPre, reqPos });
 
-      function cleanEmptyObjsProps(obj) {
-        return JSON.parse(JSON.stringify(obj));
-      }
+      Promise.all([
+        api.put(`custos-orgao-pre/modelo/${idModelo}/`, [reqPre]),
+        api.put(`custos-orgao-pos/modelo/${idModelo}/`, [reqPos]),
+      ])
+        .then(() => {})
+        .catch(() => {});
     },
     [currentFormIndex, formPages, idModelo]
   );
@@ -293,17 +297,39 @@ function PreencherModelo({ stepType }) {
           CUSTOS_ORGAO: sendOrgaoData,
           CUSTOS_TRANSFORMACAO: sendAtividadeData,
         };
+
         const inputsData = formRef.getData();
         formRef.setErrors({}); // reset past errors
+        console.log({ inputsData });
 
         try {
           await schemaValidator.validate(inputsData, {
             abortEarly: false,
           });
 
-          formTypeMethods[stepType](inputsData);
+          if (stepType === 'JORNADA_USUARIO')
+            mergedDataAtividade = { ...mergedDataAtividade, ...inputsData };
+          if (stepType === 'CUSTOS_ORGAO')
+            mergedDataOrgao = { ...mergedDataOrgao, ...inputsData };
+          if (stepType === 'CUSTOS_TRANSFORMACAO')
+            mergedDataTransformacao = {
+              ...mergedDataTransformacao,
+              ...inputsData,
+            };
 
-          mergedStepData = { ...mergedStepData, ...inputsData };
+          console.log({
+            mergedDataAtividade,
+            mergedDataOrgao,
+            mergedDataTransformacao,
+          });
+
+          if (
+            stepType === 'JORNADA_USUARIO' ||
+            formPages[currentFormIndex + 1].type === 'page-end'
+          ) {
+            // Enviar somente no final para Custos Órgão e Custos Transformação
+            formTypeMethods[stepType](inputsData);
+          }
 
           formRef.reset();
         } catch (error) {
