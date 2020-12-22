@@ -98,8 +98,8 @@ function ServicoSelecioado() {
   );
 
   const selectModel = async modelo => {
-    await getEtapaAtividadesIds(modeloSelecionado.idModelo);
     setModeloSelecionado(modelo);
+    await getEtapaAtividadesIds(modeloSelecionado.idModelo);
   };
 
   const closeCreateModal = useCallback(() => {
