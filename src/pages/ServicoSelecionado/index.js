@@ -107,6 +107,7 @@ function ServicoSelecioado() {
 
   const selectModel = async modelo => {
     setModeloSelecionado(modelo);
+    await getEtapaAtividadesIds(modeloSelecionado.idModelo);
   };
 
   const closeCreateModal = useCallback(() => {
