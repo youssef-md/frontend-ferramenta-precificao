@@ -178,18 +178,21 @@ function PreencherModelo({ stepType }) {
           const idEtapaPre = etapaAtividadesIdsPre[etapa - 1].etapaPre;
           const idEtapaPos = etapaAtividadesIdsPos[etapa - 1].etapaPos;
 
-          Promise.all([
-            api.get(`/atividades-pre/etapa/${idEtapaPre}/`),
-            api.get(`/atividades-pos/etapa/${idEtapaPos}/`),
-          ]).then(([pre, pos]) => {
-            populateAtividadeInputsWithSavedValues(pre, etapa, 'pre');
-            populateAtividadeInputsWithSavedValues(pos, etapa, 'pos');
-            formRef.setData(mergedDataAtividade);
-          });
+          if (stepType === 'JORNADA_USUARIO') {
+            Promise.all([
+              api.get(`/atividades-pre/etapa/${idEtapaPre}/`),
+              api.get(`/atividades-pos/etapa/${idEtapaPos}/`),
+            ]).then(([pre, pos]) => {
+              populateAtividadeInputsWithSavedValues(pre, etapa, 'pre');
+              populateAtividadeInputsWithSavedValues(pos, etapa, 'pos');
+              formRef.setData(mergedDataAtividade);
+            });
+          }
         }
       }
     },
     [
+      stepType,
       currentFormIndex,
       formPages,
       etapaAtividadesIdsPre,
@@ -263,24 +266,30 @@ function PreencherModelo({ stepType }) {
 
   const sendOrgaoData = useCallback(
     inputsData => {
-      const currentPage = formPages[currentFormIndex];
-
       const [sanitizedPre, sanitizedPos] = getSanitizedInputsPrePos(
         mergedDataOrgao
       );
 
-      const reqPre = getCustosOrgaoAtividadeReqObj({ ...sanitizedPre });
-      const reqPos = getCustosOrgaoAtividadeReqObj({ ...sanitizedPos });
+      const reqPre = getCustosOrgaoAtividadeReqObj({
+        ...sanitizedPre,
+        ...orgaoPreIds,
+        idModelo,
+      });
+      const reqPos = getCustosOrgaoAtividadeReqObj({
+        ...sanitizedPos,
+        ...orgaoPosIds,
+        idModelo,
+      });
       console.log({ reqPre, reqPos });
 
       Promise.all([
-        api.put(`custos-orgao-pre/modelo/${idModelo}/`, [reqPre]),
-        api.put(`custos-orgao-pos/modelo/${idModelo}/`, [reqPos]),
+        api.put(`custos-orgao-pre/modelo/${idModelo}/`, reqPre),
+        api.put(`custos-orgao-pos/modelo/${idModelo}/`, reqPos),
       ])
         .then(() => {})
         .catch(() => {});
     },
-    [currentFormIndex, formPages, idModelo]
+    [idModelo, orgaoPreIds, orgaoPosIds]
   );
 
   const goToNextPage = useCallback(

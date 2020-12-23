@@ -76,61 +76,62 @@ export function getCustosOrgaoAtividadeReqObj({
       cadastroCustosPessoal: false,
       custosImovel: {
         custosAlocacaoPessoas: {
-          custoOcupacao: null,
-          custoTotalOcupacao: null,
-          espacoOcupadoPessoa: null,
+          // custoOcupacao: null,
+          // custoTotalOcupacao: null,
+          // espacoOcupadoPessoa: null,
           idCustosAlocacaoPessoas:
             custosAlocacaoPessoasPreId || custosAlocacaoPessoasPosId,
           memoriaCalculo: '',
-          quantidadePessoasAlocadas: null,
-          totalEspacoOcupado: null,
+          // quantidadePessoasAlocadas: null,
+          // totalEspacoOcupado: null,
         },
         custosArmazenamentoPapel: {
-          custoArmazenamento: null,
-          custoTotalArmazenamento: null,
+          // custoArmazenamento: null,
+          // custoTotalArmazenamento: null,
           idCustosArmazenamentoPapel:
             custosArmazenamentoPapelPreId || custosArmazenamentoPapelPosId,
           memoriaCalculo: '',
-          quantidadePapelArmazenado,
+          quantidadePapelArmazenado: Number(quantidadePapelArmazenado),
         },
         idCustosImovel: custosImovelPreId || custosImovelPosId,
       },
       custosInfraestrutura: {
-        custoManutencao: null,
-        custoTreinamento: null,
+        // custoManutencao: null,
+        // custoTreinamento: null,
         idCustosInfraestrutura:
           custosInfraestruturaPreId || custosInfraestruturaPosId,
-        memoriaCalculo: dropdownSolucao,
+        memoriaCalculo: idCustosOrgaoPos ? dropdownSolucao : '',
       },
       custosPersonalizado: [],
       custosPessoal: [
         {
-          descricao: null,
-          idCustosPessoal:
-            custosPessoalPreServidores || custosPessoalPosServidores,
-          posicao: 0,
-          memoriaCalculo: null,
-          mediaSalarial: formatCurrency(mediaSalarialServidores),
-          nome: 'Servidores',
-          quantidadeFuncionarios: Number(qtdFuncionariosServidores),
-          tempoDedicacao: Number(tempoDedicacaoServidores),
-        },
-        {
-          descricao: null,
+          descricao: 'Custo da remuneração dos servidores dedicados',
           idCustosPessoal:
             custosPessoalPreTerceirizados || custosPessoalPosTerceirizados,
-          posicao: 1,
-          memoriaCalculo: null,
           mediaSalarial: formatCurrency(mediaSalarialTercerizados),
+          // memoriaCalculo: null,
           nome: 'Tercerizados',
+          posicao: 1,
           quantidadeFuncionarios: Number(qtdFuncionariosTercerizados),
           tempoDedicacao: Number(tempoDedicacaoTercerizados),
+        },
+        {
+          descricao: 'Custo da remuneração dos terceirizados dedicados',
+          idCustosPessoal:
+            custosPessoalPreServidores || custosPessoalPosServidores,
+          mediaSalarial: formatCurrency(mediaSalarialServidores),
+          // memoriaCalculo: null,
+          nome: 'Servidores',
+          posicao: 0,
+          quantidadeFuncionarios: Number(qtdFuncionariosServidores),
+          tempoDedicacao: Number(tempoDedicacaoServidores),
         },
       ],
       idCustosOrgao: idCustosOrgaoPre || idCustosOrgaoPos,
     },
-    idCustosOrgao: idCustosOrgaoPre || idCustosOrgaoPos,
+    [idCustosOrgaoPre ? 'idCustosOrgaoPre' : 'idCustosOrgaoPos']:
+      idCustosOrgaoPre || idCustosOrgaoPos,
     idModelo,
-    tipo: 'física',
+    tipo: 'fisica',
   };
 }
