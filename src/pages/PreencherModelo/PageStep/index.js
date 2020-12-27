@@ -76,7 +76,9 @@ function PageStep({ page, servico }, ref) {
       );
     }
     return (
-      <InputsContainer>{page.form.inputs.map(createInputs)}</InputsContainer>
+      <InputsContainer>
+        {page.form.inputs.map(map => createInputs(map, ''))}
+      </InputsContainer>
     );
   }, [page, createInputs]);
 

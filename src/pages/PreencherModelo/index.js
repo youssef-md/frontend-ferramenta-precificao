@@ -20,7 +20,11 @@ import {
   PREENCHER_CUSTOS_TRANSFORMACAO,
 } from '../../routes/routeObjects';
 
-import { jornadaUsuarioForms, custoOrgaoForms } from './pagesObject';
+import {
+  jornadaUsuarioForms,
+  custoOrgaoForms,
+  transformacaoForms,
+} from './pagesObject';
 
 import { Container, RightFormButton, LeftFormButton } from './styles';
 import BasePage from '../BasePage';
@@ -33,13 +37,13 @@ import {
 const mappedFormObjectWithStepType = {
   JORNADA_USUARIO: jornadaUsuarioForms,
   CUSTOS_ORGAO: custoOrgaoForms,
-  CUSTOS_TRANSFORMAÇÃO: jornadaUsuarioForms,
+  CUSTOS_TRANSFORMACAO: transformacaoForms,
 };
 
 const mappedRouteWithStepType = {
   JORNADA_USUARIO: PREENCHER_JORNADA_USUARIO,
   CUSTOS_ORGAO: PREENCHER_CUSTOS_ORGAO,
-  CUSTOS_TRANSFORMAÇÃO: PREENCHER_CUSTOS_TRANSFORMACAO,
+  CUSTOS_TRANSFORMACAO: PREENCHER_CUSTOS_TRANSFORMACAO,
 };
 
 let mergedDataAtividade = {};
@@ -61,7 +65,7 @@ function PreencherModelo({ stepType }) {
       transformacaoIds,
     },
   } = useLocation();
-  console.log({ orgaoPosIds, orgaoPreIds });
+  console.log({ orgaoPosIds, orgaoPreIds, transformacaoIds });
   const { idServico, nome: nomeServico } = servico;
   const [currentFormIndex, setCurrentFormIndex] = useState(0);
 
@@ -96,12 +100,18 @@ function PreencherModelo({ stepType }) {
                 .number('Somente números são permitidos')
                 .typeError('Somente números são permitidos');
 
-        schemaObject[
-          `${input.name}-pre-${step}-${activity}`
-        ] = inputTypeValidation.required('O campo é obrigatório');
-        schemaObject[
-          `${input.name}-pos-${step}-${activity}`
-        ] = inputTypeValidation.required('O campo é obrigatório');
+        if (currentPage.form.pre && currentPage.form.pos) {
+          schemaObject[
+            `${input.name}-pre-${step}-${activity}`
+          ] = inputTypeValidation.required('O campo é obrigatório');
+          schemaObject[
+            `${input.name}-pos-${step}-${activity}`
+          ] = inputTypeValidation.required('O campo é obrigatório');
+        } else {
+          schemaObject[`${input.name}`] = inputTypeValidation.required(
+            'O campo é obrigatório'
+          );
+        }
       });
 
       schemaValidator = yup.object().shape(schemaObject);
@@ -292,6 +302,8 @@ function PreencherModelo({ stepType }) {
     [idModelo, orgaoPreIds, orgaoPosIds]
   );
 
+  const sendTransformacaoData = useCallback(() => {}, []);
+
   const goToNextPage = useCallback(
     async event => {
       if (event) event.preventDefault();
@@ -304,7 +316,7 @@ function PreencherModelo({ stepType }) {
         const formTypeMethods = {
           JORNADA_USUARIO: sendAtividadeData,
           CUSTOS_ORGAO: sendOrgaoData,
-          CUSTOS_TRANSFORMACAO: sendAtividadeData,
+          CUSTOS_TRANSFORMACAO: sendTransformacaoData,
         };
 
         const inputsData = formRef.getData();
@@ -320,11 +332,13 @@ function PreencherModelo({ stepType }) {
             mergedDataAtividade = { ...mergedDataAtividade, ...inputsData };
           if (stepType === 'CUSTOS_ORGAO')
             mergedDataOrgao = { ...mergedDataOrgao, ...inputsData };
-          if (stepType === 'CUSTOS_TRANSFORMACAO')
+          if (stepType === 'CUSTOS_TRANSFORMACAO') {
             mergedDataTransformacao = {
               ...mergedDataTransformacao,
               ...inputsData,
             };
+            console.log('oi');
+          }
 
           console.log({
             mergedDataAtividade,
@@ -373,6 +387,7 @@ function PreencherModelo({ stepType }) {
       stepType,
       sendAtividadeData,
       sendOrgaoData,
+      sendTransformacaoData,
     ]
   );
 

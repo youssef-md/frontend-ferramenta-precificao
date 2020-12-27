@@ -61,7 +61,7 @@ function Routes() {
       />
       <CustomRoute
         isPrivate
-        stepType="CUSTOS_TRANSFORMAÇÃO"
+        stepType="CUSTOS_TRANSFORMACAO"
         path={PREENCHER_CUSTOS_TRANSFORMACAO.route}
         component={PreencherModelo}
       />
