@@ -52,21 +52,21 @@ export const transformacaoForms = [
       inputs: [
         {
           title: 'Renda Média:',
-          name: 'mediaSalarialTerceirizados',
+          name: 'mediaSalarialTercerizados',
           placeholder: 'R$ 123,12',
           type: 'string',
           maskType: 'money',
         },
         {
           title: 'Quantidade de Terceirizados:',
-          name: 'qtdFuncionariosTerceirizados',
+          name: 'qtdFuncionariosTercerizados',
           placeholder: '123',
           type: 'number',
           maskType: '',
         },
         {
           title: 'Tempo dedicação:',
-          name: 'tempoDedicacaoTerceirizados',
+          name: 'tempoDedicacaoTercerizados',
           placeholder: '123',
           type: 'number',
           maskType: '',
@@ -94,9 +94,9 @@ export const transformacaoForms = [
       inputs: [
         {
           title: 'Quantidade de papel:',
-          name: 'quantidadePapel',
+          name: 'quantidadePapelArmazenado',
           placeholder: '123,12',
-          type: 'string',
+          type: 'number',
           // maskType: 'money',
         },
       ],
@@ -123,7 +123,7 @@ export const transformacaoForms = [
         {
           title: 'Solução de Transformação:',
           name: 'solucaoTransformacao',
-          placeholder: '123,12',
+          placeholder: 'Balcão, SEI, etc',
           type: 'string',
           // maskType: 'money',
         },
@@ -147,7 +147,7 @@ export const transformacaoForms = [
       inputs: [
         {
           title: 'Volume de solicitação:',
-          name: 'quantidadePapel',
+          name: 'volumeSolicitacao',
           placeholder: '123,12',
           type: 'string',
           // maskType: 'money',

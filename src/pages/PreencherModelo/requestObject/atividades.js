@@ -135,3 +135,77 @@ export function getCustosOrgaoAtividadeReqObj({
     tipo: 'fisica',
   };
 }
+
+export function getCustosInvestimentoReqObj({
+  custosAlocacaoPessoasInvestimento,
+  custosArmazenamentoPapelInvestimento,
+  custosImovelInvestimento,
+  custosInfraestruturaInvestimento,
+  custosPessoalInvestimentoServidores,
+  custosPessoalInvestimentoTerceirizados,
+  idModelo,
+  idCustosInvestimento,
+  quantidadePapelArmazenado,
+  solucaoTransformacao,
+  mediaSalarialServidores,
+  mediaSalarialTercerizados,
+  qtdFuncionariosServidores,
+  qtdFuncionariosTercerizados,
+  tempoDedicacaoServidores,
+  tempoDedicacaoTercerizados,
+}) {
+  return {
+    cadastroCustosPessoal: false,
+    custosImovel: {
+      custosAlocacaoPessoas: {
+        // custoOcupacao: null,
+        // custoTotalOcupacao: null,
+        // espacoOcupadoPessoa: null,
+        idCustosAlocacaoPessoas: custosAlocacaoPessoasInvestimento,
+        memoriaCalculo: '',
+        // quantidadePessoasAlocadas: null,
+        // totalEspacoOcupado: null,
+      },
+      custosArmazenamentoPapel: {
+        // custoArmazenamento: null, Constante do Banco
+        // custoTotalArmazenamento: null,
+        idCustosArmazenamentoPapel: custosArmazenamentoPapelInvestimento,
+        memoriaCalculo: '',
+        quantidadePapelArmazenado: Number(quantidadePapelArmazenado),
+      },
+      idCustosImovel: custosImovelInvestimento,
+    },
+    custosInfraestrutura: {
+      // custoFerramentaAutomacao: null,
+      // custoTreinamento: null,
+      idCustosInfraestrutura: custosInfraestruturaInvestimento,
+      memoriaCalculo: solucaoTransformacao,
+    },
+    custosPersonalizado: [],
+    custosPessoal: [
+      {
+        descricao: 'Custo da remuneração dos servidores dedicados',
+        idCustosPessoal: custosPessoalInvestimentoServidores,
+        mediaSalarial: mediaSalarialServidores,
+        memoriaCalculo: '',
+        nome: 'Servidores',
+        posicao: 0,
+        quantidadeFuncionarios: qtdFuncionariosServidores,
+        tempoDedicacao: tempoDedicacaoServidores,
+      },
+      {
+        descricao: 'Custo da remuneração dos terceirizados dedicados',
+        idCustosPessoal: custosPessoalInvestimentoTerceirizados,
+        mediaSalarial: mediaSalarialTercerizados,
+        memoriaCalculo: '',
+        nome: 'Terceirizados',
+        posicao: 1,
+        quantidadeFuncionarios: qtdFuncionariosTercerizados,
+        tempoDedicacao: tempoDedicacaoTercerizados,
+      },
+    ],
+    idCustosInvestimento,
+    idModelo,
+    tipo: 'string',
+  };
+}

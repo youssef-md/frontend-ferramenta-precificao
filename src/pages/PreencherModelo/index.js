@@ -30,6 +30,7 @@ import { Container, RightFormButton, LeftFormButton } from './styles';
 import BasePage from '../BasePage';
 import api from '../../service/api';
 import {
+  getCustosInvestimentoReqObj,
   getCustosOrgaoAtividadeReqObj,
   getJornadaUsuarioAtividadeReqObj,
 } from './requestObject/atividades';
@@ -275,7 +276,7 @@ function PreencherModelo({ stepType }) {
   );
 
   const sendOrgaoData = useCallback(
-    inputsData => {
+    async inputsData => {
       const [sanitizedPre, sanitizedPos] = getSanitizedInputsPrePos(
         mergedDataOrgao
       );
@@ -291,18 +292,51 @@ function PreencherModelo({ stepType }) {
         idModelo,
       });
       console.log({ reqPre, reqPos });
-
-      Promise.all([
-        api.put(`custos-orgao-pre/modelo/${idModelo}/`, reqPre),
-        api.put(`custos-orgao-pos/modelo/${idModelo}/`, reqPos),
-      ])
-        .then(() => {})
-        .catch(() => {});
+      try {
+        await api.put(`custos-orgao-pre/modelo/${idModelo}/`, reqPre);
+        await api.put(`custos-orgao-pos/modelo/${idModelo}/`, reqPos);
+      } catch (e) {
+        alert('Erro ao enviar dados do órgão');
+      }
     },
     [idModelo, orgaoPreIds, orgaoPosIds]
   );
 
-  const sendTransformacaoData = useCallback(() => {}, []);
+  const sendTransformacaoData = useCallback(async () => {
+    const reqObj = getCustosInvestimentoReqObj({
+      ...mergedDataTransformacao,
+      ...transformacaoIds,
+      idModelo,
+    });
+    console.log({ reqObj });
+
+    try {
+      await api.put(`custos-investimento/${idModelo}/`, reqObj);
+      await api.put(`modelos/${idModelo}`, {
+        // cadastroAtividadePosFisica: true,
+        // cadastroAtividadePosJuridica: false,
+        // cadastroAtividadePreFisica: true,
+        // cadastroAtividadePreJuridica: false,
+        // cadastroEtapaPosFisica: true,
+        // cadastroEtapaPosJuridica: false,
+        // cadastroEtapaPreFisica: true,
+        // cadastroEtapaPreJuridica: false,
+        // descricao: "teste 1",
+        // idModelo: 20457,
+        // isSubmetido: false,
+        // isValidado: false,
+        // nome: "m1",
+        // pacoteConstante: 1,
+        // servico: 4130,
+        // tipo: null,
+        // transformacaoDigital: null,
+        // usuario: null,
+        volumeSolicitacao: mergedDataTransformacao.volumeSolicitacao,
+      });
+    } catch (e) {
+      alert('Erro ao enviar dados do investimento');
+    }
+  }, [idModelo, transformacaoIds]);
 
   const goToNextPage = useCallback(
     async event => {
