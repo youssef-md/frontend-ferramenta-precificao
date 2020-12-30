@@ -59,6 +59,7 @@ export function getCustosOrgaoAtividadeReqObj({
   custosPessoalPosServidores,
   custosPessoalPreTerceirizados,
   custosPessoalPosTerceirizados,
+  idCustosOrgao,
   idCustosOrgaoPre,
   idCustosOrgaoPos,
   // idCustosAlocacaoPessoas,
@@ -127,7 +128,7 @@ export function getCustosOrgaoAtividadeReqObj({
           tempoDedicacao: Number(tempoDedicacaoServidores),
         },
       ],
-      idCustosOrgao: idCustosOrgaoPre || idCustosOrgaoPos,
+      idCustosOrgao,
     },
     [idCustosOrgaoPre ? 'idCustosOrgaoPre' : 'idCustosOrgaoPos']:
       idCustosOrgaoPre || idCustosOrgaoPos,
