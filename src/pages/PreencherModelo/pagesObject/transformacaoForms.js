@@ -121,11 +121,18 @@ export const transformacaoForms = [
     form: {
       inputs: [
         {
+          isDropdown: true,
           title: 'Solução de Transformação:',
           name: 'solucaoTransformacao',
           placeholder: 'Balcão, SEI, etc',
           type: 'string',
-          // maskType: 'money',
+          options: [
+            { value: 'Balcão', label: 'Balcão' },
+            { value: 'Fluxo', label: 'Fluxo' },
+            { value: 'Fluxo de Integração', label: 'Balcão' },
+            { value: 'SEI', label: 'SEI' },
+            { value: 'Solução Própria', label: 'Solução Própria' },
+          ],
         },
         {
           title: 'Custos de Infra:',

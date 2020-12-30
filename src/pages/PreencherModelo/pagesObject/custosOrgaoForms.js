@@ -128,12 +128,12 @@ export const custoOrgaoForms = [
       inputs: [
         {
           isDropdown: true,
-          values: [
-            'Balcão',
-            'Fluxo',
-            'Fluxo de Integração',
-            'SEI',
-            'Solução Própria',
+          options: [
+            { value: 'Balcão', label: 'Balcão' },
+            { value: 'Fluxo', label: 'Fluxo' },
+            { value: 'Fluxo de Integração', label: 'Balcão' },
+            { value: 'SEI', label: 'SEI' },
+            { value: 'Solução Própria', label: 'Solução Própria' },
           ],
           title: 'Solução de Transformação:',
           name: 'dropdownSolucao',

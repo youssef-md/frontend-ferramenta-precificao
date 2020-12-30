@@ -16,6 +16,7 @@ import {
   LISTAR_SERVICOS,
   SERVICO_SELECIONADO,
 } from '../../../routes/routeObjects';
+import Select from '../../../components/Select';
 
 function PageStep({ page, servico }, ref) {
   const history = useHistory();
@@ -34,7 +35,30 @@ function PageStep({ page, servico }, ref) {
   });
 
   const createInputs = useCallback(
-    ({ title, name, placeholder, auxText, type, maskType }, suffix) => {
+    (
+      {
+        title,
+        name,
+        placeholder,
+        auxText,
+        type,
+        maskType,
+        isDropdown,
+        options,
+      },
+      suffix
+    ) => {
+      if (isDropdown) {
+        return (
+          <Select
+            key={name}
+            label={title}
+            name={`${name}${suffix}`}
+            options={options}
+          />
+        );
+      }
+
       return (
         <Input
           key={name}
