@@ -100,7 +100,7 @@ function PageStep({ page, servico }, ref) {
       );
     }
     return (
-      <InputsContainer>
+      <InputsContainer isSingle>
         {page.form.inputs.map(map => createInputs(map, ''))}
       </InputsContainer>
     );

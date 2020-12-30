@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import Input from '../../../components/Input';
 
 export const InputsContainer = styled.div`
-  display: flex;
+  display: ${({ isSingle }) => !isSingle && 'flex'};
+  width: ${({ isSingle }) => isSingle && '80%'};
+
   flex-wrap: wrap;
   margin-top: 3.5rem;
 `;
