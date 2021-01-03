@@ -36,7 +36,15 @@ function ServicoSelecioado() {
   } = useLocation();
 
   const [modelos, setModelos] = useState([]);
-  const [modeloSelecionado, setModeloSelecionado] = useState();
+  const [modeloSelecionado, setModeloSelecionado] = useState(
+    function recoverSelectedModel() {
+      const persistedModel = localStorage.getItem(
+        '@ferramenta-precificação:modelo-selecionado'
+      );
+
+      if (persistedModel) return JSON.parse(persistedModel);
+    }
+  );
   const [showCreateModal, setShowCreateModal] = useState(false);
 
   const getEtapaAtividadesIds = useCallback(async idModelo => {
@@ -107,6 +115,10 @@ function ServicoSelecioado() {
 
   const selectModel = async modelo => {
     setModeloSelecionado(modelo);
+    localStorage.setItem(
+      '@ferramenta-precificação:modelo-selecionado',
+      JSON.stringify(modelo)
+    );
     await getEtapaAtividadesIds(modeloSelecionado.idModelo);
   };
 

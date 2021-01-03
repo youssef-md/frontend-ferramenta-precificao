@@ -136,7 +136,7 @@ export const transformacaoForms = [
         },
         {
           title: 'Custos de Infra:',
-          name: 'custosInfra', // nome ser igual ao que o JSON espera
+          name: 'custoTreinamento',
           placeholder: 'R$ 123,12',
           type: 'string',
           maskType: 'money',

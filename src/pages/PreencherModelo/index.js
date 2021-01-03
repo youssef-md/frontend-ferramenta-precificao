@@ -66,7 +66,6 @@ function PreencherModelo({ stepType }) {
       transformacaoIds,
     },
   } = useLocation();
-  console.log({ orgaoPosIds, orgaoPreIds, transformacaoIds });
   const { idServico, nome: nomeServico } = servico;
   const [currentFormIndex, setCurrentFormIndex] = useState(0);
 
@@ -275,32 +274,29 @@ function PreencherModelo({ stepType }) {
     [currentFormIndex, etapaAtividadesIdsPos, etapaAtividadesIdsPre, formPages]
   );
 
-  const sendOrgaoData = useCallback(
-    async inputsData => {
-      const [sanitizedPre, sanitizedPos] = getSanitizedInputsPrePos(
-        mergedDataOrgao
-      );
+  const sendOrgaoData = useCallback(async () => {
+    const [sanitizedPre, sanitizedPos] = getSanitizedInputsPrePos(
+      mergedDataOrgao
+    );
 
-      const reqPre = getCustosOrgaoAtividadeReqObj({
-        ...sanitizedPre,
-        ...orgaoPreIds,
-        idModelo,
-      });
-      const reqPos = getCustosOrgaoAtividadeReqObj({
-        ...sanitizedPos,
-        ...orgaoPosIds,
-        idModelo,
-      });
-      console.log({ reqPre, reqPos });
-      try {
-        await api.put(`custos-orgao-pre/modelo/${idModelo}/`, reqPre);
-        await api.put(`custos-orgao-pos/modelo/${idModelo}/`, reqPos);
-      } catch (e) {
-        alert('Erro ao enviar dados do órgão');
-      }
-    },
-    [idModelo, orgaoPreIds, orgaoPosIds]
-  );
+    const reqPre = getCustosOrgaoAtividadeReqObj({
+      ...sanitizedPre,
+      ...orgaoPreIds,
+      idModelo,
+    });
+    const reqPos = getCustosOrgaoAtividadeReqObj({
+      ...sanitizedPos,
+      ...orgaoPosIds,
+      idModelo,
+    });
+
+    try {
+      await api.put(`custos-orgao-pre/modelo/${idModelo}/`, reqPre);
+      await api.put(`custos-orgao-pos/modelo/${idModelo}/`, reqPos);
+    } catch (e) {
+      alert('Erro ao enviar dados do órgão');
+    }
+  }, [idModelo, orgaoPreIds, orgaoPosIds]);
 
   const sendTransformacaoData = useCallback(async () => {
     const reqObj = getCustosInvestimentoReqObj({
@@ -308,11 +304,10 @@ function PreencherModelo({ stepType }) {
       ...transformacaoIds,
       idModelo,
     });
-    console.log({ reqObj });
 
     try {
       await api.put(`custos-investimento/${idModelo}/`, reqObj);
-      await api.put(`modelos/${idModelo}`, {
+      await api.put(`modelos/${idModelo}/`, {
         // cadastroAtividadePosFisica: true,
         // cadastroAtividadePosJuridica: false,
         // cadastroAtividadePreFisica: true,
@@ -331,7 +326,7 @@ function PreencherModelo({ stepType }) {
         // tipo: null,
         // transformacaoDigital: null,
         // usuario: null,
-        volumeSolicitacao: mergedDataTransformacao.volumeSolicitacao,
+        volumeSolicitacao: Number(mergedDataTransformacao.volumeSolicitacao),
       });
     } catch (e) {
       alert('Erro ao enviar dados do investimento');
@@ -355,7 +350,6 @@ function PreencherModelo({ stepType }) {
 
         const inputsData = formRef.getData();
         formRef.setErrors({}); // reset past errors
-        console.log({ inputsData });
 
         try {
           await schemaValidator.validate(inputsData, {
@@ -371,7 +365,6 @@ function PreencherModelo({ stepType }) {
               ...mergedDataTransformacao,
               ...inputsData,
             };
-            console.log('oi');
           }
 
           console.log({
