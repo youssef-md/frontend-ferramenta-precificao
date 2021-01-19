@@ -1,4 +1,5 @@
 function formatCurrency(string) {
+  if (typeof string !== 'string') return;
   return Number(string.replace('R$ ', '').replace('.', '').replace(',', '.'));
 }
 

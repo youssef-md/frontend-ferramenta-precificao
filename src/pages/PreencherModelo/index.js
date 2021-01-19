@@ -195,6 +195,34 @@ function PreencherModelo({ stepType }) {
     []
   );
 
+  const populateTransformacaoInputsWithSavedValues = useCallback(
+    (etapaPreenchida, modeloData) => {
+      const { data } = etapaPreenchida;
+
+      mergedDataTransformacao.custoTreinamento =
+        data.custosInfraestrutura.custoTreinamento;
+      mergedDataTransformacao.mediaSalarialServidores =
+        data.custosPessoal[1].mediaSalarial;
+      mergedDataTransformacao.mediaSalarialTercerizados =
+        data.custosPessoal[0].mediaSalarial;
+      mergedDataTransformacao.qtdFuncionariosServidores =
+        data.custosPessoal[1].quantidadeFuncionarios;
+      mergedDataTransformacao.qtdFuncionariosTercerizados =
+        data.custosPessoal[0].quantidadeFuncionarios;
+      mergedDataTransformacao.quantidadePapelArmazenado =
+        data.custosImovel.quantidadePapelArmazenado;
+      mergedDataTransformacao.solucaoTransformacao =
+        data.custosInfraestrutura.memoriaCalculo;
+      mergedDataTransformacao.tempoDedicacaoServidores =
+        data.custosPessoal[1].tempoDedicacao;
+      mergedDataTransformacao.tempoDedicacaoTercerizados =
+        data.custosPessoal[0].tempoDedicacao;
+      mergedDataTransformacao.volumeSolicitacao =
+        modeloData.data.volumeSolicitacao;
+    },
+    []
+  );
+
   useEffect(
     function updateDefaultFormInputValues() {
       const { current } = currentPageRef;
@@ -228,6 +256,17 @@ function PreencherModelo({ stepType }) {
               populateOrgaoInputsWithSavedValues(pos, etapa, 'pos');
               formRef.setData(mergedDataOrgao);
             });
+          } else if (stepType === 'CUSTOS_TRANSFORMACAO') {
+            Promise.all([
+              api.get(`/custos-investimento/${idModelo}/`),
+              api.get(`modelos/${idModelo}/`),
+            ]).then(([investimentoPreenchido, modeloData]) => {
+              populateTransformacaoInputsWithSavedValues(
+                investimentoPreenchido,
+                modeloData
+              );
+            });
+            formRef.setData(mergedDataTransformacao);
           }
         }
       }
@@ -240,6 +279,9 @@ function PreencherModelo({ stepType }) {
       etapaAtividadesIdsPos,
       etapaAtividadesIds,
       populateAtividadeInputsWithSavedValues,
+      populateOrgaoInputsWithSavedValues,
+      populateTransformacaoInputsWithSavedValues,
+      idModelo,
     ]
   );
 

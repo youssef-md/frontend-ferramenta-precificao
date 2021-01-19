@@ -55,13 +55,6 @@ function ServicoSelecioado() {
       orgaoPreIds = preIds;
       orgaoPosIds = posIds;
       transformacaoIds = transfIds;
-
-      console.log({
-        etapaAtividadesIds,
-        orgaoPreIds,
-        orgaoPosIds,
-        transformacaoIds,
-      });
     });
   }, []);
 
