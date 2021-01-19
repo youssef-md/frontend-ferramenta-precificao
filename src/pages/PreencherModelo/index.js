@@ -170,14 +170,36 @@ function PreencherModelo({ stepType }) {
     []
   );
 
+  const populateOrgaoInputsWithSavedValues = useCallback(
+    (etapaPreenchida, etapa, type) => {
+      const { custosOrgao } = etapaPreenchida.data;
+      mergedDataOrgao[`dropdownSolucao-${type}-3-1`] =
+        custosOrgao.custosInfraestrutura.memoriaCalculo;
+      mergedDataOrgao[`mediaSalarialServidores-${type}-1-1 `] = Number(
+        custosOrgao.custosPessoal[0].mediaSalarial
+      );
+      mergedDataOrgao[`mediaSalarialTercerizados-${type}-1-2 `] = Number(
+        custosOrgao.custosPessoal[1].mediaSalarial
+      );
+      mergedDataOrgao[`qtdFuncionariosServidores-${type}-1-1`] =
+        custosOrgao.custosPessoal[0].quantidadeFuncionarios;
+      mergedDataOrgao[`qtdFuncionariosTercerizados-${type}-1-2`] =
+        custosOrgao.custosPessoal[1].quantidadeFuncionarios;
+      mergedDataOrgao[`quantidadePapelArmazenado-${type}-2-1`] =
+        custosOrgao.custosImovel.custosArmazenamentoPapel.quantidadePapelArmazenado;
+      mergedDataOrgao[`tempoDedicacaoServidores-${type}-1-1`] =
+        custosOrgao.custosPessoal[0].tempoDedicacao;
+      mergedDataOrgao[`tempoDedicacaoTercerizados-${type}-1-2`] =
+        custosOrgao.custosPessoal[1].tempoDedicacao;
+    },
+    []
+  );
+
   useEffect(
     function updateDefaultFormInputValues() {
       const { current } = currentPageRef;
       if (current && current.formRef) {
         const { formRef } = current;
-        // const isInInputPage = formPages[currentFormIndex].form;
-        // if (isInInputPage) formRef.setData(mergedStepData);
-
         const currentPage = formPages[currentFormIndex];
 
         if (currentPage.type === 'page-form') {
@@ -196,6 +218,15 @@ function PreencherModelo({ stepType }) {
               populateAtividadeInputsWithSavedValues(pre, etapa, 'pre');
               populateAtividadeInputsWithSavedValues(pos, etapa, 'pos');
               formRef.setData(mergedDataAtividade);
+            });
+          } else if (stepType === 'CUSTOS_ORGAO') {
+            Promise.all([
+              api.get(`/custos-orgao-pre/modelo/${idModelo}/`),
+              api.get(`/custos-orgao-pos/modelo/${idModelo}/`),
+            ]).then(([pre, pos]) => {
+              populateOrgaoInputsWithSavedValues(pre, etapa, 'pre');
+              populateOrgaoInputsWithSavedValues(pos, etapa, 'pos');
+              formRef.setData(mergedDataOrgao);
             });
           }
         }
@@ -308,24 +339,6 @@ function PreencherModelo({ stepType }) {
     try {
       await api.put(`custos-investimento/${idModelo}/`, reqObj);
       await api.put(`modelos/${idModelo}/`, {
-        // cadastroAtividadePosFisica: true,
-        // cadastroAtividadePosJuridica: false,
-        // cadastroAtividadePreFisica: true,
-        // cadastroAtividadePreJuridica: false,
-        // cadastroEtapaPosFisica: true,
-        // cadastroEtapaPosJuridica: false,
-        // cadastroEtapaPreFisica: true,
-        // cadastroEtapaPreJuridica: false,
-        // descricao: "teste 1",
-        // idModelo: 20457,
-        // isSubmetido: false,
-        // isValidado: false,
-        // nome: "m1",
-        // pacoteConstante: 1,
-        // servico: 4130,
-        // tipo: null,
-        // transformacaoDigital: null,
-        // usuario: null,
         volumeSolicitacao: Number(mergedDataTransformacao.volumeSolicitacao),
       });
     } catch (e) {
