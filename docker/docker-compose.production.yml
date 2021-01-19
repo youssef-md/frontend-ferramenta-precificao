@@ -1,0 +1,14 @@
+## Não esquecer de alterar o endereço no back-end no environments.ts
+version: '3'
+services:
+  frontend-production:
+    image: ferramenta-custos/frontend:latest
+    container_name: frontend_production
+    environment:
+      - BACKEND_HOST=127.0.0.1
+      - BACKEND_PORT=8050
+    build:
+      context: ..
+      dockerfile: ./docker/compose/production/Dockerfile
+    ports:
+      - '9000:80'
